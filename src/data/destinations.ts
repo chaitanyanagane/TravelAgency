@@ -1,0 +1,60 @@
+import { Destination } from '../types';
+
+export const destinations: Destination[] = [
+  {
+    id: 'coorg',
+    slug: 'coorg-hills',
+    name: 'Coorg',
+    image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=800&q=80',
+    description: 'Known as the Scotland of India, Coorg is famous for its coffee plantations, mist-covered hills, and lush green valleys.',
+    packageCount: 2,
+  },
+  {
+    id: 'kerala',
+    slug: 'kerala-backwaters',
+    name: 'Kerala',
+    image: 'https://images.unsplash.com/photo-1593693411515-c202e974eb8f?auto=format&fit=crop&w=800&q=80',
+    description: 'God\'s Own Country offers tranquil backwaters, palm-fringed beaches, rich spice plantations, and Ayurvedic healing.',
+    packageCount: 2,
+  },
+  {
+    id: 'rajasthan',
+    slug: 'rajasthan-heritage',
+    name: 'Rajasthan',
+    image: 'https://images.unsplash.com/photo-1477587458883-471a5ed08ab4?auto=format&fit=crop&w=800&q=80',
+    description: 'Immerse yourself in royalty. Explore magnificent forts, grand palaces, vibrant cultures, and the golden sands of Thar.',
+    packageCount: 3,
+  },
+  {
+    id: 'ladakh',
+    slug: 'ladakh-adventure',
+    name: 'Ladakh',
+    image: 'https://images.unsplash.com/photo-1581791538302-03537b9c97bf?auto=format&fit=crop&w=800&q=80',
+    description: 'A land of high passes, azure lakes, barren mountains, and ancient monasteries. Perfect for adventure seekers.',
+    packageCount: 1,
+  },
+  {
+    id: 'goa',
+    slug: 'goa-beaches',
+    name: 'Goa',
+    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
+    description: 'Soak up the sun on pristine beaches, enjoy vibrant nightlife, and explore beautiful Portuguese architecture.',
+    packageCount: 2,
+  },
+  {
+    id: 'uttarakhand',
+    slug: 'uttarakhand',
+    name: 'Uttarakhand',
+    image: 'https://images.unsplash.com/photo-1626696738087-3944b1392f76?auto=format&fit=crop&w=800&q=80',
+    description: 'Sacred temples, mist-covered valleys, and mighty Himalayan peaks. Experience the spiritual heartbeat of northern India.',
+    packageCount: 1,
+  },
+  {
+    id: 'darjeeling',
+    slug: 'darjeeling',
+    name: 'Darjeeling',
+    image: 'https://images.unsplash.com/photo-1557934293-b7785c746f77?auto=format&fit=crop&w=800&q=80',
+    description: 'Famous for its lush green tea gardens, spectacular views of Kanchenjunga, and the historic Himalayan Toy Train.',
+    packageCount: 1,
+  },
+];
