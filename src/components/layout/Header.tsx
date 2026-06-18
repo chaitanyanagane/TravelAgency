@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Phone } from 'lucide-react';
+import { Menu, X, Phone, Palette, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navLinks = [
@@ -18,9 +18,14 @@ const navLinks = [
   { name: 'Contact', href: '/contact' },
 ];
 
+type BrandPreset = 'modern' | 'luxury' | 'professional';
+
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [brandFont, setBrandFont] = useState<BrandPreset>('modern');
+  const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
+  
   const pathname = usePathname();
   const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+91 9823997276';
 
@@ -36,35 +41,75 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Synchronize localStorage and HTML classes
+  useEffect(() => {
+    const savedPreset = (localStorage.getItem('saachi-brand-font') as BrandPreset) || 'modern';
+    
+    const root = document.documentElement;
+    root.classList.remove('brand-font-modern', 'brand-font-luxury', 'brand-font-professional');
+    root.classList.add(`brand-font-${savedPreset}`);
 
+    // Defer state update to avoid synchronous cascading renders warning
+    const timer = setTimeout(() => {
+      setBrandFont(savedPreset);
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handlePresetChange = (preset: BrandPreset) => {
+    setBrandFont(preset);
+    localStorage.setItem('saachi-brand-font', preset);
+    
+    const root = document.documentElement;
+    root.classList.remove('brand-font-modern', 'brand-font-luxury', 'brand-font-professional');
+    root.classList.add(`brand-font-${preset}`);
+  };
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ease-in-out ${
           isScrolled
-            ? 'bg-slate-950/80 backdrop-blur-md border-b border-slate-900/50 py-3 shadow-lg'
-            : 'bg-gradient-to-b from-black/60 to-transparent py-5'
+            ? 'bg-slate-950/80 backdrop-blur-md border-b border-slate-900/50 py-2.5 shadow-lg'
+            : 'bg-gradient-to-b from-black/70 to-transparent py-4.5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center space-x-3 group">
-              <div className="relative w-12 h-12 bg-white rounded-xl overflow-hidden flex items-center justify-center p-1 border border-slate-800 shadow-inner group-hover:border-teal-500/50 transition-colors">
-                <Image
-                  src="/images/logo.png"
-                  alt="Saachi Tour and Travel"
-                  width={40}
-                  height={40}
-                  className="object-contain"
-                />
+            
+            {/* Logo Section */}
+            <Link href="/" className="flex items-center space-x-3.5 group">
+              {/* Responsive Logo Container */}
+              <div 
+                className={`relative bg-white rounded-2xl overflow-hidden flex items-center justify-center border border-slate-800 shadow-md group-hover:border-teal-500/50 group-hover:shadow-lg group-hover:shadow-teal-900/15 transition-all duration-500 ease-in-out shrink-0 ${
+                  isScrolled ? 'w-12 h-12 p-0.5' : 'w-15 h-15 p-1.5'
+                }`}
+              >
+                <div className="relative w-full h-full">
+                  <Image
+                    src="/images/logo.png"
+                    alt="Saachi Tour and Travel"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </div>
               </div>
-              <div className="flex flex-col">
-                <span className="text-lg font-bold text-white tracking-wide leading-none group-hover:text-teal-400 transition-colors">
+
+              {/* Dynamic Text Sizing */}
+              <div className="flex flex-col justify-center">
+                <span 
+                  className={`font-brand-name text-white group-hover:text-teal-400 leading-none transition-all duration-500 ease-in-out ${
+                    isScrolled ? 'text-lg' : 'text-2xl'
+                  }`}
+                >
                   Saachi
                 </span>
-                <span className="text-[9px] text-teal-400 font-semibold tracking-widest uppercase mt-0.5">
+                <span 
+                  className={`font-brand-sub text-teal-400 font-semibold tracking-widest uppercase transition-all duration-500 ease-in-out ${
+                    isScrolled ? 'text-[8px] mt-0.5' : 'text-[10px] mt-1'
+                  }`}
+                >
                   Tours & Travels
                 </span>
               </div>
@@ -99,7 +144,7 @@ export default function Header() {
             <div className="hidden lg:flex items-center space-x-4">
               <a
                 href={`tel:${contactPhone.replace(/\s+/g, '')}`}
-                className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors text-sm font-medium"
+                className="flex items-center space-x-2 text-slate-350 hover:text-white transition-colors text-sm font-medium"
               >
                 <Phone className="w-4 h-4 text-teal-400" />
                 <span>{contactPhone}</span>
@@ -148,21 +193,22 @@ export default function Header() {
               className="fixed top-0 bottom-0 right-0 w-80 max-w-full bg-slate-950 border-l border-slate-900 z-50 flex flex-col p-6 shadow-2xl lg:hidden"
             >
               <div className="flex items-center justify-between border-b border-slate-900 pb-5 mb-6">
-                <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-3">
-                  <div className="relative w-10 h-10 bg-white rounded-xl overflow-hidden flex items-center justify-center p-1 border border-slate-800 shadow-inner">
-                    <Image
-                      src="/images/logo.png"
-                      alt="Saachi Tour and Travel"
-                      width={32}
-                      height={32}
-                      className="object-contain"
-                    />
+                <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-3.5 group">
+                  <div className="relative w-12 h-12 bg-white rounded-xl overflow-hidden flex items-center justify-center p-1 border border-slate-800 shadow-md shrink-0">
+                    <div className="relative w-full h-full">
+                      <Image
+                        src="/images/logo.png"
+                        alt="Saachi Tour and Travel"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-base font-bold text-white tracking-wide leading-none">
+                    <span className="font-brand-name text-lg text-white group-hover:text-teal-400 transition-colors leading-none">
                       Saachi
                     </span>
-                    <span className="text-[9px] text-teal-400 font-semibold tracking-widest uppercase mt-0.5">
+                    <span className="font-brand-sub text-[8px] text-teal-400 uppercase tracking-widest mt-1">
                       Tours & Travels
                     </span>
                   </div>
@@ -218,6 +264,83 @@ export default function Header() {
           </>
         )}
       </AnimatePresence>
+
+      {/* Floating Branding Customizer Widget */}
+      <div className="fixed bottom-6 left-6 z-55">
+        <button
+          onClick={() => setIsCustomizerOpen(!isCustomizerOpen)}
+          className="bg-slate-900 border border-slate-800 hover:border-teal-500/50 hover:bg-slate-850 text-slate-400 hover:text-teal-400 p-3.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 group focus:outline-none cursor-pointer"
+          title="Branding Control Widget"
+        >
+          <Palette className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+        </button>
+
+        <AnimatePresence>
+          {isCustomizerOpen && (
+            <>
+              {/* Close click-catcher */}
+              <div className="fixed inset-0 z-[-1]" onClick={() => setIsCustomizerOpen(false)} />
+              
+              <motion.div
+                initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                className="absolute bottom-16 left-0 w-64 bg-slate-950/95 border border-slate-800/80 p-4.5 rounded-2xl shadow-2xl space-y-3.5 backdrop-blur-md"
+              >
+                <div className="flex items-center justify-between border-b border-slate-900 pb-2.5">
+                  <span className="text-[10px] text-slate-500 uppercase tracking-widest font-extrabold flex items-center space-x-1.5">
+                    <Palette className="w-3.5 h-3.5 text-teal-400" />
+                    <span>Brand Preset Tool</span>
+                  </span>
+                  <button 
+                    onClick={() => setIsCustomizerOpen(false)} 
+                    className="text-slate-500 hover:text-slate-300 text-[10px] uppercase font-bold"
+                  >
+                    Close
+                  </button>
+                </div>
+
+                <div className="space-y-2">
+                  {[
+                    { id: 'modern', name: 'Modern Style', font: 'Outfit', subtitle: 'Bold, geometric sans' },
+                    { id: 'luxury', name: 'Luxury Style', font: 'Playfair', subtitle: 'Elegant, high-end serif' },
+                    { id: 'professional', name: 'Professional Style', font: 'Jakarta', subtitle: 'Clean, corporate sans' },
+                  ].map((preset) => {
+                    const isSelected = brandFont === preset.id;
+                    return (
+                      <button
+                        key={preset.id}
+                        onClick={() => handlePresetChange(preset.id as BrandPreset)}
+                        className={`w-full text-left p-3 rounded-xl border transition-all flex items-center justify-between group ${
+                          isSelected
+                            ? 'bg-teal-950/35 border-teal-600/80 shadow-md shadow-teal-950/10'
+                            : 'bg-slate-950 border-slate-850 hover:border-slate-800 hover:bg-slate-900/40'
+                        }`}
+                      >
+                        <div className="space-y-0.5">
+                          <span className={`block text-xs font-bold ${isSelected ? 'text-teal-400' : 'text-slate-200'}`}>
+                            {preset.name}
+                          </span>
+                          <span className="block text-[9px] text-slate-500 font-light">
+                            {preset.font} — {preset.subtitle}
+                          </span>
+                        </div>
+                        {isSelected && (
+                          <Check className="w-4 h-4 text-teal-400 shrink-0" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <p className="text-[8.5px] text-slate-600 font-light leading-relaxed text-center px-1">
+                  Adjusts brand name font-family, letter-spacing, and casing styles site-wide.
+                </p>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      </div>
     </>
   );
 }

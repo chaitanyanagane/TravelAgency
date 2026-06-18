@@ -84,3 +84,42 @@ input:focus, select:focus, textarea:focus {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
+
+/* Branding Font Adaptability */
+html.brand-font-modern .font-brand-name {
+  font-family: var(--font-modern), sans-serif;
+  letter-spacing: -0.01em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+html.brand-font-modern .font-brand-sub {
+  font-family: var(--font-modern), sans-serif;
+  letter-spacing: 0.28em;
+  font-weight: 600;
+}
+
+html.brand-font-luxury .font-brand-name {
+  font-family: var(--font-luxury), serif;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+html.brand-font-luxury .font-brand-sub {
+  font-family: var(--font-luxury), serif;
+  letter-spacing: 0.32em;
+  font-weight: 400;
+  font-style: italic;
+  text-transform: uppercase;
+}
+
+html.brand-font-professional .font-brand-name {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: 0.01em;
+  font-weight: 800;
+}
+html.brand-font-professional .font-brand-sub {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
+import { Inter, Plus_Jakarta_Sans, Outfit, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
@@ -13,6 +13,16 @@ const inter = Inter({
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-display',
+});
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  variable: '--font-modern',
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-luxury',
 });
 
 export const viewport: Viewport = {
@@ -78,7 +88,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${plusJakartaSans.variable}`}>
+    <html lang="en" className={`${inter.variable} ${plusJakartaSans.variable} ${outfit.variable} ${playfairDisplay.variable}`}>
       <body className="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased">
         <Header />
         <main className="flex-grow pt-20 lg:pt-24">

@@ -19,21 +19,22 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand Col */}
           <div className="space-y-4">
-            <Link href="/" className="flex items-center space-x-3 group">
-              <div className="relative w-12 h-12 bg-white rounded-xl overflow-hidden flex items-center justify-center p-1 border border-slate-800 shadow-inner group-hover:border-teal-500/50 transition-colors">
-                <Image
-                  src="/images/logo.png"
-                  alt="Saachi Tour and Travel"
-                  width={40}
-                  height={40}
-                  className="object-contain"
-                />
+            <Link href="/" className="flex items-center space-x-3.5 group">
+              <div className="relative w-14 h-14 bg-white rounded-2xl overflow-hidden flex items-center justify-center p-1 border border-slate-850 shadow-md group-hover:border-teal-500/50 group-hover:shadow-lg group-hover:shadow-teal-900/10 transition-all duration-300 shrink-0">
+                <div className="relative w-full h-full">
+                  <Image
+                    src="/images/logo.png"
+                    alt="Saachi Tour and Travel"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
               </div>
               <div className="flex flex-col">
-                <span className="text-lg font-bold text-white tracking-wide leading-none group-hover:text-teal-400 transition-colors">
+                <span className="font-brand-name text-xl text-white group-hover:text-teal-400 transition-colors leading-none">
                   Saachi
                 </span>
-                <span className="text-[9px] text-teal-400 font-semibold tracking-widest uppercase mt-0.5">
+                <span className="font-brand-sub text-[8px] text-teal-400 uppercase tracking-widest mt-1">
                   Tours & Travels
                 </span>
               </div>
