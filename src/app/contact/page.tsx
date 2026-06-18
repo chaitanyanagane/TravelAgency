@@ -1,61 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, Clock, MessageSquare, Send, CheckCircle } from 'lucide-react';
-
-interface ContactFormData {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-}
+import React from 'react';
+import { Phone, Mail, MapPin, Clock, MessageSquare } from 'lucide-react';
+import InquiryForm from '@/components/common/InquiryForm';
 
 export default function ContactPage() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formData, setFormData] = useState<ContactFormData | null>(null);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm<ContactFormData>();
-
-  const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+91 9823997276';
+  const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+91 98239 97276';
   const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'varshaagaikwad563@gmail.com';
   const contactAddress = process.env.NEXT_PUBLIC_CONTACT_ADDRESS || 'Chandrabhaga corner, Mukai chouk Ravet, Pune, Maharashtra 412101';
-  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+91 9823997276';
-  const mapsEmbedUrl = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL || 'https://maps.app.goo.gl/gGVvVSFo8tBP7FwPA';
-
-  const onSubmit = (data: ContactFormData) => {
-    setFormData(data);
-    setIsSubmitted(true);
-  };
-
-  const triggerWhatsApp = () => {
-    if (!formData) return;
-    const text = `*New Contact Inquiry*\n\n*Name:* ${formData.name}\n*Email:* ${formData.email}\n*Phone:* ${formData.phone}\n*Message:* ${formData.message}`;
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
-    window.open(url, '_blank');
-    handleReset();
-  };
-
-  const triggerEmail = () => {
-    if (!formData) return;
-    const subject = `Saachi Tour & Travel Contact Inquiry - ${formData.name}`;
-    const body = `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`;
-    const url = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.open(url, '_self');
-    handleReset();
-  };
-
-  const handleReset = () => {
-    setIsSubmitted(false);
-    setFormData(null);
-    reset();
-  };
+  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919823997276';
+  const mapsEmbedUrl = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3780.2223846618585!2d73.7431326!3d18.6540679!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b9e69c79fa69%3A0xc3fa5ee2366718!2sMukai%20Chowk%2C%20Ravet%2C%20Pune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1718464000000!5m2!1sen!2sin';
 
   return (
     <div className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -65,16 +19,16 @@ export default function ContactPage() {
           Get in Touch
         </span>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight font-display">
-          Contact Our Travel Experts
+          Plan Your Dream Vacation
         </h1>
         <p className="text-slate-400 font-light leading-relaxed">
-          Have questions about pricing, customized routing, or booking conditions? Write to us, email us, or chat with our experts directly.
+          Fill out our detailed travel inquiry form below. Our holiday specialists will customize the itinerary, hotels, and transfers to suit your budget and style.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         {/* Left Side: Contact Information & Maps */}
-        <div className="space-y-8">
+        <div className="lg:col-span-5 space-y-8">
           <div className="bg-slate-900 border border-slate-800/60 rounded-3xl p-8 space-y-6">
             <h2 className="text-2xl font-bold text-white font-display">Office Information</h2>
 
@@ -85,7 +39,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <span className="block text-slate-500 text-xs uppercase tracking-wider font-semibold">Address</span>
-                  <span className="text-slate-200 text-sm">{contactAddress}</span>
+                  <span className="text-slate-200 text-sm leading-relaxed">{contactAddress}</span>
                 </div>
               </div>
 
@@ -134,7 +88,7 @@ export default function ContactPage() {
             {/* Direct WhatsApp Call to Action */}
             <div className="pt-6 border-t border-slate-800/80">
               <a
-                href={`https://wa.me/${whatsappNumber}?text=Hi%20Saachi%20Tours%2520and%2520Travels,%2520I%2520have%2520an%2520inquiry.`}
+                href={`https://wa.me/${whatsappNumber}?text=Hi%20Saachi%20Tours%20and%20Travels,%20I%20have%20an%20inquiry.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl transition-colors flex items-center justify-center space-x-2 text-sm shadow-md"
@@ -158,142 +112,10 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* Right Side: Form */}
-        <div className="bg-slate-900 border border-slate-800/60 rounded-3xl p-8 shadow-md">
-          {!isSubmitted ? (
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <h2 className="text-2xl font-bold text-white font-display mb-4">Send an Inquiry</h2>
-
-              {/* Name */}
-              <div className="space-y-2">
-                <label htmlFor="name" className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
-                  Your Full Name
-                </label>
-                <input
-                  id="name"
-                  type="text"
-                  placeholder="Enter name"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-600 transition-colors"
-                  {...register('name', { required: 'Name is required' })}
-                />
-                {errors.name && (
-                  <span className="text-red-400 text-xs font-medium block">{errors.name.message}</span>
-                )}
-              </div>
-
-              {/* Email */}
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
-                  Email Address
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  placeholder="Enter email"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-600 transition-colors"
-                  {...register('email', {
-                    required: 'Email is required',
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: 'Invalid email address',
-                    },
-                  })}
-                />
-                {errors.email && (
-                  <span className="text-red-400 text-xs font-medium block">{errors.email.message}</span>
-                )}
-              </div>
-
-              {/* Phone */}
-              <div className="space-y-2">
-                <label htmlFor="phone" className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
-                  Mobile Number
-                </label>
-                <input
-                  id="phone"
-                  type="tel"
-                  placeholder="Enter mobile number"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-600 transition-colors"
-                  {...register('phone', {
-                    required: 'Mobile number is required',
-                    pattern: {
-                      value: /^[0-9+-\s]{10,15}$/,
-                      message: 'Invalid phone number',
-                    },
-                  })}
-                />
-                {errors.phone && (
-                  <span className="text-red-400 text-xs font-medium block">{errors.phone.message}</span>
-                )}
-              </div>
-
-              {/* Message */}
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
-                  Your Requirements / Message
-                </label>
-                <textarea
-                  id="message"
-                  rows={4}
-                  placeholder="Tell us about the destinations, group size, or custom expectations..."
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-600 transition-colors resize-none"
-                  {...register('message', { required: 'Message is required' })}
-                />
-                {errors.message && (
-                  <span className="text-red-400 text-xs font-medium block">{errors.message.message}</span>
-                )}
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-teal-600 hover:bg-teal-500 disabled:bg-slate-800 text-white font-bold py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center space-x-2 text-sm"
-              >
-                <Send className="w-4 h-4" />
-                <span>{isSubmitting ? 'Validating...' : 'Proceed to Submit'}</span>
-              </button>
-            </form>
-          ) : (
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="text-center py-12 space-y-6"
-            >
-              <div className="w-16 h-16 bg-teal-950/40 text-teal-400 border border-teal-500/20 rounded-full flex items-center justify-center mx-auto shadow-md">
-                <CheckCircle className="w-8 h-8" />
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold text-white font-display">Inquiry Validated!</h3>
-                <p className="text-slate-400 text-xs font-light max-w-sm mx-auto">
-                  Choose how you want to deliver your request details to our travel coordinator.
-                </p>
-              </div>
-
-              <div className="space-y-3 max-w-sm mx-auto pt-4">
-                <button
-                  onClick={triggerWhatsApp}
-                  className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl transition-colors flex items-center justify-center space-x-2 text-sm shadow-md"
-                >
-                  <MessageSquare className="w-4 h-4 fill-current" />
-                  <span>Send via WhatsApp</span>
-                </button>
-                <button
-                  onClick={triggerEmail}
-                  className="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 py-3.5 rounded-xl transition-colors flex items-center justify-center space-x-2 text-sm"
-                >
-                  <Mail className="w-4 h-4" />
-                  <span>Send via Email Client</span>
-                </button>
-                <button
-                  onClick={handleReset}
-                  className="w-full text-slate-500 hover:text-slate-400 font-semibold text-xs pt-2"
-                >
-                  Edit Inquiry Details
-                </button>
-              </div>
-            </motion.div>
-          )}
+        {/* Right Side: Travel Inquiry Form */}
+        <div className="lg:col-span-7 bg-slate-900 border border-slate-800/60 rounded-3xl p-8 shadow-md">
+          <h2 className="text-2xl font-bold text-white font-display mb-6">Plan a Custom Package</h2>
+          <InquiryForm />
         </div>
       </div>
     </div>
