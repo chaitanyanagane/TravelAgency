@@ -1,0 +1,149 @@
+datasource db {
+  provider  = "postgresql"
+  url  	    = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// User Model for admin access
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role     @default(ADMIN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("users")
+}
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+}
+
+// Destination Model
+model Destination {
+  id           String    @id @default(uuid())
+  slug         String    @unique
+  name         String
+  image        String
+  description  String
+  packages     Package[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("destinations")
+}
+
+// Package Model
+model Package {
+  id           String          @id @default(uuid())
+  slug         String          @unique
+  title        String
+  destination  String          // Fallback destination label
+  duration     String
+  durationDays Int
+  price        Float           // Starting price
+  rating       Float           @default(4.9)
+  tourType     String          // Honeymoon, Family, Adventure, etc.
+  images       String[]        // URLs array
+  overview     String
+  popular      Boolean         @default(false)
+  
+  // Relations
+  destinationId String
+  destInfo      Destination    @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+  itinerary     ItineraryItem[]
+  inclusions    String[]
+  exclusions    String[]
+  pricing       Pricing?
+
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@map("packages")
+}
+
+// Itinerary Item Model
+model ItineraryItem {
+  id          String   @id @default(uuid())
+  day         Int
+  title       String
+  description String
+  packageId   String
+  package     Package  @relation(fields: [packageId], references: [id], onDelete: Cascade)
+
+  @@map("itinerary_items")
+}
+
+// Package Pricing Tiers
+model Pricing {
+  id        String   @id @default(uuid())
+  couple    Float
+  family    Float
+  group     Float
+  packageId String   @unique
+  package   Package  @relation(fields: [packageId], references: [id], onDelete: Cascade)
+
+  @@map("pricings")
+}
+
+// Testimonials Model
+model Testimonial {
+  id                 String   @id @default(uuid())
+  name               String
+  destinationVisited String
+  rating             Int      @default(5)
+  reviewText         String
+  avatarUrl          String?
+  createdAt          DateTime @default(now())
+
+  @@map("testimonials")
+}
+
+// Blog Posts Model
+model Blog {
+  id        String   @id @default(uuid())
+  slug      String   @unique
+  title     String
+  excerpt   String
+  content   String   @db.Text
+  category  String
+  author    String
+  date      String
+  image     String
+  readTime  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("blogs")
+}
+
+// Customer Inquiry Inbox Model
+model Inquiry {
+  id          String        @id @default(uuid())
+  fullName    String
+  phoneNumber String
+  email       String
+  destination String
+  travelDate  String
+  travelers   Int           @default(1)
+  budgetRange String
+  message     String?       @db.Text
+  status      InquiryStatus @default(NEW)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@map("inquiries")
+}
+
+enum InquiryStatus {
+  NEW
+  CONTACTED
+  CONVERTED
+  CANCELLED
+}
