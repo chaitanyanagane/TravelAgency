@@ -20,8 +20,8 @@ export default function Footer() {
           {/* Brand Col */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center space-x-3.5 group">
-              <div className="relative w-14 h-14 bg-white rounded-2xl overflow-hidden flex items-center justify-center p-1 border border-slate-850 shadow-md group-hover:border-teal-500/50 group-hover:shadow-lg group-hover:shadow-teal-900/10 transition-all duration-300 shrink-0">
-                <div className="relative w-full h-full">
+              <div className="relative w-[84px] h-[56px] bg-white/95 rounded-2xl overflow-hidden flex items-center justify-center border border-white/40 shadow-md group-hover:border-teal-500/40 group-hover:shadow-lg group-hover:shadow-teal-500/10 transition-all duration-300 shrink-0">
+                <div className="relative w-full h-full scale-[1.6] group-hover:scale-[1.7] transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]">
                   <Image
                     src="/images/logo.png"
                     alt="Saachi Tour and Travel"
