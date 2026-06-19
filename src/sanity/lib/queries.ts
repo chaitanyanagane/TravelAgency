@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { client } from './client'
 import { urlFor } from './image'
 
@@ -98,7 +99,7 @@ function getOptimizedImages(featuredImage: any, galleryImages: any): string[] {
   if (featuredImage) {
     try {
       urls.push(urlFor(featuredImage).width(1200).auto('format').url())
-    } catch (e) {
+    } catch {
       // Fallback
     }
   }
@@ -106,7 +107,7 @@ function getOptimizedImages(featuredImage: any, galleryImages: any): string[] {
     galleryImages.forEach((img) => {
       try {
         urls.push(urlFor(img).width(1200).auto('format').url())
-      } catch (e) {
+      } catch {
         // Fallback
       }
     })
