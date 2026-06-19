@@ -28,6 +28,7 @@ export default function ContactPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         {/* Left Side: Contact Information & Maps */}
+        
         <div className="lg:col-span-5 space-y-8">
           <div className="bg-slate-900 border border-slate-800/60 rounded-3xl p-8 space-y-6">
             <h2 className="text-2xl font-bold text-white font-display">Office Information</h2>
