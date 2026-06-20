@@ -1,8 +1,7 @@
 import { MetadataRoute } from 'next';
-import { packages } from '../data/packages';
-import { blogs } from '../data/blogs';
+import { getAllPackages, getAllBlogs } from '@/sanity/lib/queries';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://saachi-tours.vercel.app';
 
   // Core Static routes
@@ -21,6 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'weekly' as const,
     priority: route === '' ? 1.0 : 0.8,
   }));
+
+  // Fetch dynamic packages and blogs from Sanity
+  const [packages, blogs] = await Promise.all([
+    getAllPackages(),
+    getAllBlogs(),
+  ]);
 
   // Dynamic Package routes
   const packageRoutes = packages.map((tour) => ({

@@ -5,21 +5,24 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Compass, ShieldCheck, Map, Clock, ArrowRight, MessageCircle, Phone, Users, Heart, Plane, Sparkles } from 'lucide-react';
-import { destinations } from '@/data/destinations';
-import { testimonials } from '@/data/testimonials';
-import { blogs } from '@/data/blogs';
 import { galleryItems } from '@/data/gallery';
 import PackageCard from '@/components/packages/PackageCard';
 import JSONLD from '@/components/common/JSONLD';
-import { Package } from '@/types';
+import { Package, Destination, Testimonial, Blog } from '@/types';
 
 interface HomeClientProps {
   featuredPackages: Package[];
+  featuredDestinations: Destination[];
+  testimonials: Testimonial[];
+  featuredBlogs: Blog[];
 }
 
-export default function HomeClient({ featuredPackages }: HomeClientProps) {
-  const featuredDestinations = destinations.slice(0, 4);
-  const featuredBlogs = blogs.slice(0, 3);
+export default function HomeClient({
+  featuredPackages,
+  featuredDestinations,
+  testimonials,
+  featuredBlogs,
+}: HomeClientProps) {
   const previewImages = galleryItems.slice(0, 6);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
@@ -27,10 +30,12 @@ export default function HomeClient({ featuredPackages }: HomeClientProps) {
   const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+91 98239 97276';
 
   const nextTestimonial = () => {
+    if (testimonials.length === 0) return;
     setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
   };
 
   const prevTestimonial = () => {
+    if (testimonials.length === 0) return;
     setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
@@ -457,87 +462,89 @@ export default function HomeClient({ featuredPackages }: HomeClientProps) {
       </section>
 
       {/* Customer Testimonials Carousel */}
-      <section className="py-32 bg-slate-900/[0.15] border-y border-white/5 overflow-hidden">
-        <div className="max-w-4xl mx-auto px-4 text-center relative">
-          <div className="flex justify-center mb-6">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center space-x-2 bg-teal-500/10 border border-teal-500/20 rounded-full px-3.5 py-1"
-            >
-              <span className="text-[10px] font-semibold tracking-widest text-teal-400 uppercase font-mono">
-                Guest Memoirs
-              </span>
-            </motion.div>
-          </div>
-
-          {/* Testimonial Core */}
-          <div className="relative min-h-[260px] flex items-center justify-center">
-            <AnimatePresence mode="wait">
+      {testimonials.length > 0 && (
+        <section className="py-32 bg-slate-900/[0.15] border-y border-white/5 overflow-hidden">
+          <div className="max-w-4xl mx-auto px-4 text-center relative">
+            <div className="flex justify-center mb-6">
               <motion.div
-                key={activeTestimonial}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-                className="space-y-8"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="inline-flex items-center space-x-2 bg-teal-500/10 border border-teal-500/20 rounded-full px-3.5 py-1"
               >
-                {/* Large quote marks */}
-                <span className="block text-[6.5rem] font-serif font-luxury leading-[0.1] text-teal-500/25 h-6">
-                  “
+                <span className="text-[10px] font-semibold tracking-widest text-teal-400 uppercase font-mono">
+                  Guest Memoirs
                 </span>
-                <p className="text-xl sm:text-2xl text-slate-200 italic font-light leading-relaxed max-w-3xl mx-auto font-luxury font-serif">
-                  {testimonials[activeTestimonial].reviewText}
-                </p>
-                <div className="flex items-center justify-center space-x-4 pt-4">
-                  {testimonials[activeTestimonial].avatarUrl && (
-                    <div className="relative w-14 h-14 rounded-full overflow-hidden border border-white/10 p-0.5 bg-slate-900 shadow-md">
-                      <div className="relative w-full h-full rounded-full overflow-hidden">
-                        <Image
-                          src={testimonials[activeTestimonial].avatarUrl}
-                          alt={testimonials[activeTestimonial].name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                    </div>
-                  )}
-                  <div className="text-left">
-                    <span className="block text-white font-bold text-sm tracking-wide">
-                      {testimonials[activeTestimonial].name}
-                    </span>
-                    <span className="block text-teal-400 text-xs font-mono uppercase tracking-wider mt-0.5">
-                      Visited: {testimonials[activeTestimonial].destinationVisited}
-                    </span>
-                  </div>
-                </div>
               </motion.div>
-            </AnimatePresence>
-          </div>
+            </div>
 
-          {/* Carousel Arrows */}
-          <div className="flex items-center justify-center space-x-6 mt-12">
-            <button
-              onClick={prevTestimonial}
-              className="w-10 h-10 rounded-full bg-slate-900 border border-white/5 text-slate-350 hover:text-white hover:border-white/15 flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer"
-              aria-label="Previous review"
-            >
-              &larr;
-            </button>
-            <span className="text-slate-500 text-xs font-mono">
-              {activeTestimonial + 1} / {testimonials.length}
-            </span>
-            <button
-              onClick={nextTestimonial}
-              className="w-10 h-10 rounded-full bg-slate-900 border border-white/5 text-slate-350 hover:text-white hover:border-white/15 flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer"
-              aria-label="Next review"
-            >
-              &rarr;
-            </button>
+            {/* Testimonial Core */}
+            <div className="relative min-h-[260px] flex items-center justify-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTestimonial}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+                  className="space-y-8"
+                >
+                  {/* Large quote marks */}
+                  <span className="block text-[6.5rem] font-serif font-luxury leading-[0.1] text-teal-500/25 h-6">
+                    “
+                  </span>
+                  <p className="text-xl sm:text-2xl text-slate-200 italic font-light leading-relaxed max-w-3xl mx-auto font-luxury font-serif">
+                    {testimonials[activeTestimonial].reviewText}
+                  </p>
+                  <div className="flex items-center justify-center space-x-4 pt-4">
+                    {testimonials[activeTestimonial].avatarUrl && (
+                      <div className="relative w-14 h-14 rounded-full overflow-hidden border border-white/10 p-0.5 bg-slate-900 shadow-md">
+                        <div className="relative w-full h-full rounded-full overflow-hidden">
+                          <Image
+                            src={testimonials[activeTestimonial].avatarUrl}
+                            alt={testimonials[activeTestimonial].name}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      </div>
+                    )}
+                    <div className="text-left">
+                      <span className="block text-white font-bold text-sm tracking-wide">
+                        {testimonials[activeTestimonial].name}
+                      </span>
+                      <span className="block text-teal-400 text-xs font-mono uppercase tracking-wider mt-0.5">
+                        Visited: {testimonials[activeTestimonial].destinationVisited}
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Carousel Arrows */}
+            <div className="flex items-center justify-center space-x-6 mt-12">
+              <button
+                onClick={prevTestimonial}
+                className="w-10 h-10 rounded-full bg-slate-900 border border-white/5 text-slate-350 hover:text-white hover:border-white/15 flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer"
+                aria-label="Previous review"
+              >
+                &larr;
+              </button>
+              <span className="text-slate-500 text-xs font-mono">
+                {activeTestimonial + 1} / {testimonials.length}
+              </span>
+              <button
+                onClick={nextTestimonial}
+                className="w-10 h-10 rounded-full bg-slate-900 border border-white/5 text-slate-350 hover:text-white hover:border-white/15 flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer"
+                aria-label="Next review"
+              >
+                &rarr;
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Gallery Preview */}
       <section className="py-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

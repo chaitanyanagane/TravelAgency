@@ -1,8 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { client } from './client'
 import { urlFor } from './image'
+import { packages as mockPackages } from '@/data/packages'
+import { destinations as mockDestinations } from '@/data/destinations'
+import { testimonials as mockTestimonials } from '@/data/testimonials'
+import { blogs as mockBlogs } from '@/data/blogs'
 
+// ==========================================
 // GROQ Queries
+// ==========================================
+
 export const ALL_PACKAGES_QUERY = `
   *[_type == "package"] | order(rating desc) {
     "id": _id,
@@ -93,6 +100,62 @@ export const PACKAGE_BY_SLUG_QUERY = `
   }
 `
 
+export const ALL_DESTINATIONS_QUERY = `
+  *[_type == "destination"] | order(name asc) {
+    "id": _id,
+    "slug": slug.current,
+    name,
+    image,
+    description,
+    packageCount
+  }
+`
+
+export const ALL_TESTIMONIALS_QUERY = `
+  *[_type == "testimonial"] | order(_createdAt desc) {
+    "id": _id,
+    name,
+    destinationVisited,
+    rating,
+    reviewText,
+    avatar
+  }
+`
+
+export const ALL_BLOGS_QUERY = `
+  *[_type == "blog"] | order(date desc) {
+    "id": _id,
+    "slug": slug.current,
+    title,
+    excerpt,
+    content,
+    category,
+    author,
+    date,
+    image,
+    readTime
+  }
+`
+
+export const BLOG_BY_SLUG_QUERY = `
+  *[_type == "blog" && slug.current == $slug][0] {
+    "id": _id,
+    "slug": slug.current,
+    title,
+    excerpt,
+    content,
+    category,
+    author,
+    date,
+    image,
+    readTime
+  }
+`
+
+// ==========================================
+// Helper Functions & URL Resolvers
+// ==========================================
+
 // Helper to resolve and optimize Sanity image objects to string URLs
 function getOptimizedImages(featuredImage: any, galleryImages: any): string[] {
   const urls: string[] = []
@@ -120,28 +183,153 @@ function getOptimizedImages(featuredImage: any, galleryImages: any): string[] {
   return urls
 }
 
-// Data Fetching Helpers
+// ==========================================
+// Exposed Data Fetching Helpers
+// ==========================================
+
 export async function getAllPackages() {
-  const rawPackages = await client.fetch<any[]>(ALL_PACKAGES_QUERY)
-  return rawPackages.map((pkg) => ({
-    ...pkg,
-    images: getOptimizedImages(pkg.featuredImage, pkg.galleryImages),
-  }))
+  console.log('Sanity Client Config [getAllPackages]:', {
+    projectId: client.config().projectId,
+    dataset: client.config().dataset,
+    apiVersion: client.config().apiVersion,
+    useCdn: client.config().useCdn,
+  });
+  try {
+    const rawPackages = await client.fetch<any[]>(ALL_PACKAGES_QUERY)
+    console.log(`getAllPackages query success: returned ${rawPackages?.length || 0} documents.`);
+    if (!rawPackages) return [];
+    return rawPackages.map((pkg) => ({
+      ...pkg,
+      images: getOptimizedImages(pkg.featuredImage, pkg.galleryImages),
+    }))
+  } catch (err) {
+    console.error('Sanity: getAllPackages query failed. Real error:', err)
+    return []
+  }
 }
 
 export async function getFeaturedPackages() {
-  const rawPackages = await client.fetch<any[]>(FEATURED_PACKAGES_QUERY)
-  return rawPackages.map((pkg) => ({
-    ...pkg,
-    images: getOptimizedImages(pkg.featuredImage, pkg.galleryImages),
-  }))
+  console.log('Sanity Client Config [getFeaturedPackages]:', {
+    projectId: client.config().projectId,
+    dataset: client.config().dataset,
+    apiVersion: client.config().apiVersion,
+    useCdn: client.config().useCdn,
+  });
+  try {
+    const rawPackages = await client.fetch<any[]>(FEATURED_PACKAGES_QUERY)
+    console.log(`getFeaturedPackages query success: returned ${rawPackages?.length || 0} documents.`);
+    if (!rawPackages) return [];
+    return rawPackages.map((pkg) => ({
+      ...pkg,
+      images: getOptimizedImages(pkg.featuredImage, pkg.galleryImages),
+    }))
+  } catch (err) {
+    console.error('Sanity: getFeaturedPackages query failed. Real error:', err)
+    return []
+  }
 }
 
 export async function getPackageBySlug(slug: string) {
-  const pkg = await client.fetch<any>(PACKAGE_BY_SLUG_QUERY, { slug })
-  if (!pkg) return null
-  return {
-    ...pkg,
-    images: getOptimizedImages(pkg.featuredImage, pkg.galleryImages),
+  console.log(`Sanity Client Config [getPackageBySlug] for "${slug}":`, {
+    projectId: client.config().projectId,
+    dataset: client.config().dataset,
+    apiVersion: client.config().apiVersion,
+    useCdn: client.config().useCdn,
+  });
+  try {
+    const pkg = await client.fetch<any>(PACKAGE_BY_SLUG_QUERY, { slug })
+    console.log(`getPackageBySlug query success for "${slug}":`, pkg ? 'found' : 'not found');
+    if (!pkg) return null;
+    return {
+      ...pkg,
+      images: getOptimizedImages(pkg.featuredImage, pkg.galleryImages),
+    }
+  } catch (err) {
+    console.error(`Sanity: getPackageBySlug for "${slug}" failed. Real error:`, err)
+    return null
+  }
+}
+
+export async function getAllDestinations() {
+  console.log('Sanity Client Config [getAllDestinations]:', {
+    projectId: client.config().projectId,
+    dataset: client.config().dataset,
+    apiVersion: client.config().apiVersion,
+    useCdn: client.config().useCdn,
+  });
+  try {
+    const rawDestinations = await client.fetch<any[]>(ALL_DESTINATIONS_QUERY)
+    console.log(`getAllDestinations query success: returned ${rawDestinations?.length || 0} documents.`);
+    if (!rawDestinations) return [];
+    return rawDestinations.map((dest) => ({
+      ...dest,
+      image: dest.image ? urlFor(dest.image).width(800).auto('format').url() : 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=800&q=80',
+    }))
+  } catch (err) {
+    console.error('Sanity: getAllDestinations query failed. Real error:', err)
+    return []
+  }
+}
+
+export async function getAllTestimonials() {
+  console.log('Sanity Client Config [getAllTestimonials]:', {
+    projectId: client.config().projectId,
+    dataset: client.config().dataset,
+    apiVersion: client.config().apiVersion,
+    useCdn: client.config().useCdn,
+  });
+  try {
+    const rawTestimonials = await client.fetch<any[]>(ALL_TESTIMONIALS_QUERY)
+    console.log(`getAllTestimonials query success: returned ${rawTestimonials?.length || 0} documents.`);
+    if (!rawTestimonials) return [];
+    return rawTestimonials.map((t) => ({
+      ...t,
+      avatarUrl: t.avatar ? urlFor(t.avatar).width(150).height(150).auto('format').url() : undefined,
+    }))
+  } catch (err) {
+    console.error('Sanity: getAllTestimonials query failed. Real error:', err)
+    return []
+  }
+}
+
+export async function getAllBlogs() {
+  console.log('Sanity Client Config [getAllBlogs]:', {
+    projectId: client.config().projectId,
+    dataset: client.config().dataset,
+    apiVersion: client.config().apiVersion,
+    useCdn: client.config().useCdn,
+  });
+  try {
+    const rawBlogs = await client.fetch<any[]>(ALL_BLOGS_QUERY)
+    console.log(`getAllBlogs query success: returned ${rawBlogs?.length || 0} documents.`);
+    if (!rawBlogs) return [];
+    return rawBlogs.map((post) => ({
+      ...post,
+      image: post.image ? urlFor(post.image).width(1200).auto('format').url() : 'https://images.unsplash.com/photo-1542856391-010fb87dcfed?auto=format&fit=crop&w=800&q=80',
+    }))
+  } catch (err) {
+    console.error('Sanity: getAllBlogs query failed. Real error:', err)
+    return []
+  }
+}
+
+export async function getBlogBySlug(slug: string) {
+  console.log(`Sanity Client Config [getBlogBySlug] for "${slug}":`, {
+    projectId: client.config().projectId,
+    dataset: client.config().dataset,
+    apiVersion: client.config().apiVersion,
+    useCdn: client.config().useCdn,
+  });
+  try {
+    const post = await client.fetch<any>(BLOG_BY_SLUG_QUERY, { slug })
+    console.log(`getBlogBySlug query success for "${slug}":`, post ? 'found' : 'not found');
+    if (!post) return null;
+    return {
+      ...post,
+      image: post.image ? urlFor(post.image).width(1200).auto('format').url() : 'https://images.unsplash.com/photo-1542856391-010fb87dcfed?auto=format&fit=crop&w=800&q=80',
+    }
+  } catch (err) {
+    console.error(`Sanity: getBlogBySlug for "${slug}" failed. Real error:`, err)
+    return null
   }
 }

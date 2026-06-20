@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Calendar, Clock, ArrowLeft, User, Compass } from 'lucide-react';
-import { blogs } from '../../../data/blogs';
-import JSONLD from '../../../components/common/JSONLD';
+import { getBlogBySlug, getAllBlogs } from '@/sanity/lib/queries';
+import JSONLD from '@/components/common/JSONLD';
 
 interface BlogPageProps {
   params: Promise<{
@@ -15,6 +15,7 @@ interface BlogPageProps {
 
 // Generate static routes
 export async function generateStaticParams() {
+  const blogs = await getAllBlogs();
   return blogs.map((post) => ({
     slug: post.slug,
   }));
@@ -23,7 +24,7 @@ export async function generateStaticParams() {
 // Dynamic Metadata
 export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = blogs.find((b) => b.slug === slug);
+  const post = await getBlogBySlug(slug);
   if (!post) return {};
 
   return {
@@ -52,7 +53,7 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
 
 export default async function BlogDetailPage({ params }: BlogPageProps) {
   const { slug } = await params;
-  const post = blogs.find((b) => b.slug === slug);
+  const post = await getBlogBySlug(slug);
 
   if (!post) {
     notFound();
