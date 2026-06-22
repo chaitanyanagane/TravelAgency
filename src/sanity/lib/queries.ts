@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { client } from './client'
 import { urlFor } from './image'
-import { packages as mockPackages } from '@/data/packages'
-import { destinations as mockDestinations } from '@/data/destinations'
-import { testimonials as mockTestimonials } from '@/data/testimonials'
-import { blogs as mockBlogs } from '@/data/blogs'
 
 // ==========================================
 // GROQ Queries
