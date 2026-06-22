@@ -66,7 +66,7 @@ export default async function AdminDashboardPage() {
             Dashboard Overview
           </h1>
           <p className="text-slate-400 text-xs font-light mt-1">
-            Real-time analytics and inbox activity feed for Saachi Tour & Travel.
+            Real-time analytics and inbox activity feed for Saachi Tours & Travels.
           </p>
         </div>
       </div>

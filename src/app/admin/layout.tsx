@@ -37,7 +37,7 @@ function SidebarContent({ pathname, onCloseMobile, handleLogout }: SidebarConten
           <div className="relative w-full h-full">
             <Image
               src="/images/logo.png"
-              alt="Saachi Travels"
+              alt="Saachi Tours & Travels"
               fill
               className="object-contain"
             />
@@ -123,13 +123,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <div className="relative w-full h-full">
               <Image
                 src="/images/logo.png"
-                alt="Saachi Logo"
+                alt="Saachi Tours & Travels Logo"
                 fill
                 className="object-contain"
               />
             </div>
           </div>
-          <span className="font-bold text-white text-sm">Saachi Admin</span>
+          <span className="font-bold text-white text-sm">Saachi Tours & Travels Admin</span>
         </Link>
         <button
           onClick={() => setIsMobileOpen(!isMobileOpen)}

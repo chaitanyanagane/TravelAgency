@@ -89,7 +89,7 @@ export default function ContactPage() {
             {/* Direct WhatsApp Call to Action */}
             <div className="pt-6 border-t border-slate-800/80">
               <a
-                href={`https://wa.me/${whatsappNumber}?text=Hi%20Saachi%20Tours%20and%20Travels,%20I%20have%20an%20inquiry.`}
+                href={`https://wa.me/${whatsappNumber}?text=Hi%20Saachi%20Tours%20%26%20Travels,%20I%20have%20an%20inquiry.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl transition-colors flex items-center justify-center space-x-2 text-sm shadow-md"
@@ -108,7 +108,7 @@ export default function ContactPage() {
               allowFullScreen={false}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Saachi Tour & Travel Office Map"
+              title="Saachi Tours & Travels Office Map"
             />
           </div>
         </div>

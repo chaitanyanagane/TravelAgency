@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 export default function FloatingWhatsApp() {
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919823997276';
-  const defaultMessage = 'Hi! I am interested in planning a vacation with Saachi Tour & Travel. Please share some popular packages.';
+  const defaultMessage = 'Hi! I am interested in planning a vacation with Saachi Tours & Travels. Please share some popular packages.';
   
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(defaultMessage)}`;
 

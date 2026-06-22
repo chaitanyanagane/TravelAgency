@@ -73,7 +73,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
     },
     'publisher': {
       '@type': 'Organization',
-      'name': 'Saachi Tour and Travel',
+      'name': 'Saachi Tours & Travels',
       'logo': {
         '@type': 'ImageObject',
         'url': 'https://saachi-tours.vercel.app/images/logo.png',

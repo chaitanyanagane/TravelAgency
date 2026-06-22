@@ -18,7 +18,7 @@ export default function AboutPage() {
       name: 'Varsha Gaikwad',
       role: 'Founder & Director',
       image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&h=300&q=80',
-      bio: 'Varsha established Saachi Tour and Travel with the core vision of making travel premium, transparent, and exceptionally caring for every customer.',
+      bio: 'Varsha established Saachi Tours & Travels with the core vision of making travel premium, transparent, and exceptionally caring for every customer.',
     },
   ];
 
@@ -60,10 +60,10 @@ export default function AboutPage() {
             Our Story
           </span>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight font-display">
-            Saachi Tour and Travel
+            Saachi Tours & Travels
           </h1>
           <p className="text-slate-300 font-light leading-relaxed">
-            Established on 19 March 2025 in Ravet, Pune, Saachi Tour and Travel was built with a clear purpose: Where every journey begins with care. We believe that travel is more than just visiting destinations—it&apos;s about creating lifelong memories, discovering new cultures, and enjoying every moment of the journey.
+            Established on 19 March 2025 in Ravet, Pune, Saachi Tours & Travels was built with a clear purpose: Where every journey begins with care. We believe that travel is more than just visiting destinations—it&apos;s about creating lifelong memories, discovering new cultures, and enjoying every moment of the journey.
           </p>
           <p className="text-slate-400 font-light leading-relaxed">
             Under the leadership of our founder, Varsha Gaikwad, we realized that holiday planning can often feel overwhelming. We set out to change this by coordinating every detail with safety, comfort, and direct value—whether it is customized family packages, spiritual pilgrimage tours like Ashtavinayak and Char Dham, or logistics for corporate groups.

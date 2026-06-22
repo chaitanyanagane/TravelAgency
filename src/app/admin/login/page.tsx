@@ -48,7 +48,7 @@ export default function AdminLoginPage() {
             <div className="relative w-full h-full">
               <Image
                 src="/images/logo.png"
-                alt="Saachi Travels Logo"
+                alt="Saachi Tours & Travels Logo"
                 fill
                 className="object-contain"
               />

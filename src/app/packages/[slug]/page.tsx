@@ -45,13 +45,13 @@ export async function generateMetadata({ params }: PackagePageProps): Promise<Me
       openGraph: {
         type: 'website',
         url: `https://saachi-tours.vercel.app/packages/${tour.slug}`,
-        title: `${tour.title} | Saachi Tour & Travel`,
+        title: `${tour.title} | Saachi Tours & Travels`,
         description: tour.overview,
         images: tour.images.map((img: string) => ({ url: img })),
       },
       twitter: {
         card: 'summary_large_image',
-        title: `${tour.title} | Saachi Tour & Travel`,
+        title: `${tour.title} | Saachi Tours & Travels`,
         description: tour.overview,
         images: [tour.images[0]],
       },
@@ -92,7 +92,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
       'url': `https://saachi-tours.vercel.app/packages/${tour.slug}`,
       'seller': {
         '@type': 'Organization',
-        'name': 'Saachi Tour & Travel',
+        'name': 'Saachi Tours & Travels',
       },
     },
   };

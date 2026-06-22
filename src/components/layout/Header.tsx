@@ -88,7 +88,7 @@ export default function Header() {
                 <div className="relative w-full h-full scale-[1.6] group-hover:scale-[1.7] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]">
                   <Image
                     src="/images/logo.png"
-                    alt="Saachi Tour and Travel"
+                    alt="Saachi Tours & Travels"
                     fill
                     className="object-contain"
                     priority
@@ -198,7 +198,7 @@ export default function Header() {
                     <div className="relative w-full h-full scale-[1.6] group-hover:scale-[1.7] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]">
                       <Image
                         src="/images/logo.png"
-                        alt="Saachi Tour and Travel"
+                        alt="Saachi Tours & Travels"
                         fill
                         className="object-contain"
                       />

@@ -1,6 +1,6 @@
-# Saachi Tour & Travel - Production Website
+# Saachi Tours & Travels - Production Website
 
-A modern, responsive, high-performance, and SEO-optimized travel agency website built for **Saachi Tour & Travel**, designed primarily for premium brand presentation and lead generation.
+A modern, responsive, high-performance, and SEO-optimized travel agency website built for **Saachi Tours & Travels**, designed primarily for premium brand presentation and lead generation.
 
 ---
 

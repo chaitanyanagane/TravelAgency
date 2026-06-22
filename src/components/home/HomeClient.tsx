@@ -43,11 +43,11 @@ export default function HomeClient({
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'TravelAgency',
-    'name': 'Saachi Tour and Travel',
+    'name': 'Saachi Tours & Travels',
     'url': 'https://saachi-tours.vercel.app',
     'logo': 'https://saachi-tours.vercel.app/images/logo.png',
     'image': 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
-    'description': 'Domestic, pilgrimage, and customized tour packages, flight/rail bookings, and vacation planning by Saachi Tour and Travel.',
+    'description': 'Domestic, pilgrimage, and customized tour packages, flight/rail bookings, and vacation planning by Saachi Tours & Travels.',
     'telephone': contactPhone,
     'address': {
       '@type': 'PostalAddress',
@@ -122,7 +122,7 @@ export default function HomeClient({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.25 }}
               >
-                Discover the art of tailored exploration with Saachi Tours. We curate unique domestic and spiritual pathways designed around your peace of mind.
+                Discover the art of tailored exploration with Saachi Tours & Travels. We curate unique domestic and spiritual pathways designed around your peace of mind.
               </motion.p>
 
               <motion.div
@@ -151,7 +151,7 @@ export default function HomeClient({
                 </Link>
 
                 <a
-                  href={`https://wa.me/${whatsappNumber}?text=Hi%20Saachi%2520Tours%2526Travels,%20I%20want%20to%20plan%20a%20holiday.%20Please%20share%20details.`}
+                  href={`https://wa.me/${whatsappNumber}?text=Hi%20Saachi%20Tours%20%26%20Travels,%20I%20want%20to%20plan%20a%20holiday.%20Please%20share%20details.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-7 py-4.5 rounded-full transition-all duration-300 active:scale-[0.98] text-sm"

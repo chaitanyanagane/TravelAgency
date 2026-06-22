@@ -1,29 +1,8 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Plus_Jakarta_Sans, Outfit, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import FloatingWhatsApp from '../components/common/FloatingWhatsApp';
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-sans',
-});
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  variable: '--font-display',
-});
-
-const outfit = Outfit({
-  subsets: ['latin'],
-  variable: '--font-modern',
-});
-
-const playfairDisplay = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-luxury',
-});
 
 export const viewport: Viewport = {
   themeColor: '#090d16',
@@ -34,13 +13,13 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://saachi-tours.vercel.app'),
   title: {
-    default: 'Saachi Tour & Travel | Domestic, Pilgrimage & Customized Tour Packages',
-    template: '%s | Saachi Tour & Travel',
+    default: 'Saachi Tours & Travels | Domestic, Pilgrimage & Customized Tour Packages',
+    template: '%s | Saachi Tours & Travels',
   },
-  description: 'Book customized tour packages, pilgrimage tours (Char Dham, Ashtavinayak), flight, train & hotel bookings, family holidays, and corporate travel solutions with Saachi Tour & Travel. Where every journey begins with care.',
-  keywords: ['travel agency', 'tour packages', 'Saachi Tour and Travel', 'Sachi Tours & Travels', 'pilgrimage tours', 'Ashtavinayak tour', 'Char Dham yatra', 'customized holidays', 'flight bookings Pune', 'train bookings Pune', 'family tours', 'honeymoon packages', 'corporate travel Pune'],
-  authors: [{ name: 'Saachi Tour and Travel' }],
-  creator: 'Saachi Tour and Travel',
+  description: 'Book customized tour packages, pilgrimage tours (Char Dham, Ashtavinayak), flight, train & hotel bookings, family holidays, and corporate travel solutions with Saachi Tours & Travels. Where every journey begins with care.',
+  keywords: ['travel agency', 'tour packages', 'Saachi Tours & Travels', 'pilgrimage tours', 'Ashtavinayak tour', 'Char Dham yatra', 'customized holidays', 'flight bookings Pune', 'train bookings Pune', 'family tours', 'honeymoon packages', 'corporate travel Pune'],
+  authors: [{ name: 'Saachi Tours & Travels' }],
+  creator: 'Saachi Tours & Travels',
   robots: {
     index: true,
     follow: true,
@@ -59,22 +38,22 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://saachi-tours.vercel.app',
-    title: 'Saachi Tour & Travel | Domestic, Pilgrimage & Customized Tour Packages',
-    description: 'Book customized tour packages, pilgrimage tours (Char Dham, Ashtavinayak), hotel bookings, and corporate travel solutions with Saachi Tour & Travel.',
-    siteName: 'Saachi Tour & Travel',
+    title: 'Saachi Tours & Travels | Domestic, Pilgrimage & Customized Tour Packages',
+    description: 'Book customized tour packages, pilgrimage tours (Char Dham, Ashtavinayak), hotel bookings, and corporate travel solutions with Saachi Tours & Travels.',
+    siteName: 'Saachi Tours & Travels',
     images: [
       {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Saachi Tour & Travel - Where Every Journey Begins with Care',
+        alt: 'Saachi Tours & Travels - Where Every Journey Begins with Care',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Saachi Tour & Travel | Domestic, Pilgrimage & Customized Tour Packages',
-    description: 'Book customized tour packages, pilgrimage tours (Char Dham, Ashtavinayak), hotel bookings, and corporate travel solutions with Saachi Tour & Travel.',
+    title: 'Saachi Tours & Travels | Domestic, Pilgrimage & Customized Tour Packages',
+    description: 'Book customized tour packages, pilgrimage tours (Char Dham, Ashtavinayak), hotel bookings, and corporate travel solutions with Saachi Tours & Travels.',
     images: ['/images/og-image.jpg'],
   },
   icons: {
@@ -88,7 +67,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${plusJakartaSans.variable} ${outfit.variable} ${playfairDisplay.variable}`}>
+    <html lang="en" className="brand-font-modern">
       <body className="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased">
         <Header />
         <main className="flex-grow pt-20 lg:pt-24">
