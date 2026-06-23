@@ -126,15 +126,15 @@ export default function HomeClient({
               </motion.p>
 
               <motion.div
-                className="flex flex-wrap items-center gap-4 pt-2"
+                className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2 w-full sm:w-auto"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.35 }}
               >
-                {/* Button-in-Button Trailing Icon primary CTA */}
+                {/* Button-in-Button Traing Icon primary CTA */}
                 <Link
                   href="/packages"
-                  className="group relative inline-flex items-center justify-between bg-teal-600 hover:bg-teal-500 text-white font-bold pl-7 pr-3 py-3.5 rounded-full shadow-lg shadow-teal-900/30 hover:shadow-teal-900/40 transition-all duration-300 active:scale-[0.98] text-sm overflow-hidden"
+                  className="group relative inline-flex items-center justify-between bg-teal-600 hover:bg-teal-500 text-white font-bold pl-7 pr-3 py-3 rounded-full shadow-lg shadow-teal-900/30 hover:shadow-teal-900/40 transition-all duration-300 active:scale-[0.98] text-sm overflow-hidden w-full sm:w-auto"
                 >
                   <span className="mr-6">Explore Packages</span>
                   <span className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
@@ -144,7 +144,7 @@ export default function HomeClient({
 
                 <Link
                   href="/contact"
-                  className="group inline-flex items-center bg-white/[0.04] border border-white/10 hover:border-white/20 text-slate-200 hover:text-white px-7 py-4.5 rounded-full transition-all duration-300 active:scale-[0.98] text-sm"
+                  className="group inline-flex items-center justify-center bg-white/[0.04] border border-white/10 hover:border-white/20 text-slate-200 hover:text-white px-6 py-4 rounded-full transition-all duration-300 active:scale-[0.98] text-sm w-full sm:w-auto"
                 >
                   <span>Plan Your Journey</span>
                   <ArrowRight className="w-3.5 h-3.5 ml-2.5 group-hover:translate-x-1 transition-transform" />
@@ -154,7 +154,7 @@ export default function HomeClient({
                   href={`https://wa.me/${whatsappNumber}?text=Hi%20Saachi%20Tours%20%26%20Travels,%20I%20want%20to%20plan%20a%20holiday.%20Please%20share%20details.`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-7 py-4.5 rounded-full transition-all duration-300 active:scale-[0.98] text-sm"
+                  className="group inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-4 rounded-full transition-all duration-300 active:scale-[0.98] text-sm w-full sm:w-auto"
                 >
                   <MessageCircle className="w-4 h-4 fill-current mr-2" />
                   <span>WhatsApp Inquiry</span>
@@ -201,14 +201,14 @@ export default function HomeClient({
       {/* Statistics Section */}
       <section className="relative z-10 py-12 border-t border-b border-white/5 bg-slate-950/60 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center divide-y md:divide-y-0 md:divide-x divide-white/5">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center">
             {[
               { label: 'Established', value: '19 March 2025' },
               { label: 'Travelers Served', value: '1,000+' },
               { label: 'Destinations Covered', value: '50+' },
               { label: 'Rating', value: '4.9/5' },
             ].map((stat, idx) => (
-              <div key={idx} className={`space-y-1 ${idx > 1 ? 'pt-6 md:pt-0' : ''} ${idx % 2 === 1 ? 'border-t-0' : ''} ${idx === 1 ? 'pt-0' : ''}`}>
+              <div key={idx} className="space-y-2 p-5 bg-white/[0.01] border border-white/5 rounded-2xl backdrop-blur-sm">
                 <span className="block text-3xl sm:text-4xl font-extrabold text-teal-400 tracking-tight">
                   {stat.value}
                 </span>
@@ -246,10 +246,10 @@ export default function HomeClient({
           {featuredDestinations.map((dest, index) => {
             // Asymmetric sizing classes for a gorgeous rhythm
             const gridClasses = [
-              'lg:col-span-7 h-96', // Row 1 Left - Large
-              'lg:col-span-5 h-96', // Row 1 Right - Medium
-              'lg:col-span-5 h-[360px]', // Row 2 Left - Medium
-              'lg:col-span-7 h-[360px]'  // Row 2 Right - Large
+              'lg:col-span-7 h-80 sm:h-96', // Row 1 Left - Large
+              'lg:col-span-5 h-80 sm:h-96', // Row 1 Right - Medium
+              'lg:col-span-5 h-80 sm:h-[360px]', // Row 2 Left - Medium
+              'lg:col-span-7 h-80 sm:h-[360px]'  // Row 2 Right - Large
             ][index] || 'lg:col-span-4 h-80';
 
             return (
@@ -449,7 +449,7 @@ export default function HomeClient({
           ].map((item, idx) => (
             <div
               key={idx}
-              className={`space-y-4 ${idx > 0 ? 'pt-8 md:pt-0 md:pl-0 lg:pl-8' : ''}`}
+              className={`space-y-4 ${idx > 0 ? 'pt-8 lg:pt-0' : ''} ${idx % 2 === 1 ? 'md:pl-6 lg:pl-8' : ''} ${idx >= 2 ? 'md:pt-8 lg:pt-0' : ''}`}
             >
               <div className="w-12 h-12 rounded-2xl bg-teal-950/30 text-teal-400 border border-teal-500/10 flex items-center justify-center">
                 <item.icon className="w-5 h-5" />

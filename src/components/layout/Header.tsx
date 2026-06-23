@@ -65,6 +65,18 @@ export default function Header() {
     root.classList.add(`brand-font-${preset}`);
   };
 
+  // Lock body scroll when mobile menu drawer is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   return (
     <>
       <header
@@ -116,7 +128,7 @@ export default function Header() {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8">
+            <nav className="hidden xl:flex items-center space-x-8">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
@@ -141,7 +153,7 @@ export default function Header() {
             </nav>
 
             {/* CTA Buttons */}
-            <div className="hidden lg:flex items-center space-x-4">
+            <div className="hidden xl:flex items-center space-x-4">
               <a
                 href={`tel:${contactPhone.replace(/\s+/g, '')}`}
                 className="flex items-center space-x-2 text-slate-350 hover:text-white transition-colors text-sm font-medium"
@@ -158,11 +170,11 @@ export default function Header() {
             </div>
 
             {/* Hamburger button */}
-            <div className="lg:hidden">
+            <div className="xl:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-white hover:text-teal-400 focus:outline-none p-1.5"
-                aria-label="Toggle menu"
+                aria-label={isOpen ? "Close main navigation menu" : "Open main navigation menu"}
               >
                 {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -181,7 +193,7 @@ export default function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 xl:hidden"
             />
 
             {/* Sidebar drawer */}
@@ -190,7 +202,7 @@ export default function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'tween', duration: 0.3, ease: 'easeOut' }}
-              className="fixed top-0 bottom-0 right-0 w-80 max-w-full bg-slate-950 border-l border-slate-900 z-50 flex flex-col p-6 shadow-2xl lg:hidden"
+              className="fixed top-0 bottom-0 right-0 w-80 max-w-[85vw] bg-slate-950 border-l border-slate-900 z-50 flex flex-col p-6 shadow-2xl xl:hidden"
             >
               <div className="flex items-center justify-between border-b border-slate-900 pb-5 mb-6">
                 <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-3.5 group">
@@ -216,7 +228,7 @@ export default function Header() {
                 <button
                   onClick={() => setIsOpen(false)}
                   className="text-slate-400 hover:text-white p-1"
-                  aria-label="Close menu"
+                  aria-label="Close navigation menu"
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -270,6 +282,7 @@ export default function Header() {
         <button
           onClick={() => setIsCustomizerOpen(!isCustomizerOpen)}
           className="bg-slate-900 border border-slate-800 hover:border-teal-500/50 hover:bg-slate-850 text-slate-400 hover:text-teal-400 p-3.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 group focus:outline-none cursor-pointer"
+          aria-label="Toggle branding controls customizer"
           title="Branding Control Widget"
         >
           <Palette className="w-5 h-5 group-hover:rotate-12 transition-transform" />
@@ -311,6 +324,7 @@ export default function Header() {
                       <button
                         key={preset.id}
                         onClick={() => handlePresetChange(preset.id as BrandPreset)}
+                        aria-label={`Select ${preset.name} brand typography preset`}
                         className={`w-full text-left p-3 rounded-xl border transition-all flex items-center justify-between group ${
                           isSelected
                             ? 'bg-teal-950/35 border-teal-600/80 shadow-md shadow-teal-950/10'

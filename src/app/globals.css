@@ -20,6 +20,15 @@
   --color-secondary-500: #f59e0b;
   --color-secondary-600: #d97706;
   
+  --color-slate-305: #cbd5e1;
+  --color-slate-350: #afbccc;
+  --color-slate-405: #94a3b8;
+  --color-slate-850: #162032;
+  
+  --spacing-4.5: 1.125rem;
+  --spacing-7: 1.75rem;
+  --spacing-13: 3.25rem;
+  
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-modern: 'Outfit', system-ui, sans-serif;

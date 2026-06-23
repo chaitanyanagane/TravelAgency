@@ -28,7 +28,8 @@ interface PackageDetailClientProps {
 }
 
 export default function PackageDetailClient({ tour }: PackageDetailClientProps) {
-  const { title, destination, duration, price, rating, tourType, images, overview, itinerary, inclusions, exclusions, pricing } = tour;
+  const { title, destination, duration, price, rating, tourType, images, overview, itinerary, inclusions, exclusions } = tour;
+  const pricing = tour.pricing || { couple: null, family: null, group: null };
   
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [expandedDays, setExpandedDays] = useState<Record<number, boolean>>({ 1: true });
@@ -51,12 +52,19 @@ export default function PackageDetailClient({ tour }: PackageDetailClientProps) 
   // Pre-filled WhatsApp message URL builder
   const getWhatsAppLink = () => {
     const text = `*Inquiry for ${title}*\n\n` +
-                 `Hello Saachi Tour & Travel, I am looking to inquire about the *${title}* (${duration}) package starting from ₹${price.toLocaleString('en-IN')}/person. Please share details.`;
+                 `Hello Saachi Tour & Travel, I am looking to inquire about the *${title}* (${duration}) package starting from ₹${price?.toLocaleString('en-IN') || 'On Request'}/person. Please share details.`;
     return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
   };
 
+  const scrollToInquiry = () => {
+    const element = document.getElementById('inquiry-section');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="space-y-12">
+    <div className="space-y-12 pb-24 lg:pb-0">
       {/* 1. HERO SECTION & GALLERY GRID */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         {/* Left: Package Headings & Badges */}
@@ -107,7 +115,7 @@ export default function PackageDetailClient({ tour }: PackageDetailClientProps) 
             <div>
               <span className="block text-[11px] text-slate-500 uppercase tracking-wider font-semibold">Starting Price</span>
               <span className="text-2xl sm:text-3xl font-extrabold text-teal-400">
-                ₹{price.toLocaleString('en-IN')}
+                ₹{price?.toLocaleString('en-IN') || 'On Request'}
               </span>
               <span className="text-xs text-slate-400 font-light"> / adult</span>
             </div>
@@ -435,9 +443,9 @@ export default function PackageDetailClient({ tour }: PackageDetailClientProps) 
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {[
-                { type: 'Couple Occupancy', priceVal: pricing.couple, desc: 'Assuming 2 persons sharing one room with private cab transfers.' },
-                { type: 'Family Plan', priceVal: pricing.family, desc: 'Per person assuming 4 adults traveling together, sharing two rooms.' },
-                { type: 'Group Occupancy', priceVal: pricing.group, desc: 'Per person assuming 6+ adults traveling together, sharing three rooms.' },
+                { type: 'Couple Occupancy', priceVal: pricing?.couple, desc: 'Assuming 2 persons sharing one room with private cab transfers.' },
+                { type: 'Family Plan', priceVal: pricing?.family, desc: 'Per person assuming 4 adults traveling together, sharing two rooms.' },
+                { type: 'Group Occupancy', priceVal: pricing?.group, desc: 'Per person assuming 6+ adults traveling together, sharing three rooms.' },
               ].map((tier, idx) => (
                 <div
                   key={idx}
@@ -451,9 +459,11 @@ export default function PackageDetailClient({ tour }: PackageDetailClientProps) 
                   </div>
                   <div className="space-y-1 border-t border-slate-900 pt-3">
                     <span className="block text-2xl font-extrabold text-teal-400">
-                      ₹{tier.priceVal.toLocaleString('en-IN')}
+                      {tier.priceVal ? `₹${tier.priceVal.toLocaleString('en-IN')}` : 'On Request'}
                     </span>
-                    <span className="block text-[9px] text-slate-500 font-bold uppercase tracking-wider">Per Person Starting</span>
+                    <span className="block text-[9px] text-slate-500 font-bold uppercase tracking-wider">
+                      {tier.priceVal ? 'Per Person Starting' : 'Contact Us'}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -514,13 +524,13 @@ export default function PackageDetailClient({ tour }: PackageDetailClientProps) 
         </div>
 
         {/* RIGHT COLUMN - STICKY BOOKING FORM SIDEBAR (lg:col-span-4) */}
-        <aside className="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
+        <aside id="inquiry-section" className="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
           <div className="bg-slate-900 border border-slate-800/80 rounded-3xl p-6 shadow-2xl space-y-6">
             <div className="space-y-1.5 border-b border-slate-850 pb-5">
               <span className="text-slate-500 text-[10px] font-semibold uppercase tracking-wider">Estimated Pricing</span>
               <div className="flex items-baseline space-x-2">
                 <span className="text-3xl font-extrabold text-teal-400">
-                  ₹{price.toLocaleString('en-IN')}
+                  ₹{price?.toLocaleString('en-IN') || 'On Request'}
                 </span>
                 <span className="text-xs text-slate-400">/ person starting</span>
               </div>
@@ -569,6 +579,37 @@ export default function PackageDetailClient({ tour }: PackageDetailClientProps) 
             </p>
           </div>
         </aside>
+      </div>
+
+      {/* Mobile Sticky Bottom Action Bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-slate-950/95 backdrop-blur-md border-t border-slate-900/80 px-4 py-3.5 shadow-2xl flex items-center justify-between gap-3">
+        <div className="flex flex-col justify-center text-left">
+          <span className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Starting Price</span>
+          <div className="flex items-baseline space-x-1">
+            <span className="text-lg font-extrabold text-teal-400">₹{price?.toLocaleString('en-IN') || 'On Request'}</span>
+            <span className="text-[9px] text-slate-405">/ adult</span>
+          </div>
+        </div>
+        
+        <div className="flex items-center gap-2">
+          <a
+            href={getWhatsAppLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-emerald-600 hover:bg-emerald-500 text-white p-3 rounded-xl transition-all shadow-md flex items-center justify-center shrink-0"
+            aria-label="Inquire via WhatsApp"
+          >
+            <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.458L0 24zm6.59-4.846c1.6.95 3.16 1.455 4.75 1.458 5.41.002 9.813-4.394 9.815-9.81.002-2.624-1.013-5.093-2.857-6.937C16.452 1.99 13.985.992 11.99.992c-5.41 0-9.813 4.402-9.815 9.811-.002 1.702.463 3.364 1.34 4.8l-.995 3.634 3.737-.98zM17.65 14.5c-.296-.148-1.748-.863-2.018-.962-.27-.099-.467-.148-.662.149-.195.297-.757.962-.927 1.16-.17.199-.34.223-.636.075-.296-.148-1.252-.462-2.385-1.474-.88-.784-1.474-1.752-1.647-2.05-.173-.296-.018-.457.13-.605.134-.133.296-.347.444-.52.149-.173.197-.297.296-.495.099-.198.05-.371-.025-.52-.075-.148-.662-1.597-.907-2.19-.239-.575-.48-.497-.661-.506-.171-.007-.367-.009-.563-.009-.195 0-.514.074-.783.371-.269.297-1.026 1.003-1.026 2.447 0 1.444 1.05 2.838 1.197 3.037.147.197 2.067 3.156 5.007 4.428.699.303 1.246.484 1.671.619.704.223 1.345.191 1.852.115.565-.084 1.748-.715 1.992-1.402.244-.687.244-1.277.171-1.402-.072-.124-.268-.198-.564-.347z"/>
+            </svg>
+          </a>
+          <button
+            onClick={scrollToInquiry}
+            className="bg-teal-600 hover:bg-teal-500 text-white font-bold py-3 px-5 rounded-xl text-xs sm:text-sm transition-all shadow-md shadow-teal-950/20 active:scale-95 flex items-center justify-center space-x-1.5 cursor-pointer"
+          >
+            <span>Book / Plan Trip</span>
+          </button>
+        </div>
       </div>
     </div>
   );

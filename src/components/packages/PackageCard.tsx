@@ -75,7 +75,7 @@ export default function PackageCard({ tour }: PackageCardProps) {
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-bold text-white mb-3 tracking-wide leading-snug group-hover:text-teal-400 transition-colors line-clamp-1">
+        <h3 className="text-lg font-bold text-white mb-3 tracking-wide leading-snug group-hover:text-teal-400 transition-colors line-clamp-2 min-h-[56px] flex items-center">
           {title}
         </h3>
 

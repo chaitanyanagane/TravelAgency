@@ -50,6 +50,18 @@ export default function GalleryPage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [lightboxIndex, closeLightbox, nextImage, prevImage]);
 
+  // Lock body scroll when lightbox is open
+  useEffect(() => {
+    if (lightboxIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [lightboxIndex]);
+
   const categories: { label: string; value: CategoryFilter }[] = [
     { label: 'All Snaps', value: 'all' },
     { label: 'Beaches', value: 'beaches' },
