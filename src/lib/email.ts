@@ -21,7 +21,7 @@ interface InquiryData {
  * Sends a structured, professional HTML email containing inquiry details to the admin address.
  */
 export async function sendInquiryEmailToAdmin(data: InquiryData) {
-  const recipient = process.env.INQUIRY_EMAIL || 'varshaagaikwad563@gmail.com';
+  const recipient = process.env.INQUIRY_EMAIL || 'naganechaitanya17@gmail.com';
   
   const htmlContent = `
     <!DOCTYPE html>
