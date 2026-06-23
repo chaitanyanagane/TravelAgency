@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { inquirySchema } from '@/schemas/inquiry';
 import { sendInquiryEmailToAdmin, sendAutoReplyToCustomer } from '@/lib/email';
+import { writeClient } from '@/sanity/lib/writeClient'
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,6 +23,19 @@ export async function POST(request: NextRequest) {
     }
 
     const data = validation.data;
+    // Save inquiry to Sanity
+    await writeClient.create({
+      _type: 'inquiry',
+      fullName: data.fullName,
+      email: data.email,
+      phoneNumber: data.phoneNumber,
+      destination: data.destination,
+      travelDate: data.travelDate,
+      travelers: data.travelers,
+      budgetRange: data.budgetRange,
+      message: data.message || '',
+      submittedAt: new Date().toISOString(),
+    });
 
     // Send inquiry details to Administrator inbox
     const adminEmailResult = await sendInquiryEmailToAdmin(data);
