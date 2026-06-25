@@ -188,7 +188,7 @@ export default function PackageDetailClient({ tour }: PackageDetailClientProps) 
         <div className="lg:col-span-8 space-y-12">
           
           {/* PACKAGE OVERVIEW */}
-          <section className="bg-slate-900/30 border border-slate-850 rounded-3xl p-8 space-y-6">
+          <section className="bg-slate-900/30 border border-slate-850 rounded-3xl p-5 sm:p-8 space-y-6">
             <h2 className="text-2xl font-bold text-white font-display flex items-center space-x-2.5">
               <span className="w-1.5 h-6 bg-teal-500 rounded-full inline-block"></span>
               <span>Tour Overview</span>
@@ -198,33 +198,33 @@ export default function PackageDetailClient({ tour }: PackageDetailClientProps) 
             </p>
 
             {/* Quick Amenities Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-slate-850">
-              <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-4 flex items-center space-x-3">
-                <Coffee className="w-5 h-5 text-teal-400 shrink-0" />
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-4 border-t border-slate-850">
+              <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-3 sm:p-4 flex items-center space-x-2.5 sm:space-x-3">
+                <Coffee className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 shrink-0" />
                 <div>
-                  <span className="block text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Meals</span>
-                  <span className="text-xs font-bold text-slate-200">Daily Breakfast</span>
+                  <span className="block text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Meals</span>
+                  <span className="text-[11px] sm:text-xs font-bold text-slate-200">Daily Breakfast</span>
                 </div>
               </div>
-              <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-4 flex items-center space-x-3">
-                <Car className="w-5 h-5 text-teal-400 shrink-0" />
+              <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-3 sm:p-4 flex items-center space-x-2.5 sm:space-x-3">
+                <Car className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 shrink-0" />
                 <div>
-                  <span className="block text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Transfers</span>
-                  <span className="text-xs font-bold text-slate-200">Private AC Cab</span>
+                  <span className="block text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Transfers</span>
+                  <span className="text-[11px] sm:text-xs font-bold text-slate-200">Private AC Cab</span>
                 </div>
               </div>
-              <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-4 flex items-center space-x-3">
-                <Building className="w-5 h-5 text-teal-400 shrink-0" />
+              <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-3 sm:p-4 flex items-center space-x-2.5 sm:space-x-3">
+                <Building className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 shrink-0" />
                 <div>
-                  <span className="block text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Stay Standard</span>
-                  <span className="text-xs font-bold text-slate-200">Premium / Custom</span>
+                  <span className="block text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Stay Standard</span>
+                  <span className="text-[11px] sm:text-xs font-bold text-slate-200">Premium / Custom</span>
                 </div>
               </div>
-              <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-4 flex items-center space-x-3">
-                <Shield className="w-5 h-5 text-teal-400 shrink-0" />
+              <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-3 sm:p-4 flex items-center space-x-2.5 sm:space-x-3">
+                <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 shrink-0" />
                 <div>
-                  <span className="block text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Security</span>
-                  <span className="text-xs font-bold text-slate-200">24/7 Assistance</span>
+                  <span className="block text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Security</span>
+                  <span className="text-[11px] sm:text-xs font-bold text-slate-200">24/7 Assistance</span>
                 </div>
               </div>
             </div>
@@ -582,30 +582,30 @@ export default function PackageDetailClient({ tour }: PackageDetailClientProps) 
       </div>
 
       {/* Mobile Sticky Bottom Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-slate-950/95 backdrop-blur-md border-t border-slate-900/80 px-4 py-3.5 shadow-2xl flex items-center justify-between gap-3">
+      <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-slate-950/95 backdrop-blur-md border-t border-slate-900/80 px-4 py-3 shadow-2xl flex items-center justify-between gap-2.5">
         <div className="flex flex-col justify-center text-left">
-          <span className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Starting Price</span>
+          <span className="text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Starting Price</span>
           <div className="flex items-baseline space-x-1">
-            <span className="text-lg font-extrabold text-teal-400">₹{price?.toLocaleString('en-IN') || 'On Request'}</span>
-            <span className="text-[9px] text-slate-405">/ adult</span>
+            <span className="text-base sm:text-lg font-extrabold text-teal-400">₹{price?.toLocaleString('en-IN') || 'On Request'}</span>
+            <span className="text-[8px] sm:text-[9px] text-slate-405">/ adult</span>
           </div>
         </div>
         
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <a
             href={getWhatsAppLink()}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-emerald-600 hover:bg-emerald-500 text-white p-3 rounded-xl transition-all shadow-md flex items-center justify-center shrink-0"
+            className="bg-emerald-600 hover:bg-emerald-500 text-white p-2.5 rounded-xl transition-all shadow-md flex items-center justify-center shrink-0"
             aria-label="Inquire via WhatsApp"
           >
-            <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.458L0 24zm6.59-4.846c1.6.95 3.16 1.455 4.75 1.458 5.41.002 9.813-4.394 9.815-9.81.002-2.624-1.013-5.093-2.857-6.937C16.452 1.99 13.985.992 11.99.992c-5.41 0-9.813 4.402-9.815 9.811-.002 1.702.463 3.364 1.34 4.8l-.995 3.634 3.737-.98zM17.65 14.5c-.296-.148-1.748-.863-2.018-.962-.27-.099-.467-.148-.662.149-.195.297-.757.962-.927 1.16-.17.199-.34.223-.636.075-.296-.148-1.252-.462-2.385-1.474-.88-.784-1.474-1.752-1.647-2.05-.173-.296-.018-.457.13-.605.134-.133.296-.347.444-.52.149-.173.197-.297.296-.495.099-.198.05-.371-.025-.52-.075-.148-.662-1.597-.907-2.19-.239-.575-.48-.497-.661-.506-.171-.007-.367-.009-.563-.009-.195 0-.514.074-.783.371-.269.297-1.026 1.003-1.026 2.447 0 1.444 1.05 2.838 1.197 3.037.147.197 2.067 3.156 5.007 4.428.699.303 1.246.484 1.671.619.704.223 1.345.191 1.852.115.565-.084 1.748-.715 1.992-1.402.244-.687.244-1.277.171-1.402-.072-.124-.268-.198-.564-.347z"/>
             </svg>
           </a>
           <button
             onClick={scrollToInquiry}
-            className="bg-teal-600 hover:bg-teal-500 text-white font-bold py-3 px-5 rounded-xl text-xs sm:text-sm transition-all shadow-md shadow-teal-950/20 active:scale-95 flex items-center justify-center space-x-1.5 cursor-pointer"
+            className="bg-teal-600 hover:bg-teal-500 text-white font-bold py-2.5 px-3 sm:px-5 rounded-xl text-[11px] sm:text-xs md:text-sm transition-all shadow-md shadow-teal-950/20 active:scale-95 flex items-center justify-center space-x-1.5 cursor-pointer shrink-0"
           >
             <span>Book / Plan Trip</span>
           </button>

@@ -112,14 +112,14 @@ export default function Header() {
               <div className="flex flex-col justify-center">
                 <span 
                   className={`font-brand-name text-white group-hover:text-teal-400 leading-none transition-all duration-500 ease-in-out ${
-                    isScrolled ? 'text-lg' : 'text-2xl'
+                    isScrolled ? 'text-base lg:text-lg' : 'text-xl lg:text-2xl'
                   }`}
                 >
                   Saachi
                 </span>
                 <span 
                   className={`font-brand-sub text-teal-400 font-semibold tracking-widest uppercase transition-all duration-500 ease-in-out ${
-                    isScrolled ? 'text-[8px] mt-0.5' : 'text-[10px] mt-1'
+                    isScrolled ? 'text-[7px] lg:text-[8px] mt-0.5' : 'text-[9px] lg:text-[10px] mt-0.5 lg:mt-1'
                   }`}
                 >
                   Tours & Travels
@@ -128,14 +128,14 @@ export default function Header() {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden xl:flex items-center space-x-8">
+            <nav className="hidden lg:flex items-center space-x-4 xl:space-x-8">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
                   <Link
                     key={link.name}
                     href={link.href}
-                    className={`text-sm font-medium tracking-wide transition-colors relative py-1 ${
+                    className={`text-xs xl:text-sm font-medium tracking-wide transition-colors relative py-1 ${
                       isActive ? 'text-teal-400' : 'text-slate-100 hover:text-teal-300'
                     }`}
                   >
@@ -153,24 +153,24 @@ export default function Header() {
             </nav>
 
             {/* CTA Buttons */}
-            <div className="hidden xl:flex items-center space-x-4">
+            <div className="hidden lg:flex items-center space-x-3 xl:space-x-4">
               <a
                 href={`tel:${contactPhone.replace(/\s+/g, '')}`}
-                className="flex items-center space-x-2 text-slate-350 hover:text-white transition-colors text-sm font-medium"
+                className="hidden xl:flex items-center space-x-2 text-slate-355 hover:text-white transition-colors text-xs xl:text-sm font-medium"
               >
                 <Phone className="w-4 h-4 text-teal-400" />
                 <span>{contactPhone}</span>
               </a>
               <Link
                 href="/contact"
-                className="bg-teal-600 text-white hover:bg-teal-500 px-5 py-2.5 rounded-full text-sm font-semibold tracking-wide shadow-md shadow-teal-900/20 hover:shadow-lg transition-all"
+                className="bg-teal-600 text-white hover:bg-teal-500 px-3.5 py-2 xl:px-5 xl:py-2.5 rounded-full text-xs xl:text-sm font-semibold tracking-wide shadow-md shadow-teal-900/20 hover:shadow-lg transition-all"
               >
                 Inquire Now
               </Link>
             </div>
 
             {/* Hamburger button */}
-            <div className="xl:hidden">
+            <div className="lg:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-white hover:text-teal-400 focus:outline-none p-1.5"
@@ -193,7 +193,7 @@ export default function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 xl:hidden"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
             />
 
             {/* Sidebar drawer */}
@@ -202,7 +202,7 @@ export default function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'tween', duration: 0.3, ease: 'easeOut' }}
-              className="fixed top-0 bottom-0 right-0 w-80 max-w-[85vw] bg-slate-950 border-l border-slate-900 z-50 flex flex-col p-6 shadow-2xl xl:hidden"
+              className="fixed top-0 bottom-0 right-0 w-80 max-w-[85vw] bg-slate-950 border-l border-slate-900 z-50 flex flex-col p-6 shadow-2xl lg:hidden"
             >
               <div className="flex items-center justify-between border-b border-slate-900 pb-5 mb-6">
                 <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-3.5 group">

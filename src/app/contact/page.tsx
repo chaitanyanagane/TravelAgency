@@ -80,8 +80,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <span className="block text-slate-500 text-xs uppercase tracking-wider font-semibold">Business Hours</span>
-                  <span className="text-slate-200 text-sm block">Mon - Sat: 10:00 AM - 6:00 PM</span>
-                  <span className="text-slate-500 text-xs">Sunday: Closed</span>
+                  <span className="text-slate-200 text-sm block">Mon - Sun: 10:00 AM - 6:00 PM</span>
                 </div>
               </div>
             </div>

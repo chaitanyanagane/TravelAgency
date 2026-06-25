@@ -70,10 +70,12 @@ export default function HomeClient({
     <div className="relative">
       <JSONLD data={organizationSchema} />
 
-      {/* Decorative background glows */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-[120px] pointer-events-none -z-10" />
-      <div className="absolute top-[80vh] right-10 w-[600px] h-[600px] bg-emerald-500/3 rounded-full blur-[140px] pointer-events-none -z-10" />
-      <div className="absolute top-[200vh] left-10 w-[500px] h-[500px] bg-teal-500/3 rounded-full blur-[120px] pointer-events-none -z-10" />
+      {/* Decorative background glows contained locally to prevent horizontal body overflow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-[120px]" />
+        <div className="absolute top-[80vh] right-10 w-[600px] h-[600px] bg-emerald-500/3 rounded-full blur-[140px]" />
+        <div className="absolute top-[200vh] left-10 w-[500px] h-[500px] bg-teal-500/3 rounded-full blur-[120px]" />
+      </div>
 
       {/* Hero Section */}
       <section className="relative min-h-[90dvh] flex items-center pt-8 pb-16 lg:py-24 overflow-hidden">
@@ -126,7 +128,7 @@ export default function HomeClient({
               </motion.p>
 
               <motion.div
-                className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2 w-full sm:w-auto"
+                className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-2 w-full sm:w-auto"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.35 }}
@@ -134,29 +136,29 @@ export default function HomeClient({
                 {/* Button-in-Button Traing Icon primary CTA */}
                 <Link
                   href="/packages"
-                  className="group relative inline-flex items-center justify-between bg-teal-600 hover:bg-teal-500 text-white font-bold pl-7 pr-3 py-3 rounded-full shadow-lg shadow-teal-900/30 hover:shadow-teal-900/40 transition-all duration-300 active:scale-[0.98] text-sm overflow-hidden w-full sm:w-auto"
+                  className="group relative inline-flex items-center justify-between bg-teal-600 hover:bg-teal-500 text-white font-bold pl-5 pr-3 sm:pl-7 sm:pr-3 py-2.5 sm:py-3 rounded-full shadow-lg shadow-teal-950/30 hover:shadow-teal-950/40 transition-all duration-300 active:scale-[0.98] text-xs sm:text-sm overflow-hidden w-full sm:w-auto"
                 >
-                  <span className="mr-6">Explore Packages</span>
-                  <span className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
-                    <Compass className="w-4 h-4 text-white" />
+                  <span className="mr-4 sm:mr-6">Explore Packages</span>
+                  <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
+                    <Compass className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
                   </span>
                 </Link>
 
                 <Link
                   href="/contact"
-                  className="group inline-flex items-center justify-center bg-white/[0.04] border border-white/10 hover:border-white/20 text-slate-200 hover:text-white px-6 py-4 rounded-full transition-all duration-300 active:scale-[0.98] text-sm w-full sm:w-auto"
+                  className="group inline-flex items-center justify-center bg-white/[0.04] border border-white/10 hover:border-white/20 text-slate-200 hover:text-white px-4 sm:px-6 py-3 sm:py-4 rounded-full transition-all duration-300 active:scale-[0.98] text-xs sm:text-sm w-full sm:w-auto"
                 >
                   <span>Plan Your Journey</span>
-                  <ArrowRight className="w-3.5 h-3.5 ml-2.5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-3.5 h-3.5 ml-2 sm:ml-2.5 group-hover:translate-x-1 transition-transform" />
                 </Link>
 
                 <a
                   href={`https://wa.me/${whatsappNumber}?text=Hi%20Saachi%20Tours%20%26%20Travels,%20I%20want%20to%20plan%20a%20holiday.%20Please%20share%20details.`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-4 rounded-full transition-all duration-300 active:scale-[0.98] text-sm w-full sm:w-auto"
+                  className="group inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 sm:px-6 py-3 sm:py-4 rounded-full transition-all duration-300 active:scale-[0.98] text-xs sm:text-sm w-full sm:w-auto"
                 >
-                  <MessageCircle className="w-4 h-4 fill-current mr-2" />
+                  <MessageCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current mr-1.5 sm:mr-2" />
                   <span>WhatsApp Inquiry</span>
                 </a>
               </motion.div>
@@ -201,7 +203,7 @@ export default function HomeClient({
       {/* Statistics Section */}
       <section className="relative z-10 py-12 border-t border-b border-white/5 bg-slate-950/60 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8 text-center">
             {[
               { label: 'Established', value: '19 March 2025' },
               { label: 'Travelers Served', value: '1,000+' },
@@ -209,10 +211,10 @@ export default function HomeClient({
               { label: 'Rating', value: '4.9/5' },
             ].map((stat, idx) => (
               <div key={idx} className="space-y-2 p-5 bg-white/[0.01] border border-white/5 rounded-2xl backdrop-blur-sm">
-                <span className="block text-3xl sm:text-4xl font-extrabold text-teal-400 tracking-tight">
+                <span className="block text-2xl sm:text-3xl lg:text-4xl font-extrabold text-teal-400 tracking-tight">
                   {stat.value}
                 </span>
-                <span className="block text-[10px] uppercase tracking-[0.2em] text-slate-400 font-semibold font-mono">
+                <span className="block text-[10px] uppercase tracking-[0.2em] text-slate-405 font-semibold font-mono">
                   {stat.label}
                 </span>
               </div>
@@ -728,7 +730,7 @@ export default function HomeClient({
 
       {/* Call to Action Section */}
       <section className="py-32 max-w-6xl mx-auto px-4">
-        <div className="relative bg-teal-950/10 border border-teal-500/10 rounded-[2.5rem] p-12 md:p-16 overflow-hidden shadow-2xl text-center space-y-8 backdrop-blur-xl">
+        <div className="relative bg-teal-950/10 border border-teal-500/10 rounded-[2.5rem] p-6 sm:p-12 md:p-16 overflow-hidden shadow-2xl text-center space-y-8 backdrop-blur-xl">
           <div className="absolute inset-0 bg-gradient-to-r from-teal-900/5 via-transparent to-teal-900/5 -z-10" />
           
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight font-luxury font-serif">
@@ -738,14 +740,14 @@ export default function HomeClient({
             Get in touch with our travel specialists today. We will customize your itinerary, choose premium stays, and configure private transfers to match your requirements.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-4">
             <Link
               href="/contact"
-              className="group relative inline-flex items-center justify-between bg-teal-600 hover:bg-teal-500 text-white font-bold pl-7 pr-3 py-3 rounded-full shadow-lg shadow-teal-950/40 hover:shadow-teal-950/60 transition-all duration-300 active:scale-[0.98] text-sm overflow-hidden w-full sm:w-auto"
+              className="group relative inline-flex items-center justify-between bg-teal-600 hover:bg-teal-500 text-white font-bold pl-5 pr-3 sm:pl-7 sm:pr-3 py-2.5 sm:py-3 rounded-full shadow-lg shadow-teal-950/40 hover:shadow-teal-950/60 transition-all duration-300 active:scale-[0.98] text-xs sm:text-sm overflow-hidden w-full sm:w-auto"
             >
-              <span className="mr-6">Contact Our Specialists</span>
-              <span className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-0.5 transition-transform duration-300">
-                <Phone className="w-4 h-4 text-white" />
+              <span className="mr-4 sm:mr-6">Contact Our Specialists</span>
+              <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-0.5 transition-transform duration-300">
+                <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
               </span>
             </Link>
 
@@ -753,9 +755,9 @@ export default function HomeClient({
               href={`https://wa.me/${whatsappNumber}?text=Hi,%20I%20want%20to%20customize%20a%20tour%20package.%20Please%20contact%20me.`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-7 py-4.5 rounded-full shadow-lg shadow-emerald-950/25 hover:shadow-emerald-950/35 transition-all duration-300 active:scale-[0.98] text-sm w-full sm:w-auto justify-center"
+              className="group inline-flex items-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 sm:px-7 py-3.5 sm:py-4.5 rounded-full shadow-lg shadow-emerald-950/25 hover:shadow-emerald-950/35 transition-all duration-300 active:scale-[0.98] text-xs sm:text-sm w-full sm:w-auto justify-center"
             >
-              <MessageCircle className="w-4 h-4 fill-current mr-2" />
+              <MessageCircle className="w-4 h-4 fill-current mr-1.5 sm:mr-2" />
               <span>Chat on WhatsApp</span>
             </a>
           </div>
