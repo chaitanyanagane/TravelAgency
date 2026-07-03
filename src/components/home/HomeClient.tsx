@@ -26,8 +26,8 @@ export default function HomeClient({
   const previewImages = galleryItems.slice(0, 6);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
-  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919823997276';
-  const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+91 98239 97276';
+  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919270267390';
+  const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+91 92702 67390';
 
   const nextTestimonial = () => {
     if (testimonials.length === 0) return;

@@ -6,10 +6,10 @@ import Image from 'next/image';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 
 export default function Footer() {
-  const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+91 98239 97276';
+  const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+91 92702 67390';
   const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'varshaagaikwad563@gmail.com';
   const contactAddress = process.env.NEXT_PUBLIC_CONTACT_ADDRESS || 'Chandrabhaga corner, Mukai chouk Ravet, Pune, Maharashtra 412101';
-  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919823997276';
+  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919270267390';
 
   const currentYear = new Date().getFullYear();
 
@@ -155,8 +155,9 @@ export default function Footer() {
         <div className="border-t border-slate-900 pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-slate-600">
           <p>&copy; {currentYear} Saachi Tours & Travels. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link href="/privacy" className="hover:text-slate-400">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-slate-400">Terms of Service</Link>
+            <Link href="/privacy-policy" className="hover:text-slate-400">Privacy Policy</Link>
+            <Link href="/terms-and-conditions" className="hover:text-slate-400">Terms & Conditions</Link>
+            <Link href="/refund-policy" className="hover:text-slate-400">Refund Policy</Link>
             <Link href="/sitemap.xml" className="hover:text-slate-400">Sitemap</Link>
           </div>
         </div>

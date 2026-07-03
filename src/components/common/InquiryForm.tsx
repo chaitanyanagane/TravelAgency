@@ -134,7 +134,7 @@ export default function InquiryForm({ defaultDestination = '', onSuccess }: Inqu
             <input
               id="phoneNumber"
               type="tel"
-              placeholder="e.g. 9823997276"
+              placeholder="e.g. 9270267390"
               disabled={isSubmitting}
               className={`w-full bg-slate-950 border ${
                 errors.phoneNumber ? 'border-rose-500/80 focus:border-rose-500' : 'border-slate-800 focus:border-teal-500'

@@ -185,7 +185,7 @@ export default function AboutPage() {
               alt={team[0].name}
               fill
               sizes="(max-width: 768px) 100vw, 300px"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
             />
           </div>
           <div className="p-8 flex flex-col justify-center w-full md:w-1/2 space-y-4">

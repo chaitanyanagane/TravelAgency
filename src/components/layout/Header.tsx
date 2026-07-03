@@ -27,7 +27,7 @@ export default function Header() {
   const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
   
   const pathname = usePathname();
-  const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+91 9823997276';
+  const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+91 9270267390';
 
   useEffect(() => {
     const handleScroll = () => {

@@ -39,7 +39,7 @@ export default function PackageDetailClient({ tour }: PackageDetailClientProps) 
   const accommodations = getAccommodationsForPackage(tour.slug, tour.destination);
   const faqs = getFaqsForPackage(tour.slug, tour.destination);
 
-  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919823997276';
+  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919270267390';
 
   const toggleDay = (day: number) => {
     setExpandedDays((prev) => ({ ...prev, [day]: !prev[day] }));
