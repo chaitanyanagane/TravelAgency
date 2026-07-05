@@ -154,11 +154,12 @@ export default function Footer() {
         {/* Bottom copyright */}
         <div className="border-t border-slate-900 pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-slate-600">
           <p>&copy; {currentYear} Saachi Tours & Travels. All rights reserved.</p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
+          <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 md:mt-0 justify-center md:justify-end">
             <Link href="/privacy-policy" className="hover:text-slate-400">Privacy Policy</Link>
             <Link href="/terms-and-conditions" className="hover:text-slate-400">Terms & Conditions</Link>
             <Link href="/refund-policy" className="hover:text-slate-400">Refund Policy</Link>
-            <Link href="/sitemap.xml" className="hover:text-slate-400">Sitemap</Link>
+            <Link href="/disclaimer" className="hover:text-slate-400">Disclaimer</Link>
+            <Link href="/sitemap" className="hover:text-slate-400">Sitemap</Link>
           </div>
         </div>
       </div>
