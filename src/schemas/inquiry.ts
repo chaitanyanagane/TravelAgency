@@ -22,15 +22,9 @@ export const inquirySchema = z.object({
     .min(2, 'Destination must be at least 2 characters')
     .max(100, 'Destination name too long')
     .trim(),
-  travelDate: z
+  travelMonth: z
     .string()
-    .min(1, 'Travel date is required')
-    .refine((val) => {
-      const date = new Date(val);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      return !isNaN(date.getTime()) && date >= today;
-    }, 'Travel date must be today or in the future'),
+    .min(1, 'Travel month is required'),
   travelers: z
     .number()
     .int('Number of travelers must be an integer')

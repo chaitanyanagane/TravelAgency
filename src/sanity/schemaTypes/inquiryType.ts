@@ -26,8 +26,8 @@ export const inquiryType = defineType({
       type: 'string',
     }),
     defineField({
-      name: 'travelDate',
-      title: 'Travel Date',
+      name: 'travelMonth',
+      title: 'Travel Month',
       type: 'string',
     }),
     defineField({

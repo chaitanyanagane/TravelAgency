@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
       email: data.email,
       phoneNumber: data.phoneNumber,
       destination: data.destination,
-      travelDate: data.travelDate,
+      travelMonth: data.travelMonth,
       travelers: data.travelers,
       budgetRange: data.budgetRange,
       message: data.message || '',

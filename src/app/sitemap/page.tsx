@@ -271,8 +271,7 @@ export default async function SitemapPage() {
               <Clock className="w-4 h-4 text-teal-400 shrink-0 mt-1" />
               <div>
                 <span className="block text-slate-200 font-medium text-xs sm:text-sm">Business Hours:</span>
-                <span className="block text-slate-500 text-xs mt-0.5">Mon - Sat: 10:00 AM - 6:00 PM</span>
-                <span className="block text-slate-500 text-xs">Sunday: Closed</span>
+                <span className="block text-slate-500 text-xs mt-0.5">Mon - Sun: 10:00 AM - 6:00 PM</span>
               </div>
             </div>
           </div>

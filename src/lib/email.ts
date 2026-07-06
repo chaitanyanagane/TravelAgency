@@ -11,7 +11,7 @@ interface InquiryData {
   email: string;
   phoneNumber: string;
   destination: string;
-  travelDate: string;
+  travelMonth: string;
   travelers: number;
   budgetRange: string;
   message?: string;
@@ -70,8 +70,8 @@ export async function sendInquiryEmailToAdmin(data: InquiryData) {
                 <td class="value"><strong>${data.destination}</strong></td>
               </tr>
               <tr>
-                <td class="label">Travel Date</td>
-                <td class="value">${data.travelDate}</td>
+                <td class="label">Travel Month</td>
+                <td class="value">${data.travelMonth}</td>
               </tr>
               <tr>
                 <td class="label">No. of Travelers</td>

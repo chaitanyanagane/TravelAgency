@@ -144,8 +144,7 @@ export default function Footer() {
               <Clock className="w-4 h-4 text-teal-400 shrink-0 mt-1" />
               <div>
                 <span className="block text-white font-medium">Business Hours:</span>
-                <span className="block text-slate-500 text-xs">Mon - Sat: 10:00 AM - 6:00 PM</span>
-                <span className="block text-slate-500 text-xs">Sunday: Closed</span>
+                <span className="block text-slate-500 text-xs">Mon - Sun: 10:00 AM - 6:00 PM</span>
               </div>
             </div>
           </div>

@@ -7,6 +7,17 @@ import { Send, Loader2, User, Phone, Mail, MapPin, Calendar, Users, Wallet, Mess
 import { inquirySchema, InquiryInput } from '@/schemas/inquiry';
 import Toast from '@/components/common/Toast';
 
+const getNext12Months = () => {
+  const months: string[] = [];
+  const date = new Date();
+  for (let i = 0; i < 12; i++) {
+    const m = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+    months.push(m);
+    date.setMonth(date.getMonth() + 1);
+  }
+  return months;
+};
+
 interface InquiryFormProps {
   defaultDestination?: string;
   onSuccess?: () => void;
@@ -35,7 +46,7 @@ export default function InquiryForm({ defaultDestination = '', onSuccess }: Inqu
       phoneNumber: '',
       email: '',
       destination: defaultDestination,
-      travelDate: '',
+      travelMonth: '',
       travelers: 1,
       budgetRange: '',
       message: '',
@@ -69,7 +80,7 @@ export default function InquiryForm({ defaultDestination = '', onSuccess }: Inqu
         phoneNumber: '',
         email: '',
         destination: defaultDestination,
-        travelDate: '',
+        travelMonth: '',
         travelers: 1,
         budgetRange: '',
         message: '',
@@ -188,23 +199,33 @@ export default function InquiryForm({ defaultDestination = '', onSuccess }: Inqu
             )}
           </div>
 
-          {/* Travel Date */}
+          {/* Travel Month */}
           <div className="space-y-2">
-            <label htmlFor="travelDate" className="text-xs font-semibold text-slate-400 uppercase tracking-wide flex items-center space-x-1.5">
+            <label htmlFor="travelMonth" className="text-xs font-semibold text-slate-400 uppercase tracking-wide flex items-center space-x-1.5">
               <Calendar className="w-3.5 h-3.5 text-teal-500" />
-              <span>Travel Date</span>
+              <span>Travel Month</span>
             </label>
-            <input
-              id="travelDate"
-              type="date"
-              disabled={isSubmitting}
-              className={`w-full bg-slate-950 border ${
-                errors.travelDate ? 'border-rose-500/80 focus:border-rose-500' : 'border-slate-800 focus:border-teal-500'
-              } rounded-xl px-4 py-3.5 text-sm text-slate-300 transition-colors focus:outline-none`}
-              {...register('travelDate')}
-            />
-            {errors.travelDate && (
-              <span className="text-rose-400 text-xs font-medium block">{errors.travelDate.message}</span>
+            <div className="relative">
+              <select
+                id="travelMonth"
+                disabled={isSubmitting}
+                defaultValue=""
+                className={`w-full bg-slate-950 border ${
+                  errors.travelMonth ? 'border-rose-500/80 focus:border-rose-500' : 'border-slate-800 focus:border-teal-500'
+                } rounded-xl px-4 py-3.5 text-sm text-slate-100 placeholder-slate-600 transition-colors focus:outline-none cursor-pointer appearance-none bg-no-repeat bg-[right_1rem_center] pr-10`}
+                style={{ backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230d9488' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`, backgroundSize: '1.25em' }}
+                {...register('travelMonth')}
+              >
+                <option value="" disabled className="text-slate-600">Select Month</option>
+                {getNext12Months().map((month) => (
+                  <option key={month} value={month} className="bg-slate-950 text-slate-100">
+                    {month}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {errors.travelMonth && (
+              <span className="text-rose-400 text-xs font-medium block">{errors.travelMonth.message}</span>
             )}
           </div>
 
