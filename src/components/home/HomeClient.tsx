@@ -205,7 +205,7 @@ export default function HomeClient({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8 text-center">
             {[
-              { label: 'Established', value: '19 March 2025' },
+              { label: 'Established', value: '2025' },
               { label: 'Travelers Served', value: '1,000+' },
               { label: 'Destinations Covered', value: '50+' },
               { label: 'Rating', value: '4.9/5' },
@@ -445,7 +445,7 @@ export default function HomeClient({
             },
             {
               icon: Clock,
-              title: '24/7 Hotline Support',
+              title: '24/7 Dedicated Support',
               desc: 'A dedicated tour executive remains active throughout your travel lifecycle to resolve issues.',
             },
           ].map((item, idx) => (
