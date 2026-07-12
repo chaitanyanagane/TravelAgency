@@ -4,7 +4,7 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Fallback sender email (Resend default sandbox address)
-const FROM_EMAIL = "Saachi Tours & Travels <noreply@saachitours.in>";
+const FROM_EMAIL = "noreply@saachitours.in";
 
 interface InquiryData {
   fullName: string;
@@ -98,12 +98,12 @@ export async function sendInquiryEmailToAdmin(data: InquiryData) {
     </html>
   `;
 
-  return resend.emails.send({
-    from: `Saachi Tours Inquiry <${FROM_EMAIL}>`,
-    to: recipient,
-    reply_to: data.email,
-    subject: `New Travel Inquiry - ${data.fullName}`,
-    html: htmlContent,
+  return await resend.emails.send({
+  from: `Saachi Tours & Travels <${FROM_EMAIL}>`,
+  to: recipient,
+  replyTo: data.email,
+  subject: `New Travel Inquiry - ${data.fullName}`,
+  html: htmlContent,
   });
 }
 
@@ -161,10 +161,10 @@ export async function sendAutoReplyToCustomer(email: string, fullName: string) {
     </html>
   `;
 
-  return resend.emails.send({
-    from: `Saachi Tours & Travels <${FROM_EMAIL}>`,
-    to: email,
-    subject: 'Thank you for contacting Saachi Tours & Travels',
-    html: htmlContent,
+  return await resend.emails.send({
+  from: `Saachi Tours & Travels <${FROM_EMAIL}>`,
+  to: email,
+  subject: "Thank you for contacting Saachi Tours & Travels",
+  html: htmlContent,
   });
 }
