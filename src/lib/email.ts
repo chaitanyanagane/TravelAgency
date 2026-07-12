@@ -21,7 +21,7 @@ interface InquiryData {
  * Sends a structured, professional HTML email containing inquiry details to the admin address.
  */
 export async function sendInquiryEmailToAdmin(data: InquiryData) {
-  const recipient = process.env.INQUIRY_EMAIL || 'naganechaitanya17@gmail.com';
+  const recipient = process.env.INQUIRY_EMAIL || 'saachitourandtravel@gmail.com';
   
   const htmlContent = `
     <!DOCTYPE html>
@@ -101,6 +101,7 @@ export async function sendInquiryEmailToAdmin(data: InquiryData) {
   return resend.emails.send({
     from: `Saachi Tours Inquiry <${FROM_EMAIL}>`,
     to: recipient,
+    reply_to: data.email,
     subject: `New Travel Inquiry - ${data.fullName}`,
     html: htmlContent,
   });
@@ -153,7 +154,7 @@ export async function sendAutoReplyToCustomer(email: string, fullName: string) {
           <div class="footer">
             <p>&copy; ${new Date().getFullYear()} Saachi Tours & Travels. All rights reserved.</p>
             <p>Where every journey begins with care.</p>
-            <p>Mukai Chowk, Ravet, Pune, Maharashtra | <a href="https://saachi-tours.vercel.app">Visit Website</a></p>
+            <p>Mukai Chowk, Ravet, Pune, Maharashtra | <a href="https://saachitours.in">Visit Website</a></p>
           </div>
         </div>
       </body>

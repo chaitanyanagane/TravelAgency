@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: PackagePageProps): Promise<Me
       },
       openGraph: {
         type: 'website',
-        url: `https://saachi-tours.vercel.app/packages/${tour.slug}`,
+        url: `https://saachitours.in/packages/${tour.slug}`,
         title: `${tour.title} | Saachi Tours & Travels`,
         description: tour.overview,
         images: tour.images.map((img: string) => ({ url: img })),
@@ -89,7 +89,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
       'price': tour.price,
       'priceValidUntil': '2027-12-31',
       'availability': 'https://schema.org/InStock',
-      'url': `https://saachi-tours.vercel.app/packages/${tour.slug}`,
+      'url': `https://saachitours.in/packages/${tour.slug}`,
       'seller': {
         '@type': 'Organization',
         'name': 'Saachi Tours & Travels',

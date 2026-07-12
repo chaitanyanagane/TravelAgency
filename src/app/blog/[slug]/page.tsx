@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
     },
     openGraph: {
       type: 'article',
-      url: `https://saachi-tours.vercel.app/blog/${post.slug}`,
+      url: `https://saachitours.in/blog/${post.slug}`,
       title: post.title,
       description: post.excerpt,
       publishedTime: new Date(post.date).toISOString(),
@@ -76,12 +76,12 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
       'name': 'Saachi Tours & Travels',
       'logo': {
         '@type': 'ImageObject',
-        'url': 'https://saachi-tours.vercel.app/images/logo.png',
+        'url': 'https://saachitours.in/images/logo.png',
       },
     },
     'mainEntityOfPage': {
       '@type': 'WebPage',
-      '@id': `https://saachi-tours.vercel.app/blog/${post.slug}`,
+      '@id': `https://saachitours.in/blog/${post.slug}`,
     },
   };
 

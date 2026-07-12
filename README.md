@@ -92,14 +92,14 @@ NEXT_PUBLIC_CONTACT_PHONE="+91 92702 67390"
 NEXT_PUBLIC_CONTACT_ADDRESS="Chandrabhaga Corner, Mukai Chowk, Ravet, Pune, Maharashtra 412101"
 
 # Production Domain (Used to resolve sitemaps and canonical metadata tags)
-NEXT_PUBLIC_SITE_URL=https://saachi-tours.vercel.app
+NEXT_PUBLIC_SITE_URL=https://saachitours.in
 
 # Google Maps place iframe source link
 NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3780.2223846618585!2d73.7431326!3d18.6540679!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b9e69c79fa69%3A0xc3fa5ee2366718!2sMukai%20Chowk%2C%20Ravet%2C%20Pune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1718464000000!5m2!1sen!2sin"
 
 # Resend Email Configuration
 RESEND_API_KEY="re_your_api_key_here"
-INQUIRY_EMAIL="naganechaitanya17@gmail.com"
+INQUIRY_EMAIL="saachitourandtravel@gmail.com"
 
 # Sanity CMS config keys
 NEXT_PUBLIC_SANITY_PROJECT_ID=4z2l1isy
@@ -141,7 +141,7 @@ This script runs the TypeScript compiler and pre-renders all dynamic static path
 To update travel packages, destinations, testimonials, and blog posts, navigate to `/studio` in your browser. This mounts the embedded Sanity Studio authoring interface directly inside the Next.js application:
 
 1. **Local Development:** Run `npm run dev` and open [http://localhost:3000/studio](http://localhost:3000/studio).
-2. **Production Studio:** Visit `https://saachi-tours.vercel.app/studio` (or your active Vercel domain).
+2. **Production Studio:** Visit `https://saachitours.in/studio` (or your active Vercel domain).
 3. Log in using your Sanity credentials to create, publish, and delete content:
    - **Travel Packages:** Manage package titles, slugs, durations, starting prices, day-wise itineraries, inclusions/exclusions, pricing matrices, and photo galleries.
    - **Destinations:** Create new cities or regions and associate them with packages.

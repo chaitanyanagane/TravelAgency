@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://saachi-tours.vercel.app/sitemap',
+    url: 'https://saachitours.in/sitemap',
     title: 'Sitemap | Saachi Tours & Travels',
     description: 'Browse every page, destination, travel package, blog article, and legal page available on the Saachi Tours & Travels website.',
   },

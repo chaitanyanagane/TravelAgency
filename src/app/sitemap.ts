@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { getAllPackages, getAllBlogs } from '@/sanity/lib/queries';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://saachi-tours.vercel.app';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://saachitours.in';
 
   // Core Static routes
   const staticRoutes = [

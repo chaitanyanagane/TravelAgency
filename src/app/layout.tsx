@@ -11,7 +11,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://saachi-tours.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://saachitours.in'),
   title: {
     default: 'Saachi Tours & Travels | Domestic, Pilgrimage & Customized Tour Packages',
     template: '%s | Saachi Tours & Travels',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://saachi-tours.vercel.app',
+    url: 'https://saachitours.in',
     title: 'Saachi Tours & Travels | Domestic, Pilgrimage & Customized Tour Packages',
     description: 'Book customized tour packages, pilgrimage tours (Char Dham, Ashtavinayak), hotel bookings, and corporate travel solutions with Saachi Tours & Travels.',
     siteName: 'Saachi Tours & Travels',
