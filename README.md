@@ -87,7 +87,7 @@ Create a `.env.local` file in the root directory. Add the following variables to
 NEXT_PUBLIC_WHATSAPP_NUMBER=919270267390
 
 # Contact parameters
-NEXT_PUBLIC_CONTACT_EMAIL=varshaagaikwad563@gmail.com
+NEXT_PUBLIC_CONTACT_EMAIL=saachituourandtravel@gmail.com
 NEXT_PUBLIC_CONTACT_PHONE="+91 92702 67390"
 NEXT_PUBLIC_CONTACT_ADDRESS="Chandrabhaga Corner, Mukai Chowk, Ravet, Pune, Maharashtra 412101"
 

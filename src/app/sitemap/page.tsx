@@ -47,7 +47,7 @@ export default async function SitemapPage() {
   ]);
 
   const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+91 92702 67390';
-  const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'varshaagaikwad563@gmail.com';
+  const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'saachituourandtravel@gmail.com';
   const contactAddress = process.env.NEXT_PUBLIC_CONTACT_ADDRESS || 'Chandrabhaga corner, Mukai chouk Ravet, Pune, Maharashtra 412101';
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919270267390';
 

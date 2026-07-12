@@ -6,7 +6,7 @@ import InquiryForm from '@/components/common/InquiryForm';
 
 export default function ContactPage() {
   const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+91 92702 67390';
-  const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'varshaagaikwad563@gmail.com';
+  const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'saachituourandtravel@gmail.com';
   const contactAddress = process.env.NEXT_PUBLIC_CONTACT_ADDRESS || 'Chandrabhaga corner, Mukai chouk Ravet, Pune, Maharashtra 412101';
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919270267390';
   const mapsEmbedUrl = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3780.2223846618585!2d73.7431326!3d18.6540679!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b9e69c79fa69%3A0xc3fa5ee2366718!2sMukai%20Chowk%2C%20Ravet%2C%20Pune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1718464000000!5m2!1sen!2sin';
