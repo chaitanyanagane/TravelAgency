@@ -98,13 +98,25 @@ export async function sendInquiryEmailToAdmin(data: InquiryData) {
     </html>
   `;
 
-  return await resend.emails.send({
-  from: `Saachi Tours & Travels <${FROM_EMAIL}>`,
-  to: recipient,
-  replyTo: data.email,
-  subject: `New Travel Inquiry - ${data.fullName}`,
-  html: htmlContent,
+  console.log('Sending Inquiry Email to Admin:', {
+    from: FROM_EMAIL,
+    recipient,
+    apiKeyPresent: !!process.env.RESEND_API_KEY,
   });
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const emailPayload: any = {
+    from: `Saachi Tours & Travels <${FROM_EMAIL}>`,
+    to: recipient,
+    replyTo: data.email,
+    subject: `New Travel Inquiry - ${data.fullName}`,
+    html: htmlContent,
+  };
+
+  const response = await resend.emails.send(emailPayload);
+
+  console.log('Resend Admin Notification Response:', response);
+  return response;
 }
 
 /**
@@ -161,10 +173,19 @@ export async function sendAutoReplyToCustomer(email: string, fullName: string) {
     </html>
   `;
 
-  return await resend.emails.send({
-  from: `Saachi Tours & Travels <${FROM_EMAIL}>`,
-  to: email,
-  subject: "Thank you for contacting Saachi Tours & Travels",
-  html: htmlContent,
+  console.log('Sending Customer Auto-reply:', {
+    from: FROM_EMAIL,
+    recipient: email,
+    apiKeyPresent: !!process.env.RESEND_API_KEY,
   });
+
+  const response = await resend.emails.send({
+    from: `Saachi Tours & Travels <${FROM_EMAIL}>`,
+    to: email,
+    subject: "Thank you for contacting Saachi Tours & Travels",
+    html: htmlContent,
+  });
+
+  console.log('Resend Customer Auto-reply Response:', response);
+  return response;
 }
