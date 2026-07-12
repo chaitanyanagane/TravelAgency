@@ -4,7 +4,7 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Fallback sender email (Resend default sandbox address)
-const FROM_EMAIL = 'onboarding@resend.dev';
+const FROM_EMAIL = "Saachi Tours & Travels <noreply@saachitours.in>";
 
 interface InquiryData {
   fullName: string;
