@@ -7,7 +7,7 @@ declare global {
   }
 }
 
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-MNLHPC3W';
 const isDev = process.env.NODE_ENV === 'development';
 
 /**
