@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
+import { trackWhatsAppClick } from '@/lib/analytics';
 
 export default function FloatingWhatsApp() {
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919270267390';
@@ -14,6 +14,11 @@ export default function FloatingWhatsApp() {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => {
+        if (typeof window !== 'undefined') {
+          trackWhatsAppClick(window.location.pathname, 'floating_widget');
+        }
+      }}
       className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-emerald-500 rounded-full shadow-lg text-white hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors duration-300"
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}

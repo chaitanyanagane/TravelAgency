@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Phone, Palette, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { trackPhoneCall, trackContactClick } from '@/lib/analytics';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -153,6 +154,11 @@ export default function Header() {
               {/* Responsive Phone Link */}
               <a
                 href={`tel:${contactPhone.replace(/\s+/g, '')}`}
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    trackPhoneCall(window.location.pathname);
+                  }
+                }}
                 className="flex items-center justify-center rounded-full bg-slate-900/40 border border-slate-800/80 hover:bg-slate-900/85 hover:border-slate-700 transition-colors text-xs text-slate-300 hover:text-white font-medium p-2.5 xl:px-4 xl:py-2"
                 title={`Call ${contactPhone}`}
               >
@@ -161,6 +167,11 @@ export default function Header() {
               </a>
               <Link
                 href="/contact"
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    trackContactClick(window.location.pathname);
+                  }
+                }}
                 className="bg-teal-600 text-white hover:bg-teal-550 pl-4.5 pr-2 py-2 rounded-full text-xs xl:text-sm font-semibold tracking-wide shadow-md shadow-teal-900/20 hover:shadow-lg transition-all active:scale-95 flex items-center space-x-2.5 group/btn"
               >
                 <span>Inquire Now</span>
@@ -271,6 +282,11 @@ export default function Header() {
               <div className="border-t border-slate-900 pt-6 space-y-4">
                 <a
                   href={`tel:${contactPhone.replace(/\s+/g, '')}`}
+                  onClick={() => {
+                    if (typeof window !== 'undefined') {
+                      trackPhoneCall(window.location.pathname);
+                    }
+                  }}
                   className="flex items-center space-x-3 text-slate-300 hover:text-white transition-colors py-1 px-2 hover:bg-white/5 rounded-xl"
                 >
                   <Phone className="w-5 h-5 text-teal-400" />
@@ -278,7 +294,12 @@ export default function Header() {
                 </a>
                 <Link
                   href="/contact"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    setIsOpen(false);
+                    if (typeof window !== 'undefined') {
+                      trackContactClick(window.location.pathname);
+                    }
+                  }}
                   className="block w-full text-center bg-teal-600 text-white hover:bg-teal-550 py-3.5 rounded-xl font-bold tracking-wide shadow-md shadow-teal-900/20 transition-all"
                 >
                   Inquire Now

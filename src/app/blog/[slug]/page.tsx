@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { Calendar, Clock, ArrowLeft, User, Compass } from 'lucide-react';
 import { getBlogBySlug, getAllBlogs } from '@/sanity/lib/queries';
 import JSONLD from '@/components/common/JSONLD';
+import BlogTracker from '@/components/common/BlogTracker';
 
 interface BlogPageProps {
   params: Promise<{
@@ -87,6 +88,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
 
   return (
     <div className="py-12 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <BlogTracker title={post.title} />
       <JSONLD data={blogSchema} />
 
       {/* Back to Blogs */}

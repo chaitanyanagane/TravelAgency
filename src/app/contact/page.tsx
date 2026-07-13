@@ -3,6 +3,7 @@
 import React from 'react';
 import { Phone, Mail, MapPin, Clock, MessageSquare } from 'lucide-react';
 import InquiryForm from '@/components/common/InquiryForm';
+import { trackPhoneCall } from '@/lib/analytics';
 
 export default function ContactPage() {
   const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+91 92702 67390';
@@ -52,6 +53,11 @@ export default function ContactPage() {
                   <span className="block text-slate-500 text-xs uppercase tracking-wider font-semibold">Phone Number</span>
                   <a
                     href={`tel:${contactPhone.replace(/\s+/g, '')}`}
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        trackPhoneCall(window.location.pathname);
+                      }
+                    }}
                     className="text-teal-400 hover:text-teal-300 font-medium text-sm transition-colors"
                   >
                     {contactPhone}

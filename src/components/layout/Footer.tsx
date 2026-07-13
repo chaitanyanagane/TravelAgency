@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
+import { trackWhatsAppClick, trackPhoneCall } from '@/lib/analytics';
 
 export default function Footer() {
   const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+91 92702 67390';
@@ -70,6 +71,11 @@ export default function Footer() {
                 href={`https://wa.me/${whatsappNumber}`}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    trackWhatsAppClick(window.location.pathname, 'footer_social');
+                  }
+                }}
                 className="w-8 h-8 rounded-full bg-slate-900 hover:bg-teal-600 hover:text-white flex items-center justify-center transition-colors"
                 aria-label="WhatsApp"
               >
@@ -130,7 +136,15 @@ export default function Footer() {
             </div>
             <div className="flex items-center space-x-3">
               <Phone className="w-4 h-4 text-teal-400 shrink-0" />
-              <a href={`tel:${contactPhone.replace(/\s+/g, '')}`} className="hover:text-white transition-colors">
+              <a 
+                href={`tel:${contactPhone.replace(/\s+/g, '')}`} 
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    trackPhoneCall(window.location.pathname);
+                  }
+                }}
+                className="hover:text-white transition-colors"
+              >
                 {contactPhone}
               </a>
             </div>

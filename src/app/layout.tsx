@@ -3,6 +3,8 @@ import './globals.css';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import FloatingWhatsApp from '../components/common/FloatingWhatsApp';
+import AnalyticsTracker from '../components/common/AnalyticsTracker';
+import { Suspense } from 'react';
 
 export const viewport: Viewport = {
   themeColor: '#090d16',
@@ -66,15 +68,30 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
+
   return (
     <html lang="en" className="brand-font-modern">
       <body className="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased">
+        {gtmId && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            />
+          </noscript>
+        )}
         <Header />
         <main className="flex-grow pt-20 lg:pt-24">
           {children}
         </main>
         <Footer />
         <FloatingWhatsApp />
+        <Suspense fallback={null}>
+          <AnalyticsTracker />
+        </Suspense>
       </body>
     </html>
   );

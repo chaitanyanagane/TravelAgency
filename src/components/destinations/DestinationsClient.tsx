@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MapPin, ArrowRight } from 'lucide-react';
 import { Destination } from '@/types';
+import { trackDestinationView } from '@/lib/analytics';
 
 interface DestinationsClientProps {
   destinations: Destination[];
@@ -71,6 +72,11 @@ export default function DestinationsClient({ destinations }: DestinationsClientP
                 </span>
                 <Link
                   href={`/packages?destination=${encodeURIComponent(dest.name)}`}
+                  onClick={() => {
+                    if (typeof window !== 'undefined') {
+                      trackDestinationView(dest.name);
+                    }
+                  }}
                   className="flex items-center space-x-1.5 text-xs font-bold text-teal-400 hover:text-white group"
                 >
                   <span>Explore Tours</span>

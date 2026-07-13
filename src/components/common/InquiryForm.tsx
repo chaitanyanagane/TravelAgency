@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Send, Loader2, User, Phone, Mail, MapPin, Calendar, Users, Wallet, MessageSquare } from 'lucide-react';
 import { inquirySchema, InquiryInput } from '@/schemas/inquiry';
 import Toast from '@/components/common/Toast';
+import { trackInquiry } from '@/lib/analytics';
 
 const getNext12Months = () => {
   const months: string[] = [];
@@ -68,6 +69,14 @@ export default function InquiryForm({ defaultDestination = '', onSuccess }: Inqu
       if (!response.ok) {
         throw new Error(result.message || 'Something went wrong. Please try again.');
       }
+
+      // Track lead generation custom analytics event (PII safe: no email, phone, or messages)
+      trackInquiry({
+        destination: data.destination,
+        travelMonth: data.travelMonth,
+        travelers: Number(data.travelers),
+        budgetRange: data.budgetRange,
+      });
 
       setToastState({
         isVisible: true,

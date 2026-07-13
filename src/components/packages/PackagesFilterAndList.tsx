@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SlidersHorizontal, Compass } from 'lucide-react';
 import PackageCard from '@/components/packages/PackageCard';
 import { Package } from '@/types';
+import { trackDestinationView } from '@/lib/analytics';
 
 type TourTypeFilter = 'all' | 'Honeymoon' | 'Adventure' | 'Family' | 'Weekend Getaway' | 'Nature' | 'Pilgrimage' | 'Customized';
 type DurationFilter = 'all' | 'short' | 'medium' | 'long';
@@ -26,6 +27,12 @@ export default function PackagesFilterAndList({ initialPackages }: PackagesFilte
   const [selectedDuration, setSelectedDuration] = useState<DurationFilter>('all');
   const [selectedBudget, setSelectedBudget] = useState<BudgetFilter>('all');
   const [sortBy, setSortBy] = useState<SortOption>('popularity');
+
+  useEffect(() => {
+    if (selectedDestination && selectedDestination !== 'all') {
+      trackDestinationView(selectedDestination);
+    }
+  }, [selectedDestination]);
 
   // Adjust state when query parameters change during render
   const [prevDestParam, setPrevDestParam] = useState<string | null>(destParam);

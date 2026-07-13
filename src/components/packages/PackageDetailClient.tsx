@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -22,6 +22,7 @@ import {
 import { Package } from '../../types';
 import InquiryForm from '@/components/common/InquiryForm';
 import { getAccommodationsForPackage, getFaqsForPackage } from '@/data/packageExtras';
+import { trackPackageView } from '@/lib/analytics';
 
 interface PackageDetailClientProps {
   tour: Package;
@@ -30,6 +31,10 @@ interface PackageDetailClientProps {
 export default function PackageDetailClient({ tour }: PackageDetailClientProps) {
   const { title, destination, duration, price, rating, tourType, images, overview, itinerary, inclusions, exclusions } = tour;
   const pricing = tour.pricing || { couple: null, family: null, group: null };
+
+  useEffect(() => {
+    trackPackageView(title, destination);
+  }, [title, destination]);
   
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [expandedDays, setExpandedDays] = useState<Record<number, boolean>>({ 1: true });
