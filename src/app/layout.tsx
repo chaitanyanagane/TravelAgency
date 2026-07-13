@@ -6,6 +6,7 @@ import FloatingWhatsApp from '../components/common/FloatingWhatsApp';
 import AnalyticsTracker from '../components/common/AnalyticsTracker';
 import { Suspense } from 'react';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const viewport: Viewport = {
   themeColor: '#090d16',
@@ -94,6 +95,7 @@ export default function RootLayout({
           <AnalyticsTracker />
         </Suspense>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
