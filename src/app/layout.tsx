@@ -73,6 +73,19 @@ export default function RootLayout({
   return (
     <html lang="en" className="brand-font-modern">
       <head>
+        {/* Google tag (gtag.js) */}
+        {/* eslint-disable-next-line @next/next/next-script-for-ga */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-TG8ZGGX4PY" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-TG8ZGGX4PY');
+            `,
+          }}
+        />
         {/* Google Tag Manager */}
         {/* eslint-disable-next-line @next/next/next-script-for-ga */}
         <script
