@@ -64,7 +64,11 @@ export default function HomeClient({
       'contactType': 'customer service',
       'areaServed': 'IN',
       'availableLanguage': ['English', 'Hindi', 'Marathi']
-    }
+    },
+    'sameAs': [
+      'https://www.facebook.com/share/1BB7ffEnhg/',
+      'https://www.instagram.com/saachi_tours/?utm_source=ig_web_button_share_sheet'
+    ]
   };
 
   return (

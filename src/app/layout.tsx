@@ -15,15 +15,16 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://saachitours.in'),
+  metadataBase: new URL('https://saachitours.in'),
   title: {
-    default: 'Saachi Tours & Travels | Domestic, Pilgrimage & Customized Tour Packages',
+    default: 'Saachi Tours & Travels | Domestic, International & Pilgrimage Tour Packages',
     template: '%s | Saachi Tours & Travels',
   },
-  description: 'Book customized tour packages, pilgrimage tours (Char Dham, Ashtavinayak), flight, train & hotel bookings, family holidays, and corporate travel solutions with Saachi Tours & Travels. Where every journey begins with care.',
+  description: 'Explore premium domestic, international, honeymoon, family, and pilgrimage tour packages with Saachi Tours & Travels.',
   keywords: ['travel agency', 'tour packages', 'Saachi Tours & Travels', 'pilgrimage tours', 'Ashtavinayak tour', 'Char Dham yatra', 'customized holidays', 'flight bookings Pune', 'train bookings Pune', 'family tours', 'honeymoon packages', 'corporate travel Pune'],
   authors: [{ name: 'Saachi Tours & Travels' }],
   creator: 'Saachi Tours & Travels',
+  manifest: '/site.webmanifest',
   robots: {
     index: true,
     follow: true,
@@ -36,32 +37,40 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: '/',
+    canonical: 'https://saachitours.in',
   },
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://saachitours.in',
-    title: 'Saachi Tours & Travels | Domestic, Pilgrimage & Customized Tour Packages',
-    description: 'Book customized tour packages, pilgrimage tours (Char Dham, Ashtavinayak), hotel bookings, and corporate travel solutions with Saachi Tours & Travels.',
+    title: 'Saachi Tours & Travels | Domestic, International & Pilgrimage Tour Packages',
+    description: 'Explore premium domestic, international, honeymoon, family, and pilgrimage tour packages with Saachi Tours & Travels.',
     siteName: 'Saachi Tours & Travels',
     images: [
       {
-        url: '/images/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Saachi Tours & Travels - Where Every Journey Begins with Care',
+        url: '/images/logo.png',
+        width: 512,
+        height: 512,
+        alt: 'Saachi Tours & Travels Logo',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Saachi Tours & Travels | Domestic, Pilgrimage & Customized Tour Packages',
-    description: 'Book customized tour packages, pilgrimage tours (Char Dham, Ashtavinayak), hotel bookings, and corporate travel solutions with Saachi Tours & Travels.',
-    images: ['/images/og-image.jpg'],
+    title: 'Saachi Tours & Travels | Domestic, International & Pilgrimage Tour Packages',
+    description: 'Explore premium domestic, international, honeymoon, family, and pilgrimage tour packages with Saachi Tours & Travels.',
+    images: ['/images/logo.png'],
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon.png', sizes: '32x32', type: 'image/png' }
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+    ]
   },
 };
 
