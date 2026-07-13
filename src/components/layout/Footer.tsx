@@ -56,7 +56,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://www.instagram.com/varshaagaikwad?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                href="https://www.instagram.com/saachi_tours/?utm_source=ig_web_button_share_sheet"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full bg-slate-900 hover:bg-teal-600 hover:text-white flex items-center justify-center transition-colors"
