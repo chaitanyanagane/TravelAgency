@@ -5,6 +5,7 @@ import Footer from '../components/layout/Footer';
 import FloatingWhatsApp from '../components/common/FloatingWhatsApp';
 import AnalyticsTracker from '../components/common/AnalyticsTracker';
 import { Suspense } from 'react';
+import { Analytics } from '@vercel/analytics/next';
 
 export const viewport: Viewport = {
   themeColor: '#090d16',
@@ -92,6 +93,7 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <AnalyticsTracker />
         </Suspense>
+        <Analytics />
       </body>
     </html>
   );
