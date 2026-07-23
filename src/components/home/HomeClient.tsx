@@ -234,120 +234,124 @@ export default function HomeClient({
       </section>
 
       {/* Popular Destinations */}
-      <section className="py-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
-          <div className="space-y-3">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight font-luxury font-serif">
-              Cultivated Destinations
-            </h2>
-            <p className="text-slate-400 max-w-xl font-light">
-              Explore our handpicked getaways from mist-covered valleys to historic forts and sandy shores.
-            </p>
+      {featuredDestinations && featuredDestinations.length > 0 && (
+        <section className="py-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
+            <div className="space-y-3">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight font-luxury font-serif">
+                Cultivated Destinations
+              </h2>
+              <p className="text-slate-400 max-w-xl font-light">
+                Explore our handpicked getaways from mist-covered valleys to historic forts and sandy shores.
+              </p>
+            </div>
+            <Link
+              href="/destinations"
+              className="flex items-center space-x-1.5 text-teal-400 hover:text-teal-300 font-semibold text-sm mt-4 md:mt-0 group"
+            >
+              <span>View All Pathways</span>
+              <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
+            </Link>
           </div>
-          <Link
-            href="/destinations"
-            className="flex items-center space-x-1.5 text-teal-400 hover:text-teal-300 font-semibold text-sm mt-4 md:mt-0 group"
-          >
-            <span>View All Pathways</span>
-            <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
-          </Link>
-        </div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {featuredDestinations.map((dest, index) => {
-            // Asymmetric sizing classes for a gorgeous rhythm
-            const gridClasses = [
-              'lg:col-span-7 h-80 sm:h-96', // Row 1 Left - Large
-              'lg:col-span-5 h-80 sm:h-96', // Row 1 Right - Medium
-              'lg:col-span-5 h-80 sm:h-[360px]', // Row 2 Left - Medium
-              'lg:col-span-7 h-80 sm:h-[360px]'  // Row 2 Right - Large
-            ][index] || 'lg:col-span-4 h-80';
+          {/* Bento Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {(featuredDestinations ?? []).map((dest, index) => {
+              // Asymmetric sizing classes for a gorgeous rhythm
+              const gridClasses = [
+                'lg:col-span-7 h-80 sm:h-96', // Row 1 Left - Large
+                'lg:col-span-5 h-80 sm:h-96', // Row 1 Right - Medium
+                'lg:col-span-5 h-80 sm:h-[360px]', // Row 2 Left - Medium
+                'lg:col-span-7 h-80 sm:h-[360px]'  // Row 2 Right - Large
+              ][index] || 'lg:col-span-4 h-80';
 
-            return (
-              <motion.div
-                key={dest.id}
-                className={`${gridClasses} relative rounded-[2rem] overflow-hidden group border border-white/5 bg-slate-900/40 p-2`}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                {/* Inner double-bezel content */}
-                <div className="relative w-full h-full rounded-[calc(2rem-0.5rem)] overflow-hidden">
-                  <Image
-                    src={dest.image}
-                    alt={dest.name}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
-                  
-                  <div className="absolute bottom-6 left-6 right-6">
-                    <span className="inline-block bg-teal-900/60 backdrop-blur-md text-teal-350 text-[9px] font-bold font-mono px-3 py-1 rounded-full mb-3 uppercase tracking-wider border border-teal-500/10">
-                      {dest.packageCount} Pathways
-                    </span>
-                    <h3 className="text-2xl font-bold text-white mb-2 font-luxury font-serif">{dest.name}</h3>
-                    <p className="text-slate-350 text-sm line-clamp-2 font-light mb-5 max-w-md leading-relaxed">
-                      {dest.description}
-                    </p>
-                    <Link
-                      href={`/packages?destination=${encodeURIComponent(dest.name)}`}
-                      className="inline-flex items-center space-x-2 text-xs font-bold text-teal-400 hover:text-white transition-colors group/link"
-                    >
-                      <span>Explore Tours</span>
-                      <ArrowRight className="w-3.5 h-3.5 transform group-hover/link:translate-x-1 transition-transform" />
-                    </Link>
+              return (
+                <motion.div
+                  key={dest?.id || index}
+                  className={`${gridClasses} relative rounded-[2rem] overflow-hidden group border border-white/5 bg-slate-900/40 p-2`}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                >
+                  {/* Inner double-bezel content */}
+                  <div className="relative w-full h-full rounded-[calc(2rem-0.5rem)] overflow-hidden">
+                    <Image
+                      src={dest?.image || '/images/logo.png'}
+                      alt={dest?.name || ''}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
+                    
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <span className="inline-block bg-teal-900/60 backdrop-blur-md text-teal-350 text-[9px] font-bold font-mono px-3 py-1 rounded-full mb-3 uppercase tracking-wider border border-teal-500/10">
+                        {dest?.packageCount ?? 0} Pathways
+                      </span>
+                      <h3 className="text-2xl font-bold text-white mb-2 font-luxury font-serif">{dest?.name || ''}</h3>
+                      <p className="text-slate-350 text-sm line-clamp-2 font-light mb-5 max-w-md leading-relaxed">
+                        {dest?.description || ''}
+                      </p>
+                      <Link
+                        href={`/packages?destination=${encodeURIComponent(dest?.name || '')}`}
+                        className="inline-flex items-center space-x-2 text-xs font-bold text-teal-400 hover:text-white transition-colors group/link"
+                      >
+                        <span>Explore Tours</span>
+                        <ArrowRight className="w-3.5 h-3.5 transform group-hover/link:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* Featured Tour Packages */}
-      <section className="py-32 bg-slate-900/[0.15] border-y border-white/5 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-            
-            {/* Left Side: Brand Narrative */}
-            <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-28">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight font-luxury font-serif leading-tight">
-                Trending Tour Packages
-              </h2>
-              <p className="text-slate-400 font-light leading-relaxed">
-                We craft tailor-made, boutique excursions designed to let you unwind completely. Every detail is taken care of by our dedicated team.
-              </p>
-              <div className="pt-4">
-                <Link
-                  href="/packages"
-                  className="group inline-flex items-center justify-center bg-white/[0.04] border border-white/10 hover:border-white/20 text-slate-200 hover:text-white pl-6 pr-3 py-2.5 rounded-full transition-all duration-300 active:scale-[0.98] text-sm"
-                >
-                  <span className="mr-4">See All Vacations</span>
-                  <span className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center group-hover:translate-x-0.5 transition-transform duration-300">
-                    <ArrowRight className="w-3.5 h-3.5 text-white" />
-                  </span>
-                </Link>
+      {featuredPackages && featuredPackages.length > 0 && (
+        <section className="py-32 bg-slate-900/[0.15] border-y border-white/5 relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+              
+              {/* Left Side: Brand Narrative */}
+              <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-28">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight font-luxury font-serif leading-tight">
+                  Trending Tour Packages
+                </h2>
+                <p className="text-slate-400 font-light leading-relaxed">
+                  We craft tailor-made, boutique excursions designed to let you unwind completely. Every detail is taken care of by our dedicated team.
+                </p>
+                <div className="pt-4">
+                  <Link
+                    href="/packages"
+                    className="group inline-flex items-center justify-center bg-white/[0.04] border border-white/10 hover:border-white/20 text-slate-200 hover:text-white pl-6 pr-3 py-2.5 rounded-full transition-all duration-300 active:scale-[0.98] text-sm"
+                  >
+                    <span className="mr-4">See All Vacations</span>
+                    <span className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center group-hover:translate-x-0.5 transition-transform duration-300">
+                      <ArrowRight className="w-3.5 h-3.5 text-white" />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Right Side: Staggered Packages Grid */}
+              <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+                {(featuredPackages ?? []).map((tour, index) => {
+                  // Apply translate-y to the second card at desktop to break grid symmetry
+                  const staggerClass = index === 1 ? 'lg:translate-y-12' : '';
+                  return (
+                    <div key={tour?.id || index} className={`${staggerClass} transition-transform duration-500`}>
+                      <PackageCard tour={tour} />
+                    </div>
+                  );
+                })}
               </div>
             </div>
-
-            {/* Right Side: Staggered Packages Grid */}
-            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-              {featuredPackages.map((tour, index) => {
-                // Apply translate-y to the second card at desktop to break grid symmetry
-                const staggerClass = index === 1 ? 'lg:translate-y-12' : '';
-                return (
-                  <div key={tour.id} className={`${staggerClass} transition-transform duration-500`}>
-                    <PackageCard tour={tour} />
-                  </div>
-                );
-              })}
-            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Our Services Section */}
       <section className="py-32 border-b border-white/5 bg-slate-950/20">
@@ -474,7 +478,7 @@ export default function HomeClient({
       </section>
 
       {/* Customer Testimonials Carousel */}
-      {testimonials.length > 0 && (
+      {testimonials && testimonials.length > 0 && (
         <section className="py-32 bg-slate-900/[0.15] border-y border-white/5 overflow-hidden">
           <div className="max-w-4xl mx-auto px-4 text-center relative">
             <div className="flex justify-center mb-6">
@@ -506,15 +510,15 @@ export default function HomeClient({
                     “
                   </span>
                   <p className="text-xl sm:text-2xl text-slate-200 italic font-light leading-relaxed max-w-3xl mx-auto font-luxury font-serif">
-                    {testimonials[activeTestimonial].reviewText}
+                    {testimonials[activeTestimonial]?.reviewText || ''}
                   </p>
                   <div className="flex items-center justify-center space-x-4 pt-4">
-                    {testimonials[activeTestimonial].avatarUrl && (
+                    {testimonials[activeTestimonial]?.avatarUrl && (
                       <div className="relative w-14 h-14 rounded-full overflow-hidden border border-white/10 p-0.5 bg-slate-900 shadow-md">
                         <div className="relative w-full h-full rounded-full overflow-hidden">
                           <Image
                             src={testimonials[activeTestimonial].avatarUrl}
-                            alt={testimonials[activeTestimonial].name}
+                            alt={testimonials[activeTestimonial].name || 'Guest'}
                             fill
                             className="object-cover"
                           />
@@ -523,11 +527,13 @@ export default function HomeClient({
                     )}
                     <div className="text-left">
                       <span className="block text-white font-bold text-sm tracking-wide">
-                        {testimonials[activeTestimonial].name}
+                        {testimonials[activeTestimonial]?.name || 'Guest'}
                       </span>
-                      <span className="block text-teal-400 text-xs font-mono uppercase tracking-wider mt-0.5">
-                        Visited: {testimonials[activeTestimonial].destinationVisited}
-                      </span>
+                      {testimonials[activeTestimonial]?.destinationVisited && (
+                        <span className="block text-teal-400 text-xs font-mono uppercase tracking-wider mt-0.5">
+                          Visited: {testimonials[activeTestimonial].destinationVisited}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </motion.div>
@@ -535,25 +541,27 @@ export default function HomeClient({
             </div>
 
             {/* Carousel Arrows */}
-            <div className="flex items-center justify-center space-x-6 mt-12">
-              <button
-                onClick={prevTestimonial}
-                className="w-10 h-10 rounded-full bg-slate-900 border border-white/5 text-slate-350 hover:text-white hover:border-white/15 flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer"
-                aria-label="Previous review"
-              >
-                &larr;
-              </button>
-              <span className="text-slate-500 text-xs font-mono">
-                {activeTestimonial + 1} / {testimonials.length}
-              </span>
-              <button
-                onClick={nextTestimonial}
-                className="w-10 h-10 rounded-full bg-slate-900 border border-white/5 text-slate-350 hover:text-white hover:border-white/15 flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer"
-                aria-label="Next review"
-              >
-                &rarr;
-              </button>
-            </div>
+            {testimonials.length > 1 && (
+              <div className="flex items-center justify-center space-x-6 mt-12">
+                <button
+                  onClick={prevTestimonial}
+                  className="w-10 h-10 rounded-full bg-slate-900 border border-white/5 text-slate-355 hover:text-white hover:border-white/15 flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer"
+                  aria-label="Previous review"
+                >
+                  &larr;
+                </button>
+                <span className="text-slate-500 text-xs font-mono">
+                  {activeTestimonial + 1} / {testimonials.length}
+                </span>
+                <button
+                  onClick={nextTestimonial}
+                  className="w-10 h-10 rounded-full bg-slate-900 border border-white/5 text-slate-355 hover:text-white hover:border-white/15 flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer"
+                  aria-label="Next review"
+                >
+                  &rarr;
+                </button>
+              </div>
+            )}
           </div>
         </section>
       )}
@@ -615,128 +623,134 @@ export default function HomeClient({
       </section>
 
       {/* Latest Blogs */}
-      <section className="py-32 bg-slate-900/[0.15] border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
-            <div className="space-y-3">
-              <div className="flex">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  className="inline-flex items-center space-x-2 bg-teal-500/10 border border-teal-500/20 rounded-full px-3.5 py-1"
-                >
-                  <span className="text-[10px] font-semibold tracking-widest text-teal-400 uppercase font-mono">
-                    Travel Journal
-                  </span>
-                </motion.div>
+      {featuredBlogs && featuredBlogs.length > 0 && (
+        <section className="py-32 bg-slate-900/[0.15] border-y border-white/5">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
+              <div className="space-y-3">
+                <div className="flex">
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    className="inline-flex items-center space-x-2 bg-teal-500/10 border border-teal-500/20 rounded-full px-3.5 py-1"
+                  >
+                    <span className="text-[10px] font-semibold tracking-widest text-teal-400 uppercase font-mono">
+                      Travel Journal
+                    </span>
+                  </motion.div>
+                </div>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight font-luxury font-serif">
+                  Latest from Travel Blog
+                </h2>
+                <p className="text-slate-400 max-w-xl font-light">
+                  Handy packing checklists, weather updates, and weekend trip guides written by our specialists.
+                </p>
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight font-luxury font-serif">
-                Latest from Travel Blog
-              </h2>
-              <p className="text-slate-400 max-w-xl font-light">
-                Handy packing checklists, weather updates, and weekend trip guides written by our specialists.
-              </p>
-            </div>
-            <Link
-              href="/blog"
-              className="flex items-center space-x-1.5 text-teal-400 hover:text-teal-305 font-semibold text-sm mt-4 md:mt-0 group"
-            >
-              <span>View All Musings</span>
-              <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-            {/* Featured Blog - Left (2/3 width) */}
-            <div className="lg:col-span-8">
-              {featuredBlogs.slice(0, 1).map((post) => (
-                <motion.article
-                  key={post.id}
-                  className="bg-slate-900/40 border border-white/5 rounded-[2rem] p-2 flex flex-col h-full group"
-                  whileHover={{ y: -4 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[calc(2rem-0.5rem)] bg-slate-950">
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 66vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <span className="absolute top-4 left-4 z-10 px-3.5 py-1 text-[10px] font-bold tracking-widest uppercase bg-slate-950/80 backdrop-blur-md rounded-full text-teal-450 border border-white/5 font-mono">
-                      {post.category}
-                    </span>
-                  </div>
-                  <div className="p-6 sm:p-8 flex flex-col flex-grow text-left">
-                    <div className="flex items-center space-x-3 text-xs text-slate-500 mb-4 font-mono">
-                      <span>{post.date}</span>
-                      <span>&bull;</span>
-                      <span>{post.readTime}</span>
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 tracking-wide leading-snug group-hover:text-teal-400 transition-colors font-luxury font-serif">
-                      {post.title}
-                    </h3>
-                    <p className="text-slate-400 text-sm font-light leading-relaxed mb-6 max-w-2xl">
-                      {post.excerpt}
-                    </p>
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="inline-flex items-center space-x-2 text-xs font-bold text-teal-400 hover:text-white transition-colors group/link"
-                    >
-                      <span>Read Full Entry</span>
-                      <ArrowRight className="w-3.5 h-3.5 transform group-hover/link:translate-x-1 transition-transform" />
-                    </Link>
-                  </div>
-                </motion.article>
-              ))}
+              <Link
+                href="/blog"
+                className="flex items-center space-x-1.5 text-teal-400 hover:text-teal-355 font-semibold text-sm mt-4 md:mt-0 group"
+              >
+                <span>View All Musings</span>
+                <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
+              </Link>
             </div>
 
-            {/* Sidebar Blogs - Right (1/3 width) */}
-            <div className="lg:col-span-4 flex flex-col gap-8">
-              {featuredBlogs.slice(1, 3).map((post) => (
-                <motion.article
-                  key={post.id}
-                  className="bg-slate-900/40 border border-white/5 rounded-[2rem] p-2 flex flex-col h-full group"
-                  whileHover={{ y: -4 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="relative aspect-video w-full overflow-hidden rounded-[calc(2rem-0.5rem)] bg-slate-950">
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 33vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <span className="absolute top-3 left-3 z-10 px-2.5 py-0.5 text-[9px] font-bold tracking-widest uppercase bg-slate-950/80 backdrop-blur-md rounded-full text-teal-405 border border-white/5 font-mono">
-                      {post.category}
-                    </span>
-                  </div>
-                  <div className="p-5 flex flex-col flex-grow text-left">
-                    <div className="flex items-center space-x-3 text-[10px] text-slate-500 mb-2 font-mono">
-                      <span>{post.date}</span>
-                      <span>&bull;</span>
-                      <span>{post.readTime}</span>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+              {/* Featured Blog - Left (2/3 width) */}
+              <div className="lg:col-span-8">
+                {((featuredBlogs ?? []).slice(0, 1)).map((post, idx) => (
+                  <motion.article
+                    key={post?.id || idx}
+                    className="bg-slate-900/40 border border-white/5 rounded-[2rem] p-2 flex flex-col h-full group"
+                    whileHover={{ y: -4 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[calc(2rem-0.5rem)] bg-slate-950">
+                      <Image
+                        src={post?.image || '/images/logo.png'}
+                        alt={post?.title || ''}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 66vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      {post?.category && (
+                        <span className="absolute top-4 left-4 z-10 px-3.5 py-1 text-[10px] font-bold tracking-widest uppercase bg-slate-950/80 backdrop-blur-md rounded-full text-teal-455 border border-white/5 font-mono">
+                          {post.category}
+                        </span>
+                      )}
                     </div>
-                    <h3 className="text-lg font-bold text-white mb-2 leading-snug group-hover:text-teal-400 transition-colors line-clamp-2">
-                      {post.title}
-                    </h3>
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="mt-auto inline-flex items-center space-x-1.5 text-xs font-bold text-teal-400 hover:text-teal-300 transition-colors"
-                    >
-                      <span>Read Entry</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </motion.article>
-              ))}
+                    <div className="p-6 sm:p-8 flex flex-col flex-grow text-left">
+                      <div className="flex items-center space-x-3 text-xs text-slate-500 mb-4 font-mono">
+                        {post?.date && <span>{post.date}</span>}
+                        {post?.date && post?.readTime && <span>&bull;</span>}
+                        {post?.readTime && <span>{post.readTime}</span>}
+                      </div>
+                      <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 tracking-wide leading-snug group-hover:text-teal-400 transition-colors font-luxury font-serif">
+                        {post?.title || ''}
+                      </h3>
+                      <p className="text-slate-400 text-sm font-light leading-relaxed mb-6 max-w-2xl">
+                        {post?.excerpt || ''}
+                      </p>
+                      <Link
+                        href={`/blog/${post?.slug || ''}`}
+                        className="inline-flex items-center space-x-2 text-xs font-bold text-teal-400 hover:text-white transition-colors group/link"
+                      >
+                        <span>Read Full Entry</span>
+                        <ArrowRight className="w-3.5 h-3.5 transform group-hover/link:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
+
+              {/* Sidebar Blogs - Right (1/3 width) */}
+              <div className="lg:col-span-4 flex flex-col gap-8">
+                {((featuredBlogs ?? []).slice(1, 3)).map((post, idx) => (
+                  <motion.article
+                    key={post?.id || idx}
+                    className="bg-slate-900/40 border border-white/5 rounded-[2rem] p-2 flex flex-col h-full group"
+                    whileHover={{ y: -4 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="relative aspect-video w-full overflow-hidden rounded-[calc(2rem-0.5rem)] bg-slate-950">
+                      <Image
+                        src={post?.image || '/images/logo.png'}
+                        alt={post?.title || ''}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 33vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      {post?.category && (
+                        <span className="absolute top-3 left-3 z-10 px-2.5 py-0.5 text-[9px] font-bold tracking-widest uppercase bg-slate-950/80 backdrop-blur-md rounded-full text-teal-405 border border-white/5 font-mono">
+                          {post.category}
+                        </span>
+                      )}
+                    </div>
+                    <div className="p-5 flex flex-col flex-grow text-left">
+                      <div className="flex items-center space-x-3 text-[10px] text-slate-500 mb-2 font-mono">
+                        {post?.date && <span>{post.date}</span>}
+                        {post?.date && post?.readTime && <span>&bull;</span>}
+                        {post?.readTime && <span>{post.readTime}</span>}
+                      </div>
+                      <h3 className="text-lg font-bold text-white mb-2 leading-snug group-hover:text-teal-400 transition-colors line-clamp-2">
+                        {post?.title || ''}
+                      </h3>
+                      <Link
+                        href={`/blog/${post?.slug || ''}`}
+                        className="mt-auto inline-flex items-center space-x-1.5 text-xs font-bold text-teal-400 hover:text-teal-305 transition-colors"
+                      >
+                        <span>Read Entry</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Call to Action Section */}
       <section className="py-32 max-w-6xl mx-auto px-4">

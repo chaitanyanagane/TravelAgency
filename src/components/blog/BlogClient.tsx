@@ -90,9 +90,9 @@ export default function BlogClient({ blogs }: BlogClientProps) {
           layout
         >
           <AnimatePresence>
-            {filteredBlogs.map((post) => (
+            {(filteredBlogs ?? []).map((post, idx) => (
               <motion.article
-                key={post.id}
+                key={post?.id || idx}
                 className="bg-slate-900 border border-slate-800/60 rounded-2xl overflow-hidden flex flex-col h-full hover:border-slate-800 shadow-md group"
                 layout
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -103,45 +103,47 @@ export default function BlogClient({ blogs }: BlogClientProps) {
               >
                 <div className="relative aspect-video w-full overflow-hidden bg-slate-950">
                   <Image
-                    src={post.image}
-                    alt={post.title}
+                    src={post?.image || '/images/logo.png'}
+                    alt={post?.title || ''}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
-                  <span className="absolute top-4 left-4 z-10 px-2.5 py-0.5 text-[10px] font-bold tracking-wide uppercase bg-slate-950/80 backdrop-blur-md rounded-full text-teal-400 border border-slate-800">
-                    {post.category}
-                  </span>
+                  {post?.category && (
+                    <span className="absolute top-4 left-4 z-10 px-2.5 py-0.5 text-[10px] font-bold tracking-wide uppercase bg-slate-950/80 backdrop-blur-md rounded-full text-teal-400 border border-slate-800">
+                      {post.category}
+                    </span>
+                  )}
                 </div>
 
                 <div className="p-6 flex flex-col flex-grow">
                   <div className="flex items-center space-x-3 text-xs text-slate-500 mb-3">
                     <div className="flex items-center space-x-1">
                       <Calendar className="w-3.5 h-3.5" />
-                      <span>{post.date}</span>
+                      <span>{post?.date || ''}</span>
                     </div>
                     <span>&bull;</span>
                     <div className="flex items-center space-x-1">
                       <Clock className="w-3.5 h-3.5" />
-                      <span>{post.readTime}</span>
+                      <span>{post?.readTime || ''}</span>
                     </div>
                   </div>
 
                   <h2 className="text-xl font-bold text-white mb-2 leading-snug group-hover:text-teal-400 transition-colors line-clamp-2">
-                    {post.title}
+                    {post?.title || ''}
                   </h2>
 
                   <p className="text-slate-400 text-sm font-light line-clamp-2 leading-relaxed mb-6">
-                    {post.excerpt}
+                    {post?.excerpt || ''}
                   </p>
 
                   <div className="pt-4 border-t border-slate-800/80 mt-auto flex items-center justify-between">
                     <span className="text-xs text-slate-500 font-medium">
-                      By {post.author}
+                      By {post?.author || 'Saachi Tours'}
                     </span>
                     <Link
-                      href={`/blog/${post.slug}`}
+                      href={`/blog/${post?.slug || ''}`}
                       className="inline-flex items-center space-x-1 text-xs font-bold text-teal-400 hover:text-teal-300 group"
                     >
                       <span>Read Article</span>

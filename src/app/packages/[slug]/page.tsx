@@ -20,7 +20,7 @@ export const revalidate = 60;
 export async function generateStaticParams() {
   try {
     const allPackages = await getAllPackages();
-    return allPackages.map((tour) => ({
+    return (allPackages ?? []).map((tour) => ({
       slug: tour.slug,
     }));
   } catch (error) {
@@ -37,23 +37,23 @@ export async function generateMetadata({ params }: PackagePageProps): Promise<Me
     if (!tour) return {};
 
     return {
-      title: `${tour.title} (${tour.duration})`,
-      description: tour.overview,
+      title: `${tour.title || 'Tour Package'} (${tour.duration || ''})`,
+      description: tour.overview || '',
       alternates: {
-        canonical: `/packages/${tour.slug}`,
+        canonical: `/packages/${tour.slug || ''}`,
       },
       openGraph: {
         type: 'website',
-        url: `https://saachitours.in/packages/${tour.slug}`,
-        title: `${tour.title} | Saachi Tours & Travels`,
-        description: tour.overview,
-        images: tour.images.map((img: string) => ({ url: img })),
+        url: `https://saachitours.in/packages/${tour.slug || ''}`,
+        title: `${tour.title || ''} | Saachi Tours & Travels`,
+        description: tour.overview || '',
+        images: (tour.images ?? []).map((img: string) => ({ url: img })),
       },
       twitter: {
         card: 'summary_large_image',
-        title: `${tour.title} | Saachi Tours & Travels`,
-        description: tour.overview,
-        images: [tour.images[0]],
+        title: `${tour.title || ''} | Saachi Tours & Travels`,
+        description: tour.overview || '',
+        images: tour.images && tour.images.length > 0 ? [tour.images[0]] : [],
       },
     };
   } catch (error) {
@@ -80,16 +80,16 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
   const productSchema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    'name': tour.title,
-    'description': tour.overview,
-    'image': tour.images,
+    'name': tour.title || '',
+    'description': tour.overview || '',
+    'image': tour.images || [],
     'offers': {
       '@type': 'Offer',
       'priceCurrency': 'INR',
-      'price': tour.price,
+      'price': tour.price || 0,
       'priceValidUntil': '2027-12-31',
       'availability': 'https://schema.org/InStock',
-      'url': `https://saachitours.in/packages/${tour.slug}`,
+      'url': `https://saachitours.in/packages/${tour.slug || ''}`,
       'seller': {
         '@type': 'Organization',
         'name': 'Saachi Tours & Travels',

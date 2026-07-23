@@ -13,14 +13,14 @@ export default async function HomePage() {
     getAllBlogs(),
   ]);
 
-  const featuredDestinations = destinations.slice(0, 4);
-  const featuredBlogs = blogs.slice(0, 3);
+  const featuredDestinations = (destinations ?? []).slice(0, 4);
+  const featuredBlogs = (blogs ?? []).slice(0, 3);
 
   return (
     <HomeClient
-      featuredPackages={featuredPackages}
+      featuredPackages={featuredPackages ?? []}
       featuredDestinations={featuredDestinations}
-      testimonials={testimonials}
+      testimonials={testimonials ?? []}
       featuredBlogs={featuredBlogs}
     />
   );

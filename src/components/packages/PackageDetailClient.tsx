@@ -29,8 +29,22 @@ interface PackageDetailClientProps {
 }
 
 export default function PackageDetailClient({ tour }: PackageDetailClientProps) {
-  const { title, destination, duration, price, rating, tourType, images, overview, itinerary, inclusions, exclusions } = tour;
-  const pricing = tour.pricing || { couple: null, family: null, group: null };
+  const { 
+    title = '', 
+    destination = '', 
+    duration = '', 
+    price, 
+    rating = 0, 
+    tourType = 'Customized', 
+    images = [], 
+    overview = '', 
+    itinerary = [], 
+    inclusions = [], 
+    exclusions = [] 
+  } = tour || {};
+  
+  const pricing = tour?.pricing || { couple: null, family: null, group: null };
+  const finalImages = images && images.length > 0 ? images : ['/images/logo.png'];
 
   useEffect(() => {
     trackPackageView(title, destination);
@@ -41,8 +55,8 @@ export default function PackageDetailClient({ tour }: PackageDetailClientProps) 
   const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(0);
   const [activeHotelTier, setActiveHotelTier] = useState<'standard' | 'premium' | 'luxury'>('premium');
 
-  const accommodations = getAccommodationsForPackage(tour.slug, tour.destination);
-  const faqs = getFaqsForPackage(tour.slug, tour.destination);
+  const accommodations = getAccommodationsForPackage(tour?.slug || '', tour?.destination || '');
+  const faqs = getFaqsForPackage(tour?.slug || '', tour?.destination || '');
 
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919270267390';
 
@@ -80,7 +94,7 @@ export default function PackageDetailClient({ tour }: PackageDetailClientProps) 
             </span>
             <span className="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 text-xs font-semibold uppercase tracking-wider flex items-center space-x-1">
               <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400 shrink-0" />
-              <span>{rating.toFixed(1)} / 5.0 Rating</span>
+              <span>{(rating ?? 0).toFixed(1)} / 5.0 Rating</span>
             </span>
           </div>
 
@@ -145,7 +159,7 @@ export default function PackageDetailClient({ tour }: PackageDetailClientProps) 
         <div className="lg:col-span-7 flex flex-col justify-between space-y-4">
           <div className="relative aspect-[16/10] w-full rounded-3xl overflow-hidden bg-slate-950 border border-slate-900/80 shadow-2xl">
             <Image
-              src={images[activeImageIndex] || images[0]}
+              src={finalImages[activeImageIndex] || finalImages[0]}
               alt={`${title} main view`}
               fill
               className="object-cover transition-all duration-500 ease-in-out"
@@ -155,14 +169,14 @@ export default function PackageDetailClient({ tour }: PackageDetailClientProps) 
             
             {/* Slide indicators overlays */}
             <div className="absolute bottom-4 left-4 bg-slate-950/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-slate-800 text-[11px] text-slate-300 font-semibold tracking-wider uppercase">
-              Image {activeImageIndex + 1} of {images.length}
+              Image {activeImageIndex + 1} of {finalImages.length}
             </div>
           </div>
 
           {/* Thumbnails row */}
-          {images.length > 1 && (
+          {finalImages.length > 1 && (
             <div className="flex space-x-3 overflow-x-auto py-1 scrollbar-none">
-              {images.map((img, idx) => (
+              {finalImages.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setActiveImageIndex(idx)}
@@ -193,339 +207,357 @@ export default function PackageDetailClient({ tour }: PackageDetailClientProps) 
         <div className="lg:col-span-8 space-y-12">
           
           {/* PACKAGE OVERVIEW */}
-          <section className="bg-slate-900/30 border border-slate-850 rounded-3xl p-5 sm:p-8 space-y-6">
-            <h2 className="text-2xl font-bold text-white font-display flex items-center space-x-2.5">
-              <span className="w-1.5 h-6 bg-teal-500 rounded-full inline-block"></span>
-              <span>Tour Overview</span>
-            </h2>
-            <p className="text-slate-350 text-sm sm:text-base font-light leading-relaxed">
-              {overview}
-            </p>
+          {overview && (
+            <section className="bg-slate-900/30 border border-slate-850 rounded-3xl p-5 sm:p-8 space-y-6">
+              <h2 className="text-2xl font-bold text-white font-display flex items-center space-x-2.5">
+                <span className="w-1.5 h-6 bg-teal-500 rounded-full inline-block"></span>
+                <span>Tour Overview</span>
+              </h2>
+              <p className="text-slate-355 text-sm sm:text-base font-light leading-relaxed">
+                {overview}
+              </p>
 
-            {/* Quick Amenities Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-4 border-t border-slate-850">
-              <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-3 sm:p-4 flex items-center space-x-2.5 sm:space-x-3">
-                <Coffee className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 shrink-0" />
-                <div>
-                  <span className="block text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Meals</span>
-                  <span className="text-[11px] sm:text-xs font-bold text-slate-200">Daily Breakfast</span>
+              {/* Quick Amenities Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-4 border-t border-slate-850">
+                <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-3 sm:p-4 flex items-center space-x-2.5 sm:space-x-3">
+                  <Coffee className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 shrink-0" />
+                  <div>
+                    <span className="block text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Meals</span>
+                    <span className="text-[11px] sm:text-xs font-bold text-slate-200">Daily Breakfast</span>
+                  </div>
+                </div>
+                <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-3 sm:p-4 flex items-center space-x-2.5 sm:space-x-3">
+                  <Car className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 shrink-0" />
+                  <div>
+                    <span className="block text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Transfers</span>
+                    <span className="text-[11px] sm:text-xs font-bold text-slate-200">Private AC Cab</span>
+                  </div>
+                </div>
+                <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-3 sm:p-4 flex items-center space-x-2.5 sm:space-x-3">
+                  <Building className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 shrink-0" />
+                  <div>
+                    <span className="block text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Stay Standard</span>
+                    <span className="text-[11px] sm:text-xs font-bold text-slate-200">Premium / Custom</span>
+                  </div>
+                </div>
+                <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-3 sm:p-4 flex items-center space-x-2.5 sm:space-x-3">
+                  <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 shrink-0" />
+                  <div>
+                    <span className="block text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Security</span>
+                    <span className="text-[11px] sm:text-xs font-bold text-slate-200">24/7 Assistance</span>
+                  </div>
                 </div>
               </div>
-              <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-3 sm:p-4 flex items-center space-x-2.5 sm:space-x-3">
-                <Car className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 shrink-0" />
-                <div>
-                  <span className="block text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Transfers</span>
-                  <span className="text-[11px] sm:text-xs font-bold text-slate-200">Private AC Cab</span>
-                </div>
-              </div>
-              <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-3 sm:p-4 flex items-center space-x-2.5 sm:space-x-3">
-                <Building className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 shrink-0" />
-                <div>
-                  <span className="block text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Stay Standard</span>
-                  <span className="text-[11px] sm:text-xs font-bold text-slate-200">Premium / Custom</span>
-                </div>
-              </div>
-              <div className="bg-slate-950/50 border border-slate-850 rounded-2xl p-3 sm:p-4 flex items-center space-x-2.5 sm:space-x-3">
-                <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 shrink-0" />
-                <div>
-                  <span className="block text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Security</span>
-                  <span className="text-[11px] sm:text-xs font-bold text-slate-200">24/7 Assistance</span>
-                </div>
-              </div>
-            </div>
-          </section>
+            </section>
+          )}
 
           {/* DAY-WISE ITINERARY (TIMELINE VIEW) */}
-          <section className="space-y-6">
-            <h2 className="text-2xl font-bold text-white font-display flex items-center space-x-2.5">
-              <span className="w-1.5 h-6 bg-teal-500 rounded-full inline-block"></span>
-              <span>Day-wise Itinerary</span>
-            </h2>
+          {itinerary && itinerary.length > 0 && (
+            <section className="space-y-6">
+              <h2 className="text-2xl font-bold text-white font-display flex items-center space-x-2.5">
+                <span className="w-1.5 h-6 bg-teal-500 rounded-full inline-block"></span>
+                <span>Day-wise Itinerary</span>
+              </h2>
 
-            <div className="relative pl-6 sm:pl-8 border-l border-slate-800 space-y-6 ml-4">
-              {itinerary.map((item) => {
-                const isExpanded = expandedDays[item.day] ?? false;
-                return (
-                  <div key={item.day} className="relative">
-                    {/* Stepper Dot */}
+              <div className="relative pl-6 sm:pl-8 border-l border-slate-800 space-y-6 ml-4">
+                {(itinerary ?? []).map((item) => {
+                  const isExpanded = expandedDays[item.day] ?? false;
+                  return (
+                    <div key={item.day} className="relative">
+                      {/* Stepper Dot */}
+                      <button
+                        onClick={() => toggleDay(item.day)}
+                        className={`absolute -left-[39px] sm:-left-[47px] top-1 w-7 h-7 sm:w-9 sm:h-9 rounded-full border-2 flex items-center justify-center transition-all focus:outline-none ${
+                          isExpanded
+                            ? 'bg-teal-500 border-teal-400 text-slate-950 shadow-md shadow-teal-500/20'
+                            : 'bg-slate-900 border-slate-850 text-slate-400 hover:border-slate-600'
+                        }`}
+                      >
+                        <span className="text-xs sm:text-sm font-bold">{item.day}</span>
+                      </button>
+
+                      {/* Timeline Card */}
+                      <div className="bg-slate-900/40 border border-slate-850 rounded-2xl hover:border-slate-800 overflow-hidden transition-all duration-300">
+                        <div 
+                          onClick={() => toggleDay(item.day)}
+                          className="flex items-center justify-between p-5 select-none cursor-pointer focus:outline-none"
+                        >
+                          <h3 className="text-sm sm:text-base font-bold text-white hover:text-teal-400 transition-colors pr-4">
+                            Day {item.day}: {item.title}
+                          </h3>
+                          <ChevronDown 
+                            className={`w-4 h-4 text-slate-500 transition-transform duration-300 shrink-0 ${
+                              isExpanded ? 'rotate-180 text-teal-400' : ''
+                            }`} 
+                          />
+                        </div>
+
+                        <AnimatePresence initial={false}>
+                          {isExpanded && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.25, ease: 'easeInOut' }}
+                            >
+                              <div className="px-5 pb-5 pt-1 border-t border-slate-900 text-xs sm:text-sm text-slate-400 font-light leading-relaxed">
+                                {item.description}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
+          {/* HOTELS & ACCOMMODATION RECOMMENDATIONS */}
+          {accommodations && accommodations.length > 0 && (
+            <section className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <h2 className="text-2xl font-bold text-white font-display flex items-center space-x-2.5">
+                  <span className="w-1.5 h-6 bg-teal-500 rounded-full inline-block"></span>
+                  <span>Recommended Accommodation</span>
+                </h2>
+
+                {/* Tier Selector Tabs */}
+                <div className="bg-slate-950 border border-slate-850 p-1 rounded-xl flex space-x-1 self-start sm:self-center shrink-0">
+                  {(['standard', 'premium', 'luxury'] as const).map((tier) => (
                     <button
-                      onClick={() => toggleDay(item.day)}
-                      className={`absolute -left-[39px] sm:-left-[47px] top-1 w-7 h-7 sm:w-9 sm:h-9 rounded-full border-2 flex items-center justify-center transition-all focus:outline-none ${
-                        isExpanded
-                          ? 'bg-teal-500 border-teal-400 text-slate-950 shadow-md shadow-teal-500/20'
-                          : 'bg-slate-900 border-slate-850 text-slate-400 hover:border-slate-600'
+                      key={tier}
+                      onClick={() => setActiveHotelTier(tier)}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors focus:outline-none ${
+                        activeHotelTier === tier
+                          ? 'bg-teal-600 text-white shadow-sm'
+                          : 'text-slate-500 hover:text-slate-300'
                       }`}
                     >
-                      <span className="text-xs sm:text-sm font-bold">{item.day}</span>
+                      {tier}
                     </button>
+                  ))}
+                </div>
+              </div>
 
-                    {/* Timeline Card */}
-                    <div className="bg-slate-900/40 border border-slate-850 rounded-2xl hover:border-slate-800 overflow-hidden transition-all duration-300">
-                      <summary 
-                        onClick={() => toggleDay(item.day)}
-                        className="flex items-center justify-between p-5 select-none cursor-pointer focus:outline-none"
+              {/* Hotel Cards Comparison Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {(accommodations ?? []).map((hotel) => {
+                  const isSelected = activeHotelTier === hotel.tier;
+                  return (
+                    <div
+                      key={hotel.tier}
+                      onClick={() => setActiveHotelTier(hotel.tier)}
+                      className={`bg-slate-900 border rounded-3xl overflow-hidden cursor-pointer transition-all duration-300 group flex flex-col justify-between ${
+                        isSelected
+                          ? 'border-teal-500 ring-2 ring-teal-500/20 shadow-xl scale-[1.01]'
+                          : 'border-slate-850/60 hover:border-slate-800 opacity-70 hover:opacity-100'
+                      }`}
+                    >
+                      <div>
+                        {/* Hotel Photo */}
+                        <div className="relative aspect-[4/3] w-full bg-slate-950 overflow-hidden">
+                          <Image
+                            src={hotel.image || '/images/logo.png'}
+                            alt={hotel.name || ''}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 300px"
+                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                          <div className="absolute top-3 right-3 bg-slate-950/80 backdrop-blur-md px-2.5 py-1 rounded-lg border border-slate-800 text-[10px] uppercase font-bold tracking-wider text-teal-400">
+                            {hotel.tier}
+                          </div>
+                        </div>
+
+                        {/* Hotel Copy */}
+                        <div className="p-5 space-y-3">
+                          <div className="flex items-center space-x-1.5">
+                            <span className="text-amber-400 flex items-center">
+                              {Array.from({ length: hotel?.stars || 0 }).map((_, i) => (
+                                <Star key={i} className="w-3 h-3 fill-current shrink-0" />
+                              ))}
+                            </span>
+                            <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wide">
+                              {hotel?.stars || 0} Star Property
+                            </span>
+                          </div>
+                          <h3 className="text-sm font-bold text-white line-clamp-1 group-hover:text-teal-400 transition-colors">
+                            {hotel.name || ''}
+                          </h3>
+                          <p className="text-[11px] text-slate-500 flex items-center space-x-1">
+                            <MapPin className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                            <span>{hotel.location || ''}</span>
+                          </p>
+                          <div className="border-t border-slate-950 pt-3 space-y-1">
+                            <span className="block text-[9px] uppercase tracking-wider text-slate-500 font-bold">Room Category</span>
+                            <span className="text-xs font-semibold text-slate-300">{hotel.roomType || ''}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Amenities Checklist */}
+                      {hotel?.amenities && hotel.amenities.length > 0 && (
+                        <div className="px-5 pb-5 pt-0">
+                          <div className="bg-slate-950/60 border border-slate-850/60 rounded-xl p-3.5 space-y-2">
+                            <span className="block text-[8px] uppercase tracking-wider text-slate-500 font-bold">Inclusions</span>
+                            <ul className="space-y-1.5">
+                              {(hotel.amenities ?? []).map((item, i) => (
+                                <li key={i} className="flex items-start space-x-1.5 text-[10px] text-slate-400 font-light">
+                                  <Check className="w-3 h-3 text-teal-400 shrink-0 mt-0.5" />
+                                  <span className="line-clamp-1">{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
+          {/* INCLUSIONS & EXCLUSIONS */}
+          {((inclusions && inclusions.length > 0) || (exclusions && exclusions.length > 0)) && (
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+              {/* Inclusions Card */}
+              {inclusions && inclusions.length > 0 && (
+                <div className="bg-slate-900/30 border border-slate-850 rounded-3xl p-6 sm:p-8 space-y-5">
+                  <div className="flex items-center space-x-2.5 text-teal-400 font-bold">
+                    <div className="w-8 h-8 rounded-lg bg-teal-950/50 flex items-center justify-center border border-teal-500/20">
+                      <Check className="w-4 h-4" />
+                    </div>
+                    <h3 className="text-lg font-bold text-white font-display">Inclusions</h3>
+                  </div>
+                  <ul className="space-y-3">
+                    {(inclusions ?? []).map((inc, i) => (
+                      <li key={i} className="flex items-start space-x-3 text-xs sm:text-sm text-slate-355 font-light">
+                        <CheckCircle2 className="w-4 h-4 text-teal-500 shrink-0 mt-0.5" />
+                        <span>{inc}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Exclusions Card */}
+              {exclusions && exclusions.length > 0 && (
+                <div className="bg-slate-900/30 border border-slate-850 rounded-3xl p-6 sm:p-8 space-y-5">
+                  <div className="flex items-center space-x-2.5 text-amber-500 font-bold">
+                    <div className="w-8 h-8 rounded-lg bg-amber-950/50 flex items-center justify-center border border-amber-500/20">
+                      <X className="w-4 h-4" />
+                    </div>
+                    <h3 className="text-lg font-bold text-white font-display">Exclusions</h3>
+                  </div>
+                  <ul className="space-y-3">
+                    {(exclusions ?? []).map((exc, i) => (
+                      <li key={i} className="flex items-start space-x-3 text-xs sm:text-sm text-slate-355 font-light">
+                        <AlertTriangle className="w-4 h-4 text-amber-555 shrink-0 mt-0.5" />
+                        <span>{exc}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </section>
+          )}
+
+          {/* DETAILED PRICING BREAKDOWN */}
+          {pricing && (pricing.couple || pricing.family || pricing.group) && (
+            <section className="bg-slate-900/30 border border-slate-850 rounded-3xl p-6 sm:p-8 space-y-6">
+              <h2 className="text-2xl font-bold text-white font-display flex items-center space-x-2.5">
+                <span className="w-1.5 h-6 bg-teal-500 rounded-full inline-block"></span>
+                <span>Pricing Packages</span>
+              </h2>
+              <p className="text-xs text-slate-500 font-light">
+                *All prices are in Indian Rupees (INR) and calculated per person. Stated rates are valid for non-holiday dates. Rates may fluctuate based on room availability and seasonal flight/hotel surcharges.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                {[
+                  { type: 'Couple Occupancy', priceVal: pricing?.couple, desc: 'Assuming 2 persons sharing one room with private cab transfers.' },
+                  { type: 'Family Plan', priceVal: pricing?.family, desc: 'Per person assuming 4 adults traveling together, sharing two rooms.' },
+                  { type: 'Group Occupancy', priceVal: pricing?.group, desc: 'Per person assuming 6+ adults traveling together, sharing three rooms.' },
+                ].map((tier, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-slate-950/80 border border-slate-850 hover:border-slate-800 rounded-2xl p-5 text-center flex flex-col justify-between space-y-4 hover:shadow-lg transition-all"
+                  >
+                    <div className="space-y-1">
+                      <span className="block text-xs text-slate-500 font-semibold uppercase tracking-wider">{tier.type}</span>
+                      <p className="text-[10px] text-slate-400 font-light leading-relaxed px-1">
+                        {tier.desc}
+                      </p>
+                    </div>
+                    <div className="space-y-1 border-t border-slate-900 pt-3">
+                      <span className="block text-2xl font-extrabold text-teal-400">
+                        {tier.priceVal ? `₹${tier.priceVal.toLocaleString('en-IN')}` : 'On Request'}
+                      </span>
+                      <span className="block text-[9px] text-slate-500 font-bold uppercase tracking-wider">
+                        {tier.priceVal ? 'Per Person Starting' : 'Contact Us'}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* FAQ ACCORDION SECTION */}
+          {faqs && faqs.length > 0 && (
+            <section className="space-y-6">
+              <h2 className="text-2xl font-bold text-white font-display flex items-center space-x-2.5">
+                <span className="w-1.5 h-6 bg-teal-500 rounded-full inline-block"></span>
+                <span>Frequently Asked Questions</span>
+              </h2>
+
+              <div className="space-y-4">
+                {(faqs ?? []).map((faq, idx) => {
+                  const isOpen = openFaqIdx === idx;
+                  return (
+                    <div
+                      key={idx}
+                      className="bg-slate-900/40 border border-slate-850 hover:border-slate-800 rounded-2xl overflow-hidden transition-all duration-300"
+                    >
+                      <button
+                        onClick={() => toggleFaq(idx)}
+                        className="w-full flex items-center justify-between p-5 select-none focus:outline-none text-left"
                       >
-                        <h3 className="text-sm sm:text-base font-bold text-white hover:text-teal-400 transition-colors pr-4">
-                          Day {item.day}: {item.title}
-                        </h3>
+                        <div className="flex items-center space-x-3.5 pr-4">
+                          <HelpCircle className="w-4 h-4 text-teal-500 shrink-0" />
+                          <span className="text-sm font-bold text-white hover:text-teal-400 transition-colors">
+                            {faq.question || ''}
+                          </span>
+                        </div>
                         <ChevronDown 
                           className={`w-4 h-4 text-slate-500 transition-transform duration-300 shrink-0 ${
-                            isExpanded ? 'rotate-180 text-teal-400' : ''
+                            isOpen ? 'rotate-180 text-teal-400' : ''
                           }`} 
                         />
-                      </summary>
+                      </button>
 
                       <AnimatePresence initial={false}>
-                        {isExpanded && (
+                        {isOpen && (
                           <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.25, ease: 'easeInOut' }}
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.2, ease: 'easeInOut' }}
                           >
-                            <div className="px-5 pb-5 pt-1 border-t border-slate-900 text-xs sm:text-sm text-slate-400 font-light leading-relaxed">
-                              {item.description}
+                            <div className="px-5 pb-5 pt-1 border-t border-slate-900 text-xs sm:text-sm text-slate-400 font-light leading-relaxed pl-13">
+                              {faq.answer || ''}
                             </div>
                           </motion.div>
                         )}
                       </AnimatePresence>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-
-          {/* HOTELS & ACCOMMODATION RECOMMENDATIONS */}
-          <section className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <h2 className="text-2xl font-bold text-white font-display flex items-center space-x-2.5">
-                <span className="w-1.5 h-6 bg-teal-500 rounded-full inline-block"></span>
-                <span>Recommended Accommodation</span>
-              </h2>
-
-              {/* Tier Selector Tabs */}
-              <div className="bg-slate-950 border border-slate-850 p-1 rounded-xl flex space-x-1 self-start sm:self-center shrink-0">
-                {(['standard', 'premium', 'luxury'] as const).map((tier) => (
-                  <button
-                    key={tier}
-                    onClick={() => setActiveHotelTier(tier)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors focus:outline-none ${
-                      activeHotelTier === tier
-                        ? 'bg-teal-600 text-white shadow-sm'
-                        : 'text-slate-500 hover:text-slate-300'
-                    }`}
-                  >
-                    {tier}
-                  </button>
-                ))}
+                  );
+                })}
               </div>
-            </div>
-
-            {/* Hotel Cards Comparison Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {accommodations.map((hotel) => {
-                const isSelected = activeHotelTier === hotel.tier;
-                return (
-                  <div
-                    key={hotel.tier}
-                    onClick={() => setActiveHotelTier(hotel.tier)}
-                    className={`bg-slate-900 border rounded-3xl overflow-hidden cursor-pointer transition-all duration-300 group flex flex-col justify-between ${
-                      isSelected
-                        ? 'border-teal-500 ring-2 ring-teal-500/20 shadow-xl scale-[1.01]'
-                        : 'border-slate-850/60 hover:border-slate-800 opacity-70 hover:opacity-100'
-                    }`}
-                  >
-                    <div>
-                      {/* Hotel Photo */}
-                      <div className="relative aspect-[4/3] w-full bg-slate-950 overflow-hidden">
-                        <Image
-                          src={hotel.image}
-                          alt={hotel.name}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 300px"
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <div className="absolute top-3 right-3 bg-slate-950/80 backdrop-blur-md px-2.5 py-1 rounded-lg border border-slate-800 text-[10px] uppercase font-bold tracking-wider text-teal-400">
-                          {hotel.tier}
-                        </div>
-                      </div>
-
-                      {/* Hotel Copy */}
-                      <div className="p-5 space-y-3">
-                        <div className="flex items-center space-x-1.5">
-                          <span className="text-amber-400 flex items-center">
-                            {Array.from({ length: hotel.stars }).map((_, i) => (
-                              <Star key={i} className="w-3 h-3 fill-current shrink-0" />
-                            ))}
-                          </span>
-                          <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wide">
-                            {hotel.stars} Star Property
-                          </span>
-                        </div>
-                        <h3 className="text-sm font-bold text-white line-clamp-1 group-hover:text-teal-400 transition-colors">
-                          {hotel.name}
-                        </h3>
-                        <p className="text-[11px] text-slate-500 flex items-center space-x-1">
-                          <MapPin className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-                          <span>{hotel.location}</span>
-                        </p>
-                        <div className="border-t border-slate-950 pt-3 space-y-1">
-                          <span className="block text-[9px] uppercase tracking-wider text-slate-500 font-bold">Room Category</span>
-                          <span className="text-xs font-semibold text-slate-300">{hotel.roomType}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Amenities Checklist */}
-                    <div className="px-5 pb-5 pt-0">
-                      <div className="bg-slate-950/60 border border-slate-850/60 rounded-xl p-3.5 space-y-2">
-                        <span className="block text-[8px] uppercase tracking-wider text-slate-500 font-bold">Inclusions</span>
-                        <ul className="space-y-1.5">
-                          {hotel.amenities.map((item, i) => (
-                            <li key={i} className="flex items-start space-x-1.5 text-[10px] text-slate-400 font-light">
-                              <Check className="w-3 h-3 text-teal-400 shrink-0 mt-0.5" />
-                              <span className="line-clamp-1">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-
-          {/* INCLUSIONS & EXCLUSIONS */}
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-            {/* Inclusions Card */}
-            <div className="bg-slate-900/30 border border-slate-850 rounded-3xl p-6 sm:p-8 space-y-5">
-              <div className="flex items-center space-x-2.5 text-teal-400 font-bold">
-                <div className="w-8 h-8 rounded-lg bg-teal-950/50 flex items-center justify-center border border-teal-500/20">
-                  <Check className="w-4 h-4" />
-                </div>
-                <h3 className="text-lg font-bold text-white font-display">Inclusions</h3>
-              </div>
-              <ul className="space-y-3">
-                {inclusions.map((inc, i) => (
-                  <li key={i} className="flex items-start space-x-3 text-xs sm:text-sm text-slate-350 font-light">
-                    <CheckCircle2 className="w-4 h-4 text-teal-500 shrink-0 mt-0.5" />
-                    <span>{inc}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Exclusions Card */}
-            <div className="bg-slate-900/30 border border-slate-850 rounded-3xl p-6 sm:p-8 space-y-5">
-              <div className="flex items-center space-x-2.5 text-amber-500 font-bold">
-                <div className="w-8 h-8 rounded-lg bg-amber-950/50 flex items-center justify-center border border-amber-500/20">
-                  <X className="w-4 h-4" />
-                </div>
-                <h3 className="text-lg font-bold text-white font-display">Exclusions</h3>
-              </div>
-              <ul className="space-y-3">
-                {exclusions.map((exc, i) => (
-                  <li key={i} className="flex items-start space-x-3 text-xs sm:text-sm text-slate-350 font-light">
-                    <AlertTriangle className="w-4 h-4 text-amber-550 shrink-0 mt-0.5" />
-                    <span>{exc}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-
-          {/* DETAILED PRICING BREAKDOWN */}
-          <section className="bg-slate-900/30 border border-slate-850 rounded-3xl p-6 sm:p-8 space-y-6">
-            <h2 className="text-2xl font-bold text-white font-display flex items-center space-x-2.5">
-              <span className="w-1.5 h-6 bg-teal-500 rounded-full inline-block"></span>
-              <span>Pricing Packages</span>
-            </h2>
-            <p className="text-xs text-slate-500 font-light">
-              *All prices are in Indian Rupees (INR) and calculated per person. Stated rates are valid for non-holiday dates. Rates may fluctuate based on room availability and seasonal flight/hotel surcharges.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {[
-                { type: 'Couple Occupancy', priceVal: pricing?.couple, desc: 'Assuming 2 persons sharing one room with private cab transfers.' },
-                { type: 'Family Plan', priceVal: pricing?.family, desc: 'Per person assuming 4 adults traveling together, sharing two rooms.' },
-                { type: 'Group Occupancy', priceVal: pricing?.group, desc: 'Per person assuming 6+ adults traveling together, sharing three rooms.' },
-              ].map((tier, idx) => (
-                <div
-                  key={idx}
-                  className="bg-slate-950/80 border border-slate-850 hover:border-slate-800 rounded-2xl p-5 text-center flex flex-col justify-between space-y-4 hover:shadow-lg transition-all"
-                >
-                  <div className="space-y-1">
-                    <span className="block text-xs text-slate-500 font-semibold uppercase tracking-wider">{tier.type}</span>
-                    <p className="text-[10px] text-slate-400 font-light leading-relaxed px-1">
-                      {tier.desc}
-                    </p>
-                  </div>
-                  <div className="space-y-1 border-t border-slate-900 pt-3">
-                    <span className="block text-2xl font-extrabold text-teal-400">
-                      {tier.priceVal ? `₹${tier.priceVal.toLocaleString('en-IN')}` : 'On Request'}
-                    </span>
-                    <span className="block text-[9px] text-slate-500 font-bold uppercase tracking-wider">
-                      {tier.priceVal ? 'Per Person Starting' : 'Contact Us'}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* FAQ ACCORDION SECTION */}
-          <section className="space-y-6">
-            <h2 className="text-2xl font-bold text-white font-display flex items-center space-x-2.5">
-              <span className="w-1.5 h-6 bg-teal-500 rounded-full inline-block"></span>
-              <span>Frequently Asked Questions</span>
-            </h2>
-
-            <div className="space-y-4">
-              {faqs.map((faq, idx) => {
-                const isOpen = openFaqIdx === idx;
-                return (
-                  <div
-                    key={idx}
-                    className="bg-slate-900/40 border border-slate-850 hover:border-slate-800 rounded-2xl overflow-hidden transition-all duration-300"
-                  >
-                    <button
-                      onClick={() => toggleFaq(idx)}
-                      className="w-full flex items-center justify-between p-5 select-none focus:outline-none text-left"
-                    >
-                      <div className="flex items-center space-x-3.5 pr-4">
-                        <HelpCircle className="w-4 h-4 text-teal-500 shrink-0" />
-                        <span className="text-sm font-bold text-white hover:text-teal-400 transition-colors">
-                          {faq.question}
-                        </span>
-                      </div>
-                      <ChevronDown 
-                        className={`w-4 h-4 text-slate-500 transition-transform duration-300 shrink-0 ${
-                          isOpen ? 'rotate-180 text-teal-400' : ''
-                        }`} 
-                      />
-                    </button>
-
-                    <AnimatePresence initial={false}>
-                      {isOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2, ease: 'easeInOut' }}
-                        >
-                          <div className="px-5 pb-5 pt-1 border-t border-slate-900 text-xs sm:text-sm text-slate-400 font-light leading-relaxed pl-13">
-                            {faq.answer}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
+            </section>
+          )}
         </div>
 
         {/* RIGHT COLUMN - STICKY BOOKING FORM SIDEBAR (lg:col-span-4) */}

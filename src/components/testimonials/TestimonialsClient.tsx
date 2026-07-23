@@ -28,17 +28,19 @@ export default function TestimonialsClient({ testimonials }: TestimonialsClientP
 
       {/* Testimonials Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {testimonials.map((test, index) => {
-          // Extract initials for placeholder avatar
-          const initials = test.name
-            .split(' ')
-            .map((n) => n[0])
-            .slice(0, 2)
-            .join('');
+        {(testimonials ?? []).map((test, index) => {
+          // Extract initials safely for placeholder avatar
+          const initials = test?.name
+            ? test.name
+                .split(' ')
+                .map((n) => n[0])
+                .slice(0, 2)
+                .join('')
+            : 'G';
 
           return (
             <motion.div
-              key={test.id}
+              key={test?.id || index}
               className="bg-slate-900 border border-slate-800/60 rounded-2xl p-6 flex flex-col justify-between hover:border-slate-800 transition-all duration-300 shadow-md relative group"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -56,7 +58,7 @@ export default function TestimonialsClient({ testimonials }: TestimonialsClientP
                     <Star
                       key={i}
                       className={`w-4 h-4 ${
-                        i < test.rating ? 'fill-current' : 'text-slate-700'
+                        i < (test?.rating ?? 5) ? 'fill-current' : 'text-slate-700'
                       }`}
                     />
                   ))}
@@ -64,17 +66,17 @@ export default function TestimonialsClient({ testimonials }: TestimonialsClientP
 
                 {/* Review Text */}
                 <p className="text-slate-300 text-sm leading-relaxed italic font-light">
-                  &ldquo;{test.reviewText}&rdquo;
+                  &ldquo;{test?.reviewText || ''}&rdquo;
                 </p>
               </div>
 
               {/* User Bio */}
               <div className="flex items-center space-x-4 pt-6 mt-6 border-t border-slate-800/80 relative z-10">
-                {test.avatarUrl ? (
+                {test?.avatarUrl ? (
                   <div className="relative w-12 h-12 rounded-full overflow-hidden border border-teal-500/20">
                     <Image
                       src={test.avatarUrl}
-                      alt={test.name}
+                      alt={test?.name || 'Guest'}
                       fill
                       sizes="48px"
                       className="object-cover"
@@ -87,11 +89,13 @@ export default function TestimonialsClient({ testimonials }: TestimonialsClientP
                 )}
                 <div>
                   <h3 className="text-white font-bold text-sm leading-snug">
-                    {test.name}
+                    {test?.name || 'Guest'}
                   </h3>
-                  <span className="text-teal-400 text-xs font-semibold block">
-                    {test.destinationVisited}
-                  </span>
+                  {test?.destinationVisited && (
+                    <span className="text-teal-400 text-xs font-semibold block">
+                      {test.destinationVisited}
+                    </span>
+                  )}
                 </div>
               </div>
             </motion.div>

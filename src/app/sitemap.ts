@@ -28,20 +28,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
 
   // Dynamic Package routes
-  const packageRoutes = packages.map((tour) => ({
-    url: `${baseUrl}/packages/${tour.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.7,
-  }));
+  const packageRoutes = (packages ?? [])
+    .filter((tour) => tour && tour.slug)
+    .map((tour) => ({
+      url: `${baseUrl}/packages/${tour.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    }));
 
   // Dynamic Blog routes
-  const blogRoutes = blogs.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.6,
-  }));
+  const blogRoutes = (blogs ?? [])
+    .filter((post) => post && post.slug)
+    .map((post) => ({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    }));
 
   return [...staticRoutes, ...packageRoutes, ...blogRoutes];
 }

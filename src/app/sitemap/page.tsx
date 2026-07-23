@@ -147,19 +147,19 @@ export default async function SitemapPage() {
               Tour Packages
             </h2>
           </div>
-          {packages.length === 0 ? (
+          {!packages || packages.length === 0 ? (
             <p className="text-slate-500 text-sm font-light">No packages available.</p>
           ) : (
             <ul className="space-y-3.5 max-h-[320px] overflow-y-auto pr-2 custom-scrollbar">
-              {packages.map((pkg) => (
+              {(packages ?? []).map((pkg) => (
                 <li key={pkg.id}>
                   <Link
-                    href={`/packages/${pkg.slug}`}
+                    href={`/packages/${pkg.slug || ''}`}
                     className="flex items-center justify-between text-slate-355 hover:text-teal-400 transition-colors text-sm sm:text-base font-light focus:outline-none focus:ring-2 focus:ring-teal-500/50 rounded-lg p-2 hover:bg-slate-950/20 group/link"
                   >
-                    <span className="truncate pr-4">{pkg.title}</span>
+                    <span className="truncate pr-4">{pkg.title || 'Bespoke Tour'}</span>
                     <span className="text-xs text-slate-500 shrink-0 font-medium group-hover/link:text-teal-500/80 transition-colors">
-                      {pkg.duration}
+                      {pkg.duration || 'On Request'}
                     </span>
                   </Link>
                 </li>
@@ -178,19 +178,19 @@ export default async function SitemapPage() {
               Destinations
             </h2>
           </div>
-          {destinations.length === 0 ? (
+          {!destinations || destinations.length === 0 ? (
             <p className="text-slate-500 text-sm font-light">No destinations available.</p>
           ) : (
             <ul className="space-y-3.5 max-h-[320px] overflow-y-auto pr-2 custom-scrollbar">
-              {destinations.map((dest) => (
+              {(destinations ?? []).map((dest) => (
                 <li key={dest.id}>
                   <Link
-                    href={`/packages?destination=${encodeURIComponent(dest.name)}`}
+                    href={`/packages?destination=${encodeURIComponent(dest.name || '')}`}
                     className="flex items-center justify-between text-slate-355 hover:text-teal-400 transition-colors text-sm sm:text-base font-light focus:outline-none focus:ring-2 focus:ring-teal-500/50 rounded-lg p-2 hover:bg-slate-950/20 group/link"
                   >
-                    <span>{dest.name}</span>
+                    <span>{dest.name || ''}</span>
                     <span className="text-xs text-slate-500 font-semibold uppercase tracking-wider group-hover/link:text-teal-500/80 transition-colors">
-                      {dest.packageCount} tours
+                      {dest.packageCount || 0} tours
                     </span>
                   </Link>
                 </li>
@@ -209,19 +209,19 @@ export default async function SitemapPage() {
               Travel Blog
             </h2>
           </div>
-          {blogs.length === 0 ? (
+          {!blogs || blogs.length === 0 ? (
             <p className="text-slate-500 text-sm font-light">No blog posts published yet.</p>
           ) : (
             <ul className="space-y-3.5 max-h-[320px] overflow-y-auto pr-2 custom-scrollbar">
-              {blogs.map((post) => (
+              {(blogs ?? []).map((post) => (
                 <li key={post.id}>
                   <Link
-                    href={`/blog/${post.slug}`}
+                    href={`/blog/${post.slug || ''}`}
                     className="flex items-center justify-between text-slate-355 hover:text-teal-400 transition-colors text-sm sm:text-base font-light focus:outline-none focus:ring-2 focus:ring-teal-500/50 rounded-lg p-2 hover:bg-slate-950/20 group/link"
                   >
-                    <span className="truncate pr-4">{post.title}</span>
+                    <span className="truncate pr-4">{post.title || 'Blog Post'}</span>
                     <span className="text-xs text-slate-500 shrink-0 group-hover/link:text-teal-500/80 transition-colors">
-                      {post.readTime}
+                      {post.readTime || '5 min read'}
                     </span>
                   </Link>
                 </li>

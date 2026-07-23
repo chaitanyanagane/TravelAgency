@@ -12,8 +12,20 @@ interface PackageCardProps {
 }
 
 export default function PackageCard({ tour }: PackageCardProps) {
-  const { title, slug, destination, duration, price, rating, tourType, images } = tour;
-  const displayImage = images[0] || 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=800&q=80';
+  const { 
+    title = '', 
+    slug = '', 
+    destination = '', 
+    duration = '', 
+    price = 0, 
+    rating = 0, 
+    tourType = 'Customized', 
+    images = [] 
+  } = tour || {};
+
+  const displayImage = images && images.length > 0 
+    ? images[0] 
+    : 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=800&q=80';
 
   // Tag color mapping
   const tagColors = {
@@ -53,7 +65,7 @@ export default function PackageCard({ tour }: PackageCardProps) {
         {/* Rating tag */}
         <div className="absolute top-4 right-4 z-10 bg-slate-950/80 backdrop-blur-md px-2 py-1 rounded-lg flex items-center space-x-1 text-xs font-bold text-amber-400 border border-slate-800">
           <Star className="w-3.5 h-3.5 fill-current" />
-          <span>{rating.toFixed(1)}</span>
+          <span>{(rating ?? 0).toFixed(1)}</span>
         </div>
         
         {/* Bottom soft gradient */}
@@ -66,17 +78,17 @@ export default function PackageCard({ tour }: PackageCardProps) {
         <div className="flex items-center justify-between text-xs text-slate-500 mb-3 font-medium">
           <div className="flex items-center space-x-1">
             <MapPin className="w-3.5 h-3.5 text-teal-500 shrink-0" />
-            <span>{destination}</span>
+            <span>{destination || ''}</span>
           </div>
           <div className="flex items-center space-x-1">
             <Calendar className="w-3.5 h-3.5 text-teal-500 shrink-0" />
-            <span>{duration}</span>
+            <span>{duration || ''}</span>
           </div>
         </div>
 
         {/* Title */}
         <h3 className="text-lg font-bold text-white mb-3 tracking-wide leading-snug group-hover:text-teal-400 transition-colors line-clamp-2 min-h-[56px] flex items-center">
-          {title}
+          {title || ''}
         </h3>
 
         {/* Short info/Price */}
@@ -86,7 +98,7 @@ export default function PackageCard({ tour }: PackageCardProps) {
               Starting from
             </span>
             <span className="text-xl font-extrabold text-teal-400">
-              ₹{price.toLocaleString('en-IN')}
+              ₹{price ? price.toLocaleString('en-IN') : 'On Request'}
             </span>
             <span className="text-[10px] text-slate-500 ml-1">/ person</span>
           </div>

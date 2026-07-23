@@ -42,34 +42,34 @@ export default function PackagesFilterAndList({ initialPackages }: PackagesFilte
   }
 
   // Extract unique destinations from our dataset
-  const uniqueDestinations = ['all', ...Array.from(new Set(initialPackages.map((p) => p.destination)))];
+  const uniqueDestinations = ['all', ...Array.from(new Set((initialPackages ?? []).map((p) => p?.destination).filter(Boolean)))];
 
   // Filtering Logic
-  const filteredPackages = initialPackages.filter((tour) => {
+  const filteredPackages = (initialPackages ?? []).filter((tour) => {
     // 1. Destination
-    const matchesDest = selectedDestination === 'all' || tour.destination === selectedDestination;
+    const matchesDest = selectedDestination === 'all' || tour?.destination === selectedDestination;
     
     // 2. Tour Type
-    const matchesType = selectedTourType === 'all' || tour.tourType === selectedTourType;
+    const matchesType = selectedTourType === 'all' || tour?.tourType === selectedTourType;
     
     // 3. Duration
     let matchesDuration = true;
     if (selectedDuration === 'short') {
-      matchesDuration = tour.durationDays <= 4;
+      matchesDuration = (tour?.durationDays ?? 0) <= 4;
     } else if (selectedDuration === 'medium') {
-      matchesDuration = tour.durationDays === 5 || tour.durationDays === 6;
+      matchesDuration = (tour?.durationDays ?? 0) === 5 || (tour?.durationDays ?? 0) === 6;
     } else if (selectedDuration === 'long') {
-      matchesDuration = tour.durationDays >= 7;
+      matchesDuration = (tour?.durationDays ?? 0) >= 7;
     }
 
     // 4. Budget
     let matchesBudget = true;
     if (selectedBudget === 'under-15k') {
-      matchesBudget = tour.price <= 15000;
+      matchesBudget = (tour?.price ?? 0) <= 15000;
     } else if (selectedBudget === 'under-25k') {
-      matchesBudget = tour.price <= 25000;
+      matchesBudget = (tour?.price ?? 0) <= 25000;
     } else if (selectedBudget === 'over-25k') {
-      matchesBudget = tour.price > 25000;
+      matchesBudget = (tour?.price ?? 0) > 25000;
     }
 
     return matchesDest && matchesType && matchesDuration && matchesBudget;
@@ -78,14 +78,14 @@ export default function PackagesFilterAndList({ initialPackages }: PackagesFilte
   // Sorting Logic
   const sortedPackages = [...filteredPackages].sort((a, b) => {
     if (sortBy === 'price-low') {
-      return a.price - b.price;
+      return (a?.price ?? 0) - (b?.price ?? 0);
     } else if (sortBy === 'price-high') {
-      return b.price - a.price;
+      return (b?.price ?? 0) - (a?.price ?? 0);
     } else if (sortBy === 'duration') {
-      return a.durationDays - b.durationDays;
+      return (a?.durationDays ?? 0) - (b?.durationDays ?? 0);
     } else {
       // Popularity (Rating)
-      return b.rating - a.rating;
+      return (b?.rating ?? 0) - (a?.rating ?? 0);
     }
   });
 
